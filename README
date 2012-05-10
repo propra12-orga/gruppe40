@@ -9,6 +9,18 @@
        _/.___,\_         
       (_/     \_) 
 
+******
+NEWS
+******
+Ausgang ist ja gefordert. Also Singleplayer/Multiplayer:
+SP: Alle Gegner + Mauern zum Ausgang hin frei machen und dann "rausgehen"
+MP: Ausgang = Gegner erledigt
+
+evtl. schon mal beruecksichtigen
+
+******
+
+
 Aufgabenverteilung:
 
 Philipp
@@ -22,6 +34,7 @@ Spielfeld
 - Groesse
 - feste Mauern
 - zerstoerbare Mauern (random)
+- AUSGANG!
 
 
 Thomas
