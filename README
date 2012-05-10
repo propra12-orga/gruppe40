@@ -1,4 +1,5 @@
-             \|/
+
+\|/
             .-*-         
            / /|\         
           _L_            
@@ -13,20 +14,35 @@ Aufgabenverteilung:
 
 Philipp
 ----------
-View zeugs...
+Grafiken/Oberflaeche
 
 
 Dominik
 ----------
+Spielfeld
+- Groesse
+- feste Mauern
+- zerstoerbare Mauern (random)
 
 
 Thomas
 ----------
+AI
 
 
 Lisa
 ----------
+"drawable"
+- Figur
+-- move/Bombe legen
+
+- Bombe
+-- Radius
 
 
 Sebastian
 ----------
+Menue
+- Neustart
+- Stop
+- Beenden
