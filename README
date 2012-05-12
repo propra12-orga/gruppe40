@@ -19,6 +19,11 @@ MP: Ausgang = Gegner erledigt
 evtl. schon mal beruecksichtigen
 
 ******
+Soll der Ausgang zufällig plaziert werden, oder eine feste Position haben?
+Soll es verschiedene Mauertypen mit zB. verschienen Stärken geben?
+Soll es verschiedene Felder geben, die zB. die Geschwindigkeit des Spielers 
+beeinflussen?
+******
 
 
 Aufgabenverteilung:
@@ -32,9 +37,12 @@ Dominik
 ----------
 Spielfeld
 - Groesse
+-verschiedene Felder?
 - feste Mauern
 - zerstoerbare Mauern (random)
+--verschiedene Mauern?
 - AUSGANG!
+--Zufällig oder fest plaziert?
 
 
 Thomas
