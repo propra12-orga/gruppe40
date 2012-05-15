@@ -25,6 +25,11 @@ Soll es verschiedene Felder geben, die zB. die Geschwindigkeit des Spielers
 beeinflussen?
 ******
 
+- Ich denke der Ausgang ist fix. Nen Ausgang gibts ja nur im Singleplayer und ich denke, dass wir da am besten die Level vorgeben (bis auf Zufallsmauern).
+- moeglich, laesst sich ja aber im Nachhinein leicht realisieren.
+- dafuer gibts im Original doch diese Schuhpowerups. Sollte evtl. eher in die Kategorie. Dafuer muessten wir aber auch fluessige Bewegung implementieren (sollten wir eh) und nicht 1 Klick = 1 Feld. Dann kann man bspw. pro Powerup = 10% mehr Geschw. (o.Ae)
+
+
 
 Aufgabenverteilung:
 
