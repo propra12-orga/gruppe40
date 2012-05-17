@@ -14,8 +14,8 @@ public class Map {
         m = new Field[width][height]; /* sets mapsize */
 
         /* sets normal Fields everywhere */
-        for (int x = 0; x <= width; x++) {
-            for (int y = 0; y <= height; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 m[x][y] = new NormalField();
             }
         }
