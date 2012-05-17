@@ -1,9 +1,8 @@
 package map;
 
-public class NormalWall extends Field {
+public class NormalWall extends DestructibleWall {
 
     public NormalWall() {
         super(1, "NormalWall");
     }
-
 }
