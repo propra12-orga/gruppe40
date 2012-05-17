@@ -13,6 +13,13 @@ public class Map {
         this.exit = exit;
         m = new Field[width][height]; /* sets mapsize */
 
+        /* sets normal Fields everywhere */
+        for (int x = 0; x <= width; x++) {
+            for (int y = 0; y <= height; y++) {
+                m[x][y] = new NormalField();
+            }
+        }
+
         /* spawns destructible walls */
         /* no walls at the spawnpoint */
         for (int x = 3; x < width - 3; x++) {
@@ -91,5 +98,27 @@ public class Map {
      */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * @param x
+     *            - horizontal axis
+     * @param y
+     *            - vertical axis
+     * @param damage
+     *            - damage suffered
+     */
+    public void destroy(int x, int y, int damage) {
+
+        Field field = m[x][y];
+
+        if (field instanceof DestructibleWall) { /* NormalWall etc. */
+            if (field.getStrength() - damage <= 0) {
+                field = new NormalField();
+            } else {
+                field.setStrength(field.getStrength() - damage);
+            }
+        }
+
     }
 }
