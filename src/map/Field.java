@@ -17,8 +17,18 @@ public abstract class Field {
         return strength;
     }
 
+    /**
+     * @return name of the field
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param newStrength
+     *            - the new strength
+     */
+    public void setStrength(int newStrength) {
+        this.strength = newStrength;
+    }
 }
