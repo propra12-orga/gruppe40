@@ -1,16 +1,23 @@
 package map;
 
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 
 public class ImageLoader {
 
-    private static String imagePaths[] = { "NormalWall.jpg",
-            "IndestructibleWall.jpg", "NormalField.jpg", "Exit.jpg" };
-    private static Image images[] = new Image[imagePaths.length];
+    private static String imagePaths[] = { "NormalWall.jpg", "IndestructibleWall.jpg", "NormalField.jpg", "Exit.jpg" };
+    private static Image  images[]     = new Image[imagePaths.length];
 
-    public static void init() {
+    public static void init(ClassLoader classLoader) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
         for (int i = 0; i < imagePaths.length; i++) {
-
+            URL url = classLoader.getResource(imagePaths[i]);
+            if (url == null) {
+                System.err.println("failed to load image: " + imagePaths[i]);
+            } else {
+                images[i] = toolkit.createImage(url);
+            }
         }
     }
 
