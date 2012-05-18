@@ -16,7 +16,7 @@ public class Map {
         /* sets normal Fields everywhere */
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                m[x][y] = new Field(0, "NormalField");
+                m[x][y] = new EmptyField();
             }
         }
 
@@ -25,13 +25,13 @@ public class Map {
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
                 if (Math.random() < 0.5)
-                    m[x][y] = new DestructibleWall(1, "NormalWall");
+                    m[x][y] = new DestructibleWall(1, "NormalWall", ImageLoader.getNormalWallImage());
             }
         }
         for (int y = 3; y < height - 3; y++) {
             for (int x = 1; x < (width - 1); x++) {
-                if (Math.random() < 0.5)
-                    m[x][y] = new DestructibleWall(1, "NormalWall");
+                if (Math.random() < 0.9)
+                    m[x][y] = new DestructibleWall(1, "NormalWall", ImageLoader.getNormalWallImage());
             }
         }
 
@@ -99,6 +99,10 @@ public class Map {
     public int getHeight() {
         return height;
     }
+    
+    public Field getField(int x, int y) {
+        return m[x][y];
+    }
 
     /**
      * @param x
@@ -114,7 +118,7 @@ public class Map {
 
         if (field instanceof DestructibleWall) { /* NormalWall etc. */
             if (field.getStrength() - damage <= 0) {
-                field = new Field(0, "NormalField");
+                field = new EmptyField();
             } else {
                 field.setStrength(field.getStrength() - damage);
             }
