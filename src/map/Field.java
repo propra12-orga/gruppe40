@@ -1,6 +1,6 @@
 package map;
 
-public abstract class Field {
+public class Field {
 
     private int strength;
     private String name;
