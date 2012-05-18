@@ -25,13 +25,15 @@ public class Map {
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
                 if (Math.random() < 0.5)
-                    m[x][y] = new DestructibleWall(1, "NormalWall", ImageLoader.getNormalWallImage());
+                    m[x][y] = new DestructibleWall(1, "NormalWall",
+                            ImageLoader.getNormalWallImage());
             }
         }
         for (int y = 3; y < height - 3; y++) {
             for (int x = 1; x < (width - 1); x++) {
                 if (Math.random() < 0.9)
-                    m[x][y] = new DestructibleWall(1, "NormalWall", ImageLoader.getNormalWallImage());
+                    m[x][y] = new DestructibleWall(1, "NormalWall",
+                            ImageLoader.getNormalWallImage());
             }
         }
 
@@ -52,12 +54,6 @@ public class Map {
                 m[x][y] = new IndestructibleWall();
             }
         }
-
-        /* spawns the exit */
-        if (exit) {
-            m[width - width / 2][height - height / 2] = new Exit();
-        }
-
     }
 
     /**
@@ -99,7 +95,7 @@ public class Map {
     public int getHeight() {
         return height;
     }
-    
+
     public Field getField(int x, int y) {
         return m[x][y];
     }
@@ -124,5 +120,10 @@ public class Map {
             }
         }
 
+    }
+
+    public void setExit(int x, int y) {
+        if (exit)
+            m[x][y] = new Exit();
     }
 }
