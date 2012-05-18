@@ -9,6 +9,21 @@
        _/.___,\_         
       (_/     \_) 
 
+
+****************
+Weitere Fragen
+****************
+Ich muss die Bombe und die Spielfigur noch verschwinden lassen (Objekte zerstören).
+Bombe: Bombe zerstören erst nachdem Timer abgelaufen ist, wie lösche ich die Referenz (=null geht hier nicht)?
+Figuer: Wie kann man das bei einem Multiplayer-Spiel umsetzen?
+
+Was muss bezüglich Bombe und Figur bis zur ersten Abgabe noch getan werden?
+
+Weitere Ziele: Laufende Bewegung fließend machen
+Superbombe einführen
+Geschwindigkeit der Spielfigur durch Item ändern
+
+	  
 ******
 NEWS
 ******

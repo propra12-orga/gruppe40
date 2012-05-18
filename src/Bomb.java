@@ -1,14 +1,20 @@
+import javax.swing.Timer;
 
-public class Bomb extends Item{
+public class Bomb extends Item implements ActionListener{
 	
 	private int radius;
 	private int x;
 	private int y;
 	private Map map;
+	private int strength;
+	private int delay;
+	private Timer timer;
 	
 	public Bomb(){
 		this.radius = 1;
 		super(true);
+		this.strength = 1;
+		this.delay = 300; //milliseconds
 		
 	}
 	
@@ -19,35 +25,42 @@ public class Bomb extends Item{
 	}
 	
 	public void explode(){
-		//TODO: start timer
 		boolean proceedLeft = true;
 		boolean proceedRight = true;
 		boolean proceedUp = true;
 		boolean proceedDown = true;
-		this.map.destroyContent(this.x,this.y); 
-		//TODO: write method destroyContent in class map, suggestion: each object has got method destroy.
-		//destroyContent calls each destroy-method
+		this.map.destroy(this.x,this.y,this.strength); 
 		for (int i=1; i<=this.radius; i++){
 			if (proceedRight){
-				this.map.destroyContent(this.x + i,this.y);
+				this.map.destroy(this.x + i,this.y, this.strength);
 				proceedRight = !this.map.isBlocked(this.x + i,this.y);
 			}
 			if (proceedLeft){
-				this.map.destroyContent(this.x - i,this.y);
+				this.map.destroy(this.x - i,this.y, this.strength);
 				proceedLeft = !this.map.isBlocked(this.x-i,this.y);
 			}
 			if (proceedUp){
-				this.map.destroyContent(this.x,this.y + i);
-				proceedUp = !this.map.isBlocked(this.x,this.y+i)
+				this.map.destroy(this.x,this.y + i,this.strength);
+				proceedUp = !this.map.isBlocked(this.x,this.y+i);
 			}
 			if (proceedDown){
-				this.map.destroyContent(this.x,this.y - i);
+				this.map.destroy(this.x,this.y - i,this.strength);
 				proceedDown = !this.map.isBlocked(this.x,this.y-i);
 			}
 		}
 	}
 	
+	public void startTimer(){
+		timer = new Timer(this.delay,this);
+		timer.setRepeats(false);
+		timer.start();
+	}
+	
 	public void destroy(){
+		this.explode();
+	}
+	
+	public void actionPerformed(ActionEvent e){
 		this.explode();
 	}
 	
