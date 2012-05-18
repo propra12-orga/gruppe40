@@ -6,10 +6,18 @@ import java.net.URL;
 
 public class ImageLoader {
 
+    /**
+     * Paths for images (make sure that the indices of all getImage-methods match their desired path)
+     */
     private static String imagePaths[] = { "NormalWall.jpg", "IndestructibleWall.jpg", "NormalField.jpg", "Exit.jpg" };
     private static Image  images[]     = new Image[imagePaths.length];
 
-    public static void init(ClassLoader classLoader) {
+    /**
+     * Loads images (Duh!)
+     * @param classLoader
+     */
+    public static void loadImages() {
+        ClassLoader classLoader = ImageLoader.class.getClassLoader();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         for (int i = 0; i < imagePaths.length; i++) {
             URL url = classLoader.getResource(imagePaths[i]);
