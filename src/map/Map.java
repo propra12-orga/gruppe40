@@ -54,8 +54,8 @@ public class Map {
                 m[x][y] = new IndestructibleWall();
             }
         }
-        
-        /* spawns exit at (x,y) */
+
+        /* spawns exit at (x,y) just for testing */
         setExit(4, 5);
     }
 
@@ -99,6 +99,13 @@ public class Map {
         return height;
     }
 
+    /**
+     * @param x
+     *            - horizontal axis
+     * @param y
+     *            - vertical axis
+     * @return
+     */
     public Field getField(int x, int y) {
         return m[x][y];
     }
@@ -113,20 +120,29 @@ public class Map {
      */
     public void destroy(int x, int y, int damage) {
 
-        //Field field = m[x][y];  	This was wrong!!!
-
         if (m[x][y] instanceof DestructibleWall) { /* NormalWall etc. */
-            if (m[x][y].getStrength() - damage <= 0) {
-            	m[x][y] = new EmptyField();
+            if (m[x][y].getName() == "ExitWall") {
+                m[x][y] = new Exit();
+            }
+
+            else if (m[x][y].getStrength() - damage <= 0) {
+                m[x][y] = new EmptyField();
             } else {
-            	m[x][y].setStrength(m[x][y].getStrength() - damage);
+                m[x][y].setStrength(m[x][y].getStrength() - damage);
             }
         }
 
     }
 
+    /**
+     * @param x
+     *            - horizontal axis
+     * @param y
+     *            - vertical axis
+     */
     public void setExit(int x, int y) {
         if (exit)
-            m[x][y] = new Exit();
+            m[x][y] = new DestructibleWall(1, "ExtWall",
+                    ImageLoader.getNormalWallImage());
     }
 }
