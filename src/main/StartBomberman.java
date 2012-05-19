@@ -18,9 +18,6 @@ import map.Map;
  */
 public class StartBomberman implements KeyListener {
 
-	// TODO put menu here (or somewhere else, we just need a class to start
-	// things for now until someone feels responsible making something better)
-
 	public static void main(String[] args) {
 		// Load images
 	    // When using eclipse, drag and drop images into the src folder to add new images

@@ -13,16 +13,19 @@ public class Path {
      * @param yEnd end y-coordinate
      * @return
      */
-    public static boolean find(Map map, int x0, int y0, int xEnd, int yEnd) {
+    public static int find(Map map, int x0, int y0, int xEnd, int yEnd) {
         int w = map.getWidth();
         int h = map.getHeight();
-        boolean[][] visited = new boolean[w][h];
+        int[][] distance = new int[w][h];
         int[][] prev = new int[w][h];
         int[] stackX = new int[w * h];
         int[] stackY = new int[w * h];
+        
+        for (int y=0; y<h; y++) for (int x=0; x<w; x++) distance[x][y] = -1;
 
         boolean pathFound = false;
 
+        distance[x0][y0] = 0;
         stackX[0] = x0;
         stackY[0] = y0;
         int stackPos = 0;
@@ -43,13 +46,13 @@ public class Path {
 
                 // If coordinate is not on map, visited or blocked, skip this
                 // and check other tiles
-                if (!map.contains(x2, y2) || visited[x2][y2] || map.isBlocked(x2, y2)) continue;
+                if (!map.contains(x2, y2) || distance[x2][y2] != -1 || map.isBlocked(x2, y2)) continue;
                 
                 // Mark previous tile for tracing back later
                 prev[x2][y2] = stackPos;
                 
                 // Mark tile as visited
-                visited[x2][y2] = true;
+                distance[x2][y2] = distance[x][y] + 1;
                 
                 //Push new tile on stack
                 stackX[stackSize] = x2;
@@ -65,7 +68,7 @@ public class Path {
             stackPos++;
         }
 
-        if (!pathFound) return false;
+        if (!pathFound) return -1;
 /*
         // Iterating through path (testing)
         int i = prev[xEnd][yEnd];
@@ -92,6 +95,6 @@ public class Path {
             }
             System.out.println();
         }*/
-        return true;
+        return distance[xEnd][yEnd];
     }
 }

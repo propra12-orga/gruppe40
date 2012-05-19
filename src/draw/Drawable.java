@@ -16,6 +16,11 @@ public class Drawable {
         this.y = y;
         this.img = img;
     }
+    
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public Image getImage() {
         return img;
