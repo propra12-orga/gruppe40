@@ -44,7 +44,35 @@ beeinflussen?
 - moeglich, laesst sich ja aber im Nachhinein leicht realisieren.
 - dafuer gibts im Original doch diese Schuhpowerups. Sollte evtl. eher in die Kategorie. Dafuer muessten wir aber auch fluessige Bewegung implementieren (sollten wir eh) und nicht 1 Klick = 1 Feld. Dann kann man bspw. pro Powerup = 10% mehr Geschw. (o.Ae)
 
+/************************************************
+Fuer die AI waeren folgende Funktionen hilfreich:
+- player.getY();
+- player.getY();
+- bomb.getX();
+- bomb.getY();
+(koennte ich auch gerne selber hinzufuegen, aber lieber vorher fragen)
+- player.move(int, int)
+(die anderen Funktionen tun es auch, aber dies waer flexibler [Teleporter etc.])
 
+und irgendwas um festzustellen ob man vor der naechsten Explosion noch um die Ecke laufen kann
+z.B. sowas in der Richtung von
+- (double/int?) player.getMoveSpeed()
+- (double/int?) bomb.getTime[UntilExplosion]()
+
+Ausserdem scheint im pdf zum dritten Milestone Netzwerk verpflichtend zu werden, was viele Probleme aufwirft
+- Server/Client/P2P?
+- Wie synchronisieren (Timer problematisch)?
+
+Fragen und Anmerkungen:
+- Um irgendwas in verschiedene Richtungen zu tun kann man zwei Arrays verwenden (siehe z.B. Pathfinding/AI code)
+- final static Variablen fuer alle willkuerlich gewaehlten Werte (Richtungen, strength)?
+- Wozu ist Item?
+- Hat Bomberman nur eine Bombe? Und wenn ja, warum hat der die? Der wirft die doch Weg
+- Fields haben immer noch Namen
+- Wo soll der Einstiegspunkt sein? (public static void main)
+- Wer fuegt alles zusammen?
+
+************************************************/
 
 Aufgabenverteilung:
 
