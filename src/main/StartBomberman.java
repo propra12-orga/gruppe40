@@ -4,11 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
-import javax.swing.event.MouseInputListener;
 
 import draw.Drawable;
 import draw.GamePanel;
@@ -18,25 +16,22 @@ import map.Map;
 /**
  * This is where it begins
  */
-public class StartBomberman implements MouseInputListener, KeyListener {
+public class StartBomberman implements KeyListener {
 
 	// TODO put menu here (or somewhere else, we just need a class to start
 	// things for now until someone feels responsible making something better)
 
-	public static LinkedList<Drawable> drawables = new LinkedList<Drawable>();
-	// Buffer for Drawables (required since nothing can be added to a LinkedList
-	// while it is being iterated through)
-	public static LinkedList<Drawable> buffer = new LinkedList<Drawable>();
-
 	public static void main(String[] args) {
-		// //////////////////
-
-		// //////////////////
 		// Load images
-		// IMAGES STORED IN bin folder!!!
+	    // When using eclipse, drag and drop images into the src folder to add new images
 		ImageLoader.loadImages();
-		Map map = new Map(11, 11, true);
-		GamePanel gamePanel = new GamePanel(map, drawables, buffer);
+        Map map = new Map(11, 11, true);
+		
+		LinkedList<Drawable> drawables = new LinkedList<Drawable>();		
+		//How to create and add a drawable object:
+		//Drawable drawable = new Drawable(ImageLoader.getBombImage(), 1, 3);
+		//drawables.add(drawable);		
+		GamePanel gamePanel = new GamePanel(map, drawables);
 		// Create a window
 		JFrame frame = new JFrame();
 		// Make window close when everything is done
@@ -55,64 +50,6 @@ public class StartBomberman implements MouseInputListener, KeyListener {
 
 		// Show window
 		frame.setVisible(true);
-		// //_____________________________________\\\\
-
-		/*
-		 * DESTROY EXAMPLE for (int y = 0; y < map.getHeight(); y++) { for (int
-		 * x = 0; x < map.getWidth(); x++) { map.destroy(x, y, 10);
-		 * 
-		 * 
-		 * } }
-		 * 
-		 * for (int y = 0; y < map.getHeight(); y++) { for (int x = 0; x <
-		 * map.getWidth(); x++) { System.out.println(map.getField(x,
-		 * y).getName());
-		 * 
-		 * } }
-		 */
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

@@ -52,15 +52,15 @@ public class ImageLoader {
         return images[3];
     }
     
-    public static Image getBomb() {
+    public static Image getBombImage() {
         return images[4];
     }
     
-    public static Image getPlayer() {
+    public static Image getPlayerImage() {
         return images[5];
     }
 
-    public static Image getExplosion() {
+    public static Image getExplosionImage() {
         return images[6];
     }
 }
