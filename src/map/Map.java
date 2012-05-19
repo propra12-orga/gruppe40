@@ -54,6 +54,9 @@ public class Map {
                 m[x][y] = new IndestructibleWall();
             }
         }
+        
+        /* spawns exit at (x,y) */
+        setExit(4, 5);
     }
 
     /**
@@ -110,13 +113,13 @@ public class Map {
      */
     public void destroy(int x, int y, int damage) {
 
-        Field field = m[x][y];
+        //Field field = m[x][y];  	This was wrong!!!
 
-        if (field instanceof DestructibleWall) { /* NormalWall etc. */
-            if (field.getStrength() - damage <= 0) {
-                field = new EmptyField();
+        if (m[x][y] instanceof DestructibleWall) { /* NormalWall etc. */
+            if (m[x][y].getStrength() - damage <= 0) {
+            	m[x][y] = new EmptyField();
             } else {
-                field.setStrength(field.getStrength() - damage);
+            	m[x][y].setStrength(m[x][y].getStrength() - damage);
             }
         }
 

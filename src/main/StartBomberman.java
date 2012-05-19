@@ -2,8 +2,13 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.event.MouseInputListener;
 
 import draw.GamePanel;
 import map.ImageLoader;
@@ -12,13 +17,22 @@ import map.Map;
 /**
  * This is where it begins
  */
-public class StartBomberman {
+public class StartBomberman implements MouseInputListener, KeyListener {
 
     // TODO put menu here (or somewhere else, we just need a class to start
     // things for now until someone feels responsible making something better)
 
+
     public static void main(String[] args) {
-        Map map = new Map(9, 9, true);
+    	////////////////////
+    	
+    	
+    	
+    	////////////////////
+    	// Load images
+    	//IMAGES STORED IN bin folder!!!
+    	ImageLoader.loadImages();
+        Map map = new Map(11, 11, true);
         GamePanel gamePanel = new GamePanel(map);
         // Create a window
         JFrame frame = new JFrame();
@@ -34,12 +48,97 @@ public class StartBomberman {
         frame.pack();
         // Window of this size fits on my screen, so this size is good
         // If it is higher than 768 pixels it will be bad
-        frame.setSize(512, 512);
+        frame.setSize(900, 900);
 
         // Show window
         frame.setVisible(true);
-        // Load images
-        ImageLoader.loadImages();
+        ////_____________________________________\\\\
+        
+        
+        /* DESTROY EXAMPLE
+        for (int y = 0; y < map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
+            	map.destroy(x, y, 10);
+          
+            	
+            }
+        }
+        
+        for (int y = 0; y < map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
+            	System.out.println(map.getField(x, y).getName());
+            	
+            }
+        }
+        
+        */
+        
+        
+        
+        
     }
 
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+			
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
+
+
