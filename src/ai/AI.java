@@ -61,6 +61,8 @@ public class AI {
             }
         }
         
+        // Alternative approach: chess-like AI
+        
         // if threatened by bomb
         //     find safe place
         //     go there

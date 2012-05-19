@@ -24,10 +24,7 @@ public class StartBomberman implements KeyListener {
 		ImageLoader.loadImages();
         Map map = new Map(11, 11, true);
 		
-		LinkedList<Drawable> drawables = new LinkedList<Drawable>();		
-		//How to create and add a drawable object:
-		//Drawable drawable = new Drawable(ImageLoader.getBombImage(), 1, 3);
-		//drawables.add(drawable);		
+		LinkedList<Drawable> drawables = new LinkedList<Drawable>();
 		GamePanel gamePanel = new GamePanel(map, drawables);
 		// Create a window
 		JFrame frame = new JFrame();
