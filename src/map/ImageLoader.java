@@ -7,9 +7,16 @@ import java.net.URL;
 public class ImageLoader {
 
     /**
-     * Paths for images (make sure that the indices of all getImage-methods match their desired path)
+     * Paths for images (make sure that the indices of all getImage-methods match their desired path, that means, images should be stored under the bin-folder)
      */
-    private static String imagePaths[] = { "NormalWall.jpg", "IndestructibleWall.jpg", "NormalField.jpg", "Exit.jpg" };
+    private static String imagePaths[] = { 	"NormalWall.jpg",  				//[0] 
+    									 	"IndestructibleWall.jpg", 		//[1] 
+    									 	"NormalField.jpg", 				//[2]
+    									 	"Exit.jpg",						//[3]
+    									 	"Bomb.gif",						//[4]
+    									 	"Player.gif",					//[5]
+    									 	"Explosion.gif"};				//[6]
+    
     private static Image  images[]     = new Image[imagePaths.length];
 
     /**
@@ -44,5 +51,16 @@ public class ImageLoader {
     public static Image getExitImage() {
         return images[3];
     }
+    
+    public static Image getBombImage() {
+        return images[4];
+    }
+    
+    public static Image getPlayerImage() {
+        return images[5];
+    }
 
+    public static Image getExplosionImage() {
+        return images[6];
+    }
 }
