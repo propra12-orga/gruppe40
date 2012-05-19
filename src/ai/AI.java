@@ -17,32 +17,11 @@ public class AI {
         this.player = player;
         this.map = map;
     }
-    
-    private Point findClosestSavePoint(boolean dangerous[][]) {
-        Point safePoint = null;
-        int shortestDistance = Integer.MAX_VALUE;
-        //TODO search smarter (path finding with multiple end points)
-        //Find closest safe point
-        int w = map.getWidth();
-        int h = map.getHeight();
-        for (int y=0; y<h; y++) {
-            for (int x=0; x<w; x++) {
-                if (!dangerous[x][y]) {
-                    int distance = Path.find(map, player.getX(), player.getY(), x, y);
-                    if (distance != -1 && distance < shortestDistance) {
-                        shortestDistance = distance;
-                        safePoint = new Point(x, y);
-                    }
-                }
-            }
-        }
-        return safePoint;
-    }
 
     public void nextStep() {
+        //Dumb AI        
         int w = map.getWidth();
         int h = map.getHeight();
-        //TODO make AI smarter by considering duration until bomb explodes
         boolean dangerous[][] = new boolean[w][h];
         int dx[] = {-1, 0, 1,  0};
         int dy[] = { 0, 1, 0, -1};
@@ -50,19 +29,36 @@ public class AI {
             int x = bomb.getX();
             int y = bomb.getY();
             dangerous[x][y] = true;
-            for (int r=1; r<=bomb.getRadius(); r++) {
-                for (int i=0; i<4; i++) dangerous[x+dx[i]*r][y+dy[i]*r] = true;//Replace with duration until detonation
+            for (int i=0; i<4; i++) {
+                int x2 = bomb.getX();
+                int y2 = bomb.getY();
+                for (int r=1; r<=bomb.getRadius(); r++) {
+                    x2 += dx[i];
+                    y2 += dy[i];
+                    if (map.contains(x2, y2)) dangerous[x2][y2] = true;
+                }
             }
         }
-        if (dangerous[player.getX()][player.getY()]) {
-            Point safePoint = findClosestSavePoint(dangerous);
-            if (safePoint != null) {
+        int x = player.getX();
+        int y = player.getY();
+        int possibleDirections[] = new int[4];
+        int c = 0;
+        for (int i=0; i<4; i++) {
+            int x2 = player.getX() + dx[i];
+            int y2 = player.getY() + dy[i];
+            if (map.contains(x2, y2) && !map.isBlocked(x2, y2) && !dangerous[x2][y2]) possibleDirections[c++] = i;
+        }
+        // Walk towards random direction
+        if (c > 0) {
+            int i = possibleDirections[(int)(Math.random()*c)];
+            player.move(x+dx[i], y+dy[i]);
+        }
+        if (player.hasBomb()) player.putBomb();
+        
+        // Unbeatable AI: like chess-AIs
+        
+        // Less dumb AI:
                 
-            }
-        }
-        
-        // Alternative approach: chess-like AI
-        
         // if threatened by bomb
         //     find safe place
         //     go there
