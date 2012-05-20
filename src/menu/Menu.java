@@ -1,6 +1,10 @@
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.Dimension;
 
 public class Menu {
 	
@@ -10,22 +14,42 @@ public class Menu {
 		 ******************************************************/
 		
 		JFrame menu = new JFrame("Willkommen in der Bomberman-Beta");
+		JPanel buttons = new JPanel();
 		JLabel title = new JLabel("Bomberman");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
+		
+		Dimension buttonSize = new Dimension(190,60);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 		final JButton buttonSP = new JButton("Starte Singleplayer");
 		final JButton buttonMP = new JButton("Starte Multiplayer");
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		
 		menu.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		menu.setLayout(new GridLayout(3, 3, 5, 5));
 		menu.addWindowListener(new MenuListener());
+		//setting up layout
+		menu.setSize(600, 300);
+		menu.setLayout(new GridLayout(3, 1));
+		menu.setLocation((int)screenSize.getWidth()/2 - menu.getWidth()/2, (int)screenSize.getHeight()/2 - menu.getHeight()/2);
+		menu.setResizable(false);
+		buttons.setLayout(new FlowLayout());
+		title.setHorizontalAlignment(0);
+		creators.setHorizontalAlignment(0);
 		
-		menu.setSize(600, 400);
+		buttonSP.setPreferredSize(buttonSize);
+		buttonMP.setPreferredSize(buttonSize);
+		buttonTutorial.setPreferredSize(buttonSize);
+		
+		title.setFont(new Font("Arial", Font.PLAIN, 72));
+		
+		//adding Buttons to Panel
+		buttons.add(buttonSP);
+		buttons.add(buttonMP);
+		buttons.add(buttonTutorial);
+		
+		//adding everything to Frame
 		menu.add(title);
-		menu.add(buttonSP);
-		menu.add(buttonMP);
-		menu.add(buttonTutorial);
+		menu.add(buttons);
 		menu.add(creators);
 		
 		//menu.pack();
@@ -52,7 +76,7 @@ public class Menu {
 		//Tutorial
 		ActionListener tut = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new Tutorial();
+				new Tutorial("tutorialtext.txt");
 			}
 		};
 		
