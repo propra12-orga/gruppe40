@@ -18,7 +18,7 @@ import map.Map;
  */
 public class StartBomberman implements KeyListener {
 
-	public static void main(String[] args) {
+	public StartBomberman() {
 		// Load images
 	    // When using eclipse, drag and drop images into the src folder to add new images
 		ImageLoader.loadImages();
