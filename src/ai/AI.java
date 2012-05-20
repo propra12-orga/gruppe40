@@ -1,10 +1,11 @@
 package ai;
 
-import java.awt.Point;
+import game.Bomb;
+import game.Player;
+
 import java.util.LinkedList;
 
 import map.Map;
-import map.Path;
 
 public class AI {
 
