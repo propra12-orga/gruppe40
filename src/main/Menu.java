@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,13 +14,16 @@ public class Menu {
 	static int x, y;
 	
 	public static void main(String[] args) {
+		
 		/******************************************************
 		 * Initialize frame, labels, buttons and set settings *
 		 ******************************************************/
 		
+		final CardLayout cards = new CardLayout();
 		
-		
-		JFrame menu = new JFrame("Willkommen in der Bomberman-Beta");
+		final JFrame base = new JFrame("Willkommen in der Bomberman-Beta");
+		JPanel bomberman = new JPanel();
+		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
 		JLabel title = new JLabel("Bomberman");
@@ -44,13 +48,14 @@ public class Menu {
 		gameSizes.add(large);
 		buttonsSize.add(large);
 		
-		menu.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		menu.addWindowListener(new MenuListener());
+		base.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		base.addWindowListener(new MenuListener());
 		//setting up layout
-		menu.setSize(600, 300);
+		base.setSize(600, 300);
+		base.setLayout(cards);
 		menu.setLayout(new GridLayout(4, 1));
-		menu.setLocation((int)screenSize.getWidth()/2 - menu.getWidth()/2, (int)screenSize.getHeight()/2 - menu.getHeight()/2);
-		menu.setResizable(false);
+		base.setLocation((int)screenSize.getWidth()/2 - base.getWidth()/2, (int)screenSize.getHeight()/2 - base.getHeight()/2);
+		base.setResizable(false);
 		buttons.setLayout(new FlowLayout());
 		title.setHorizontalAlignment(0);
 		creators.setHorizontalAlignment(0);
@@ -70,10 +75,14 @@ public class Menu {
 		menu.add(title);
 		menu.add(buttons);
 		menu.add(buttonsSize);
+		
+		base.add(menu, "menue");
+		base.add(bomberman, "bomberman");
 		menu.add(creators);
 		
 		//menu.pack();
-		menu.setVisible(true);
+		base.setVisible(true);
+		cards.show(base.getContentPane(), "menue");
 		
 		/*************************************
 		 * Actions taken when Button clicked *
@@ -82,7 +91,7 @@ public class Menu {
 		//Singleplayer
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-			//	new Bomberman(menu, x, y);
+				cards.show(base.getContentPane(), "bomberman");
 			}
 		};
 		
