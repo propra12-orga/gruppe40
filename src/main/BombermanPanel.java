@@ -3,8 +3,6 @@ package main;
 import java.awt.Color;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -14,7 +12,7 @@ import draw.GamePanel;
 import map.Map;
 
 @SuppressWarnings("serial")
-public class BombermanPanel extends JPanel implements KeyListener, ComponentListener {
+public class BombermanPanel extends JPanel implements ComponentListener {
 
     Map                  map       = new Map(11, 11, true);
     LinkedList<Drawable> drawables = new LinkedList<Drawable>();
@@ -58,24 +56,6 @@ public class BombermanPanel extends JPanel implements KeyListener, ComponentList
 
     @Override
     public void componentMoved(ComponentEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
 
     @Override
     public void componentHidden(ComponentEvent arg0) {}
