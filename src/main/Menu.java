@@ -64,7 +64,7 @@ public class Menu {
 		//Singleplayer
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new StartBomberman();
+				new Bomberman(menu);
 			}
 		};
 		
