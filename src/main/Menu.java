@@ -91,6 +91,7 @@ public class Menu {
 		//Singleplayer
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
+			    base.setResizable(true);
 				cards.show(base.getContentPane(), "bomberman");
 			}
 		};

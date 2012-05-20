@@ -18,12 +18,10 @@ public class ImageLoader {
     									 	"Explosion.gif"};				//[6]
     
     private static Image  images[]     = new Image[imagePaths.length];
-
-    /**
-     * Loads images (Duh!)
-     * @param classLoader
-     */
-    public static void loadImages() {
+    
+    static {
+        // Loads images
+        // This will be executed before first access to this class
         ClassLoader classLoader = ImageLoader.class.getClassLoader();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         for (int i = 0; i < imagePaths.length; i++) {
