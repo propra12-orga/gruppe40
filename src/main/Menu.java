@@ -22,7 +22,7 @@ public class Menu {
 		final CardLayout cards = new CardLayout();
 		
 		final JFrame base = new JFrame("Willkommen in der Bomberman-Beta");
-		JPanel bomberman = new JPanel();
+		JPanel bomberman = new BombermanPanel();
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
