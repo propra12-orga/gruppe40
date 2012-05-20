@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 import java.io.*;
 import java.awt.Font;

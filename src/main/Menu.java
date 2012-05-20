@@ -10,13 +10,18 @@ import java.awt.Dimension;
 
 public class Menu {
 	
+	static int x, y;
+	
 	public static void main(String[] args) {
 		/******************************************************
 		 * Initialize frame, labels, buttons and set settings *
 		 ******************************************************/
 		
+		
+		
 		JFrame menu = new JFrame("Willkommen in der Bomberman-Beta");
 		JPanel buttons = new JPanel();
+		JPanel buttonsSize = new JPanel();
 		JLabel title = new JLabel("Bomberman");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
@@ -27,11 +32,23 @@ public class Menu {
 		final JButton buttonMP = new JButton("Starte Multiplayer");
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		
+		JRadioButton small = new JRadioButton("800 x 600", true);
+		JRadioButton medium = new JRadioButton("1024 x 768");
+		JRadioButton large = new JRadioButton("1280 x 1024");
+		
+		ButtonGroup gameSizes = new ButtonGroup();
+		gameSizes.add(small);
+		buttonsSize.add(small);
+		gameSizes.add(medium);
+		buttonsSize.add(medium);
+		gameSizes.add(large);
+		buttonsSize.add(large);
+		
 		menu.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		menu.addWindowListener(new MenuListener());
 		//setting up layout
 		menu.setSize(600, 300);
-		menu.setLayout(new GridLayout(3, 1));
+		menu.setLayout(new GridLayout(4, 1));
 		menu.setLocation((int)screenSize.getWidth()/2 - menu.getWidth()/2, (int)screenSize.getHeight()/2 - menu.getHeight()/2);
 		menu.setResizable(false);
 		buttons.setLayout(new FlowLayout());
@@ -52,6 +69,7 @@ public class Menu {
 		//adding everything to Frame
 		menu.add(title);
 		menu.add(buttons);
+		menu.add(buttonsSize);
 		menu.add(creators);
 		
 		//menu.pack();
@@ -64,7 +82,7 @@ public class Menu {
 		//Singleplayer
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new Bomberman(menu);
+			//	new Bomberman(menu, x, y);
 			}
 		};
 		
@@ -82,10 +100,35 @@ public class Menu {
 			}
 		};
 		
+		ActionListener butSmall = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				x = 800;
+				y = 600;
+			}
+		};
+		
+		ActionListener butMedium = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				x = 1024;
+				y = 768;
+			}
+		};
+		
+		ActionListener butLarge = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				x = 1280;
+				y = 1024;
+			}
+		};
+		
 		//adding listeners
 		buttonSP.addActionListener(sp);
 		buttonMP.addActionListener(mp);
 		buttonTutorial.addActionListener(tut);
+		small.addActionListener(butSmall);
+		medium.addActionListener(butMedium);
+		large.addActionListener(butLarge);
+		
 	}
 	
 }
