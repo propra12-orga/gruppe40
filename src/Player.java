@@ -1,11 +1,4 @@
-package game;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.Timer;
-
-import map.Map;
 
 public class Player implements ActionListener{
 
@@ -25,6 +18,7 @@ public class Player implements ActionListener{
 		this.direction = 0;
 		this.speed = speed;
 		this.timer = new Timer(this.speed,this);
+		
 	}
 	
 	public int getSpeed(){
@@ -56,7 +50,7 @@ public class Player implements ActionListener{
 		this.y = y;
 	}
 	
-	public void startMove(int direction){
+	public boolean startMove(int direction){
 	    this.direction = direction;
 		this.move(direction);
 		this.timer.start();
@@ -81,25 +75,13 @@ public class Player implements ActionListener{
 					break;
 			case 4: x = this.x -1; //4:left
 					y = this.y;
-					break;
-			default: x = 0; y = 0; break;
+					break;		
 		}
 		return this.move(x,y);
-		
 	}
 	
-	public void move(int dx, int dy) {
-	    int x2 = x + dx;
-	    int y2 = y + dy;
-        if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
-            //TODO set facing direction
-            this.x = x2;
-            this.y = y2;
-        }
-    }
-	
 	public boolean move(int x, int y){// to teleport player
-		if (this.map.contains(x,y)){
+	if (this.map.contains(x,y)){
 			if (!this.map.isBlocked(x,y)){
 				this.x = x;
 				this.y = y;
@@ -120,9 +102,7 @@ public class Player implements ActionListener{
 		//this.mybomb = null; //bomb doesn't exist any longer
 	}
 	
-	@Override
 	public void actionPerformed(ActionEvent e){
-	    /*
 		switch (this.direction){
 		case 1: this.moveUp();
 				break;
@@ -133,8 +113,9 @@ public class Player implements ActionListener{
 		case 4: this.moveLeft();
 				break;
 		}
-		*/
 	}
+	
+
 	
 
 }

@@ -59,6 +59,8 @@ z.B. sowas in der Richtung von
 - (double/int?) player.getMoveSpeed()
 - (double/int?) bomb.getTime[UntilExplosion]()
 
+++++++ gemacht ++++++++
+
 Ausserdem scheint im pdf zum dritten Milestone Netzwerk verpflichtend zu werden, was viele Probleme aufwirft
 - Server/Client/P2P?
 - Wie synchronisieren (Timer problematisch)?
@@ -67,7 +69,11 @@ Fragen und Anmerkungen:
 - Um irgendwas in verschiedene Richtungen zu tun kann man zwei Arrays verwenden (siehe z.B. Pathfinding/AI code)
 - final static Variablen fuer alle willkuerlich gewaehlten Werte (Richtungen, strength)?
 - Wozu ist Item?
++++++++ falls es neben Bombe noch weitere Items später gibt, würde ich dann entsprechend gucken, ob das noch Sinn ergibt +++++
+
 - Hat Bomberman nur eine Bombe? Und wenn ja, warum hat der die? Der wirft die doch Weg
++++++++ er soll sie wegwerfen, ich weiß leider nicht, wie das geht ++++++
+
 - Fields haben immer noch Namen
 - Wo soll der Einstiegspunkt sein? (public static void main)
 - Wer fuegt alles zusammen?

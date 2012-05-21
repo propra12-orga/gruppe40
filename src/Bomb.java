@@ -1,11 +1,4 @@
-package game;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.Timer;
-
-import map.Map;
 
 public class Bomb extends Item implements ActionListener{
 	
@@ -19,12 +12,11 @@ public class Bomb extends Item implements ActionListener{
 	private long startTime;
 	
 	public Bomb(){
-        super(true);
 		this.radius = 1;
+		super(true);
 		this.strength = 1;
 		this.delay = 300; //milliseconds
 		this.startTime = -1;
-		
 	}
 	
 	public void setXY(int x, int y, Map map){
@@ -32,6 +24,15 @@ public class Bomb extends Item implements ActionListener{
 		this.y = y;
 		this.map = map;
 	}
+	
+	public int getX(){
+		return this.x;
+	}
+	
+	public int getY(){
+		return this.y;
+	}
+	
 	
 	public void explode(){
 		boolean proceedLeft = true;
@@ -70,25 +71,13 @@ public class Bomb extends Item implements ActionListener{
 		this.explode();
 	}
 	
+	public void actionPerformed(ActionEvent e){
+		this.explode();
+	}
+	
 	public long getTimeUntilExplosion(){
 		return (long)this.delay - (System.currentTimeMillis() - this.startTime);
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e){
-		this.explode();
-	}
-
-    public int getX() {
-        return x;
-    }
-    
-    public int getY() {
-        return y;
-    }
-    
-    public int getRadius() {
-        return radius;
-    }
 	
 }
