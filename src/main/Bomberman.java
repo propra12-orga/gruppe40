@@ -72,10 +72,10 @@ public class Bomberman {
 
         KeyListener keyListener = new KeyListener() {
 
-            // TODO decide how to design server/client stuff
-            // there shouldn't be a direct connection between classes here
             @Override
             public void keyPressed(KeyEvent e) {
+                // TODO decide how to design server/client stuff
+                // there shouldn't be a direct connection between classes here
                 switch (e.getKeyChar()) {
                     case 'E':
                     case 'e':
