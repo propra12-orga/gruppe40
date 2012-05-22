@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 import map.Map;
 
-public class Bomb extends Item implements ActionListener{
+public class Bomb extends Drawable implements ActionListener{
 	
 	private int radius;
 	private int x;

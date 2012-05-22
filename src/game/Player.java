@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 import map.Map;
 
-public class Player implements ActionListener{
+public class Player implements ActionListener extends Drawable{
 
 	private int x; //player's x-coordinate
 	private int y;// player's y-coordinate
@@ -17,9 +17,8 @@ public class Player implements ActionListener{
 	private Timer timer;
 	private int speed;
 	
-	public Player(int x, int y, int speed, Map map){
-		this.x = x;
-		this.y = y;
+	public Player(int x, int y, int speed, Map map, Image img){
+		super(img, x, y);
 		this.map = map;
 		this.mybomb = new Bomb();
 		this.direction = 0;
