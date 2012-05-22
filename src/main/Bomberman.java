@@ -25,7 +25,7 @@ public class Bomberman {
     Map                  map       = new Map(11, 11, true);
     LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     GamePanel            gamePanel = new GamePanel(map, drawables);
-    Player               player1   = new Player(1, 1, 1, map, ImageLoader.getPlayerImage());
+    Player               player1   = new Player(1, 1, 2, map, ImageLoader.getPlayerImage());
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
         this.menuFrame = menuFrame;
@@ -36,6 +36,7 @@ public class Bomberman {
         if (fullscreen) {
             frame.setUndecorated(true);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setAlwaysOnTop(true);
         }
 
         // Remove layout so things can be placed manually
@@ -71,6 +72,8 @@ public class Bomberman {
 
         KeyListener keyListener = new KeyListener() {
 
+            // TODO decide how to design server/client stuff
+            // there shouldn't be a direct connection between classes here
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyChar()) {
