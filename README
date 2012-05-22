@@ -1,0 +1,123 @@
+             \|/
+            .-*-         
+           / /|\         
+          _L_            
+        ,"   ".          
+    (\ /  O O  \ /)      
+     \|    _    |/       
+       \  (_)  /         
+       _/.___,\_         
+      (_/     \_) 
+
+
+****************
+Weitere Fragen
+****************
+Ich muss die Bombe und die Spielfigur noch verschwinden lassen (Objekte zerstören).
+Bombe: Bombe zerstören erst nachdem Timer abgelaufen ist, wie lösche ich die Referenz (=null geht hier nicht)?
+Figuer: Wie kann man das bei einem Multiplayer-Spiel umsetzen?
+
+Was muss bezüglich Bombe und Figur bis zur ersten Abgabe noch getan werden?
+
+Weitere Ziele: Laufende Bewegung fließend machen
+Superbombe einführen
+Geschwindigkeit der Spielfigur durch Item ändern
+
+	  
+******
+NEWS
+******
+Ausgang ist ja gefordert. Also Singleplayer/Multiplayer:
+SP: Alle Gegner + Mauern zum Ausgang hin frei machen und dann "rausgehen"
+MP: Ausgang = Gegner erledigt
+
+evtl. schon mal beruecksichtigen
+
+******
+Soll der Ausgang zufällig plaziert werden, oder eine feste Position haben?
+Soll es verschiedene Mauertypen mit zB. verschienen Stärken geben?
+Soll es verschiedene Felder geben, die zB. die Geschwindigkeit des Spielers 
+beeinflussen?
+******
+
+- Ich denke der Ausgang ist fix. Nen Ausgang gibts ja nur im Singleplayer und ich denke, dass wir da am besten die Level vorgeben (bis auf Zufallsmauern).
+- moeglich, laesst sich ja aber im Nachhinein leicht realisieren.
+- dafuer gibts im Original doch diese Schuhpowerups. Sollte evtl. eher in die Kategorie. Dafuer muessten wir aber auch fluessige Bewegung implementieren (sollten wir eh) und nicht 1 Klick = 1 Feld. Dann kann man bspw. pro Powerup = 10% mehr Geschw. (o.Ae)
+
+/************************************************
+Fuer die AI waeren folgende Funktionen hilfreich:
+- player.getY();
+- player.getY();
+- bomb.getX();
+- bomb.getY();
+(koennte ich auch gerne selber hinzufuegen, aber lieber vorher fragen)
+- player.move(int, int)
+(die anderen Funktionen tun es auch, aber dies waer flexibler [Teleporter etc.])
+
+und irgendwas um festzustellen ob man vor der naechsten Explosion noch um die Ecke laufen kann
+z.B. sowas in der Richtung von
+- (double/int?) player.getMoveSpeed()
+- (double/int?) bomb.getTime[UntilExplosion]()
+
+++++++ gemacht ++++++++
+
+Ausserdem scheint im pdf zum dritten Milestone Netzwerk verpflichtend zu werden, was viele Probleme aufwirft
+- Server/Client/P2P?
+- Wie synchronisieren (Timer problematisch)?
+
+Fragen und Anmerkungen:
+- Um irgendwas in verschiedene Richtungen zu tun kann man zwei Arrays verwenden (siehe z.B. Pathfinding/AI code)
+- final static Variablen fuer alle willkuerlich gewaehlten Werte (Richtungen, strength)?
+- Wozu ist Item?
++++++++ falls es neben Bombe noch weitere Items später gibt, würde ich dann entsprechend gucken, ob das noch Sinn ergibt +++++
+
+- Hat Bomberman nur eine Bombe? Und wenn ja, warum hat der die? Der wirft die doch Weg
++++++++ er soll sie wegwerfen, ich weiß leider nicht, wie das geht ++++++
+
+- Fields haben immer noch Namen
+- Wo soll der Einstiegspunkt sein? (public static void main)
+- Wer fuegt alles zusammen?
+
+************************************************/
+
+Zu Field.java: die Namen spielen zurzeit beim Exit eine Rolle, damit der hinter einer normalen Wand versteckt ist.
+Aufgabenverteilung:
+
+Philipp
+----------
+Grafiken/Oberflaeche
+
+
+Dominik
+----------
+Spielfeld
+- Groesse
+-verschiedene Felder?
+- feste Mauern
+- zerstoerbare Mauern (random)
+--verschiedene Mauern?
+- AUSGANG!
+--Zufällig oder fest plaziert?
+
+
+Thomas
+----------
+AI
+
+
+Lisa
+----------
+"drawable"
+- Figur
+-- move/Bombe legen
+
+- Bombe
+-- Radius
+
+
+Sebastian
+----------
+Menue
+- Neustart
+- Stop
+- Beenden
