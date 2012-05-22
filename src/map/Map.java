@@ -56,9 +56,6 @@ public class Map {
                 m[x][y] = new IndestructibleWall();
             }
         }
-
-        /* spawns exit at (x,y) just for testing */
-        setExit(4, 5);
     }
 
     /**
