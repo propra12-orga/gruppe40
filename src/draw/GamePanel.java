@@ -19,17 +19,23 @@ public class GamePanel extends JPanel {
         this.map = map;
         this.drawables = drawables;
     }
-    
+
     private void drawTile(Graphics g, Image img, int x, int y, double width, double height) {
         // Dirty +1 hack to stop flickering
-        g.drawImage(img, (int)(x*width), (int)(y*height), (int)width+1, (int)height+1, this);
+        g.drawImage(img, (int) (x * width), (int) (y * height), (int) width + 1, (int) height + 1, this);
     }
 
     public void paintComponent(Graphics g0) {
         Graphics2D g = (Graphics2D) g0;
 
-        double tileWidth = this.getWidth() / (double) map.getWidth();
-        double tileHeight = this.getHeight() / (double) map.getHeight();
+        int width = this.getWidth();
+        int height = this.getHeight();
+        // Clear background (just in case)
+        g.setColor(this.getBackground());
+        g.fillRect(0, 0, width, height);
+
+        double tileWidth = width / (double) map.getWidth();
+        double tileHeight = height / (double) map.getHeight();
 
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {

@@ -4,10 +4,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 
+
 public class ImageLoader {
 
     /**
-     * Paths for images (make sure that the indices of all getImage-methods match their desired path, that means, images should be stored under the bin-folder)
+     * Paths for images.
+     * NOTE THAT PATHS ARE CASE SENSITIVE!
+     * Make sure that the indices of all getImage-methods match their desired path.
      */
     private static String imagePaths[] = { 	"NormalWall.jpg",  				//[0] 
     									 	"IndestructibleWall.jpg", 		//[1] 
