@@ -1,7 +1,5 @@
 *.classpath
 *.class
-*bin
-*/bin
-*/bin/
+*bin/
 *.settings
 *.git
