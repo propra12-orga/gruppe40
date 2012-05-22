@@ -1,13 +1,16 @@
 package game;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import draw.Drawable;
+
 import map.Map;
 
-public class Player implements ActionListener extends Drawable{
+public class Player extends Drawable implements ActionListener {
 
 	private int x; //player's x-coordinate
 	private int y;// player's y-coordinate
@@ -55,9 +58,21 @@ public class Player implements ActionListener extends Drawable{
 		this.y = y;
 	}
 	
+	// Fixed move, boolean move() didnt work this way - S.B.
 	public void startMove(int direction){
 	    this.direction = direction;
-		this.move(direction);
+		switch(direction){ 
+			case 1: move(this.x, this.y + 1); //1:up
+					break;
+			case 2: move(this.x + 1, this.y); //2:right
+					break;
+			case 3: move(this.x, this.y - 1); //3:down
+					break;
+			case 4: move(this.x - 1, this.y); //4:left
+					break;
+			default: move(this.x, this.y); 
+			        break;
+		}
 		this.timer.start();
 	}
 	
@@ -66,7 +81,8 @@ public class Player implements ActionListener extends Drawable{
 		this.timer.stop();
 	}
 	
-	public boolean move(int direction){ 
+/* shouldn't be needed
+ 	public boolean move(int direction){ 
 		int x,y;
 		switch(direction){ //1:up
 			case 1: x = this.x;
@@ -86,6 +102,7 @@ public class Player implements ActionListener extends Drawable{
 		return this.move(x,y);
 		
 	}
+*/
 	
 	public void move(int dx, int dy) {
 	    int x2 = x + dx;
@@ -97,7 +114,7 @@ public class Player implements ActionListener extends Drawable{
         }
     }
 	
-	public boolean move(int x, int y){// to teleport player
+	public boolean teleport(int x, int y){// to teleport player
 		if (this.map.contains(x,y)){
 			if (!this.map.isBlocked(x,y)){
 				this.x = x;

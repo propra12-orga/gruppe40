@@ -1,0 +1,8 @@
+Steuerung:
+
+? - nach links gehen
+? - nach rechts gehen
+? - nach oben
+? - nach unten
+
+? - Bombe platzieren
