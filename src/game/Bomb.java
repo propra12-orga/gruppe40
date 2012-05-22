@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import draw.Drawable;
+
+import map.ImageLoader;
 import map.Map;
 
 public class Bomb extends Drawable implements ActionListener{
@@ -19,7 +22,7 @@ public class Bomb extends Drawable implements ActionListener{
 	private long startTime;
 	
 	public Bomb(){
-        super(true);
+        super(ImageLoader.getBombImage(), x, y);
 		this.radius = 1;
 		this.strength = 1;
 		this.delay = 300; //milliseconds
