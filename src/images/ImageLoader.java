@@ -1,4 +1,4 @@
-package map;
+package images;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -25,7 +25,7 @@ public class ImageLoader {
         ClassLoader classLoader = ImageLoader.class.getClassLoader();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         for (int i = 0; i < imagePaths.length; i++) {
-            URL url = classLoader.getResource(imagePaths[i]);
+            URL url = classLoader.getResource("images/" + imagePaths[i]);
             if (url == null) {
                 System.err.println("failed to load image: " + imagePaths[i]);
             } else {

@@ -12,8 +12,9 @@ import map.Map;
 
 public class Player extends Drawable implements ActionListener {
 
-	private int x; //player's x-coordinate
-	private int y;// player's y-coordinate
+    //inherits x/y from Drawable
+	//private int x; //player's x-coordinate
+	//private int y;// player's y-coordinate
 	private Map map; // player knows which field he is playing on
 	private Bomb mybomb;
 	private int direction; // players moving direction 0:no movement, 1:up, 2:right, 3:down, 4:left
@@ -23,7 +24,7 @@ public class Player extends Drawable implements ActionListener {
 	public Player(int x, int y, int speed, Map map, Image img){
 		super(img, x, y);
 		this.map = map;
-		this.mybomb = new Bomb();
+		this.mybomb = new Bomb(-1, -1);
 		this.direction = 0;
 		this.speed = speed;
 		this.timer = new Timer(this.speed,this);

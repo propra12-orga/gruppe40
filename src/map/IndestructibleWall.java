@@ -1,5 +1,7 @@
 package map;
 
+import images.ImageLoader;
+
 public class IndestructibleWall extends Field {
 
     public IndestructibleWall() {

@@ -1,5 +1,7 @@
 package game;
 
+import images.ImageLoader;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,21 +9,21 @@ import javax.swing.Timer;
 
 import draw.Drawable;
 
-import map.ImageLoader;
 import map.Map;
 
 public class Bomb extends Drawable implements ActionListener{
 	
 	private int radius;
-	private int x;
-	private int y;
+    // inherits x/y from drawable
+	//private int x;
+	//private int y;
 	private Map map;
 	private int strength;
 	private int delay;
 	private Timer timer;
 	private long startTime;
 	
-	public Bomb(){
+	public Bomb(int x, int y){
         super(ImageLoader.getBombImage(), x, y);
 		this.radius = 1;
 		this.strength = 1;

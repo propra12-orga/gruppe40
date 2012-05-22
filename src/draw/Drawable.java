@@ -6,8 +6,8 @@ import java.awt.Image;
  * Every tile-sized object which is not the map should extend this to be drawn
  */
 public abstract class Drawable {
-    private int   x   = 0;
-    private int   y   = 0;
+    protected int   x   = 0;
+    protected int   y   = 0;
 
     private Image img = null;
 

@@ -11,7 +11,9 @@ import java.awt.Dimension;
 
 public class Menu {
 	
-	static int x, y;
+	static int x = 800, y = 600;
+	// TODO button to (de)select fullscreen
+	static boolean fullscreen = true;
 	
 	public static void main(String[] args) {
 		
@@ -22,7 +24,6 @@ public class Menu {
 		final CardLayout cards = new CardLayout();
 		
 		final JFrame base = new JFrame("Willkommen in der Bomberman-Beta");
-		JPanel bomberman = new BombermanPanel();
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
@@ -77,7 +78,6 @@ public class Menu {
 		menu.add(buttonsSize);
 		
 		base.add(menu, "menue");
-		base.add(bomberman, "bomberman");
 		menu.add(creators);
 		
 		//menu.pack();
@@ -91,8 +91,8 @@ public class Menu {
 		//Singleplayer
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-			    base.setResizable(true);
-				cards.show(base.getContentPane(), "bomberman");
+			    base.setVisible(false);
+			    new Bomberman(base, x, y, fullscreen);
 			}
 		};
 		

@@ -1,5 +1,7 @@
 package map;
 
+import images.ImageLoader;
+
 public class Map {
 
     private int width, height;
