@@ -50,7 +50,9 @@ public class GamePanel extends JPanel {
                 if (drawable.isExpired()) {
                     it.remove();
                 }else {
-                    drawTile(g, drawable.getImage(), drawable.getX(), drawable.getY(), tileWidth, tileHeight);
+                    if (drawable.isVisible()) {
+                        drawTile(g, drawable.getImage(), drawable.getX(), drawable.getY(), tileWidth, tileHeight);
+                    }
                 }
             }
         }
