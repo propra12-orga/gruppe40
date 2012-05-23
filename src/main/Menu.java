@@ -1,7 +1,5 @@
 package main;
 
-import images.ImageLoader;
-
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
