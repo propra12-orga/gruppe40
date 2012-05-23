@@ -25,8 +25,8 @@ public class Player extends Drawable implements ActionListener {
     // Became obsolete?
     private Bomb bomb;
 	
-	public Player(int x, int y, int speed, Map map, Image img, LinkedList<Drawable> drawables){
-		super(img, x, y);
+	public Player(int x, int y, int speed, Map map, LinkedList<Drawable> drawables){
+		super(x, y);
 		this.map = map;
 		this.bomb = new Bomb(-1, -1, map);
 		this.direction = 0;

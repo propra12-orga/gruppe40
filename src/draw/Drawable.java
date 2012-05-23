@@ -1,5 +1,7 @@
 package draw;
 
+import images.ImageLoader;
+
 import java.awt.Image;
 
 /**
@@ -12,10 +14,10 @@ public abstract class Drawable {
 
     private Image     img     = null;
 
-    public Drawable(Image img, int x, int y) {
+    public Drawable(int x, int y) {
         this.x = x;
         this.y = y;
-        this.img = img;
+        this.img = ImageLoader.getImage(this);
     }
 
     public void setXY(int x, int y) {

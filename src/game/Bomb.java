@@ -1,7 +1,5 @@
 package game;
 
-import images.ImageLoader;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +22,7 @@ public class Bomb extends Drawable implements ActionListener {
 	private long startTime;
 	
 	public Bomb(int x, int y, Map map){
-        super(ImageLoader.getBombImage(), x, y);
+        super(x, y);
 		this.radius = 1;
 		this.strength = 1;
 		this.delay = 300; //300 milliseconds is too short

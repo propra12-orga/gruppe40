@@ -1,7 +1,5 @@
 package map;
 
-import images.ImageLoader;
-
 public class Map {
 
     private int width, height;
@@ -25,14 +23,14 @@ public class Map {
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
                 if (Math.random() < 0.5)
-                    m[x][y] = new DestructibleWall(1, ImageLoader.getNormalWallImage());
+                    m[x][y] = new DestructibleWall(1);
             }
         }
         DestructibleWall lastWall = null;
         for (int y = 3; y < height - 3; y++) {
             for (int x = 1; x < (width - 1); x++) {
                 if (Math.random() < 0.9) {
-                    lastWall = new DestructibleWall(1, ImageLoader.getNormalWallImage());
+                    lastWall = new DestructibleWall(1);
                     m[x][y] = lastWall;
                 }
             }
@@ -141,7 +139,7 @@ public class Map {
      *            - vertical axis
      */
     public void setExit(int x, int y) {
-        DestructibleWall exitWall = new DestructibleWall(1, ImageLoader.getNormalWallImage());
+        DestructibleWall exitWall = new DestructibleWall(1);
         exitWall.setExit(true);
     }
 }

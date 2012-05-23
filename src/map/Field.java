@@ -1,5 +1,7 @@
 package map;
 
+import images.ImageLoader;
+
 import java.awt.Image;
 
 public abstract class Field {
@@ -7,9 +9,9 @@ public abstract class Field {
     private int strength;
     private Image img;
 
-    public Field(int strength, Image img) {
+    public Field(int strength) {
         this.strength = strength;
-        this.img = img;
+        this.img = ImageLoader.getImage(this);
     }
 
     /**

@@ -1,7 +1,5 @@
 package main;
 
-import images.ImageLoader;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ComponentEvent;
@@ -28,7 +26,7 @@ public class Bomberman {
     Map                  map       = new Map(11, 11);
     LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     GamePanel            gamePanel = new GamePanel(map, drawables);
-    Player               player1   = new Player(1, 1, 2, map, ImageLoader.getPlayerImage(), drawables);
+    Player               player1   = new Player(1, 1, 2, map, drawables);
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
         this.menuFrame = menuFrame;

@@ -1,7 +1,5 @@
 package map;
 
-import java.awt.Image;
-
 public class DestructibleWall extends Field {
     
     private boolean exit = false;
@@ -14,7 +12,7 @@ public class DestructibleWall extends Field {
         return exit;
     }
     
-    public DestructibleWall(int strength, Image img) {
-        super(strength, img);
+    public DestructibleWall(int strength) {
+        super(strength);
     }
 }
