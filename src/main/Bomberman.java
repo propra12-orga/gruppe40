@@ -117,6 +117,8 @@ public class Bomberman {
                     JOptionPane.showMessageDialog(frame, "You won!");
                     exit();
                 }
+                // Force repaint to make sure everything is drawn even if there is no animated gif
+                frame.repaint();
             }
 
             @Override
@@ -135,7 +137,7 @@ public class Bomberman {
         menuFrame.setVisible(true);
         frame.dispose();
     }
-    
+
     /**
      * Resizes the game panel so it stays square
      */
