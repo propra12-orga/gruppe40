@@ -12,12 +12,12 @@ public abstract class Drawable {
     protected int     y       = 0;
     protected boolean visible = true;
 
-    private Image     img     = null;
+    protected Image   image   = null;
 
     public Drawable(int x, int y) {
         this.x = x;
         this.y = y;
-        this.img = ImageLoader.getImage(this);
+        this.image = ImageLoader.getImage(this);
     }
 
     public void setXY(int x, int y) {
@@ -34,7 +34,7 @@ public abstract class Drawable {
     }
 
     public Image getImage() {
-        return img;
+        return image;
     }
 
     public boolean isExpired() {

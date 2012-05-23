@@ -27,6 +27,10 @@ public class ImageLoader {
                 System.err.println("failed to locate image: " + path);
             } else {
                 Image image = toolkit.createImage(url);
+                String ext = path.substring(path.lastIndexOf('.')+1, path.length());
+                if (!ext.equals("gif")) {
+                    image = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                }
                 if (image == null) {
                     System.err.println("failed to create image: " + path);
                 } else {

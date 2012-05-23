@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -28,7 +27,7 @@ public class Player extends Drawable implements ActionListener {
 	public Player(int x, int y, int speed, Map map, LinkedList<Drawable> drawables){
 		super(x, y);
 		this.map = map;
-		this.bomb = new Bomb(-1, -1, map);
+		this.bomb = new Bomb(-1, -1, map, drawables);
 		this.direction = 0;
 		this.speed = speed;
 		this.timer = new Timer(this.speed,this);
@@ -136,7 +135,7 @@ public class Player extends Drawable implements ActionListener {
 	}
 	
 	public void putBomb(){
-	    Bomb bomb = new Bomb(x, y, map);
+	    Bomb bomb = new Bomb(x, y, map, drawables);
 	    bomb.startTimer();
 	    synchronized (drawables) {
 	        drawables.add(bomb);
