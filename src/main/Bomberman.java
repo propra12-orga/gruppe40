@@ -11,9 +11,12 @@ import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import draw.Drawable;
 import draw.GamePanel;
+import map.Exit;
+import map.Field;
 import map.Map;
 import game.Player;
 
@@ -22,7 +25,7 @@ public class Bomberman {
     JFrame               menuFrame;
     JFrame               frame     = new JFrame();
     Container            pane      = frame.getContentPane();
-    Map                  map       = new Map(11, 11, true);
+    Map                  map       = new Map(11, 11);
     LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     GamePanel            gamePanel = new GamePanel(map, drawables);
     Player               player1   = new Player(1, 1, 2, map, ImageLoader.getPlayerImage(), drawables);
@@ -109,7 +112,13 @@ public class Bomberman {
                     default:
                     break;
                 }
-
+                int x = player1.getX();
+                int y = player1.getY();
+                Field field = map.getField(x, y);
+                if (field instanceof Exit) {
+                    JOptionPane.showMessageDialog(frame, "You won!");
+                    exit();
+                }
             }
 
             @Override

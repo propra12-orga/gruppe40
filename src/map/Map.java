@@ -5,14 +5,12 @@ import images.ImageLoader;
 public class Map {
 
     private int width, height;
-    boolean exit;
 
     private Field[][] m;
 
-    public Map(int width, int height, boolean exit) {
+    public Map(int width, int height) {
         this.width = width;
         this.height = height;
-        this.exit = exit;
         m = new Field[width][height]; /* sets mapsize */
 
         /* sets normal Fields everywhere */
@@ -27,17 +25,19 @@ public class Map {
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
                 if (Math.random() < 0.5)
-                    m[x][y] = new DestructibleWall(1, "NormalWall",
-                            ImageLoader.getNormalWallImage());
+                    m[x][y] = new DestructibleWall(1, ImageLoader.getNormalWallImage());
             }
         }
+        DestructibleWall lastWall = null;
         for (int y = 3; y < height - 3; y++) {
             for (int x = 1; x < (width - 1); x++) {
-                if (Math.random() < 0.9)
-                    m[x][y] = new DestructibleWall(1, "NormalWall",
-                            ImageLoader.getNormalWallImage());
+                if (Math.random() < 0.9) {
+                    lastWall = new DestructibleWall(1, ImageLoader.getNormalWallImage());
+                    m[x][y] = lastWall;
+                }
             }
         }
+        if (lastWall != null) lastWall.setExit(true);
 
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
@@ -118,16 +118,17 @@ public class Map {
      *            - damage suffered
      */
     public void destroy(int x, int y, int damage) {
-
-        if (m[x][y] instanceof DestructibleWall) { /* NormalWall etc. */
-            if (m[x][y].getName() == "ExitWall") {
+        Field field = m[x][y];
+        if (field instanceof DestructibleWall) { /* NormalWall etc. */
+            DestructibleWall wall = (DestructibleWall)field;
+            if (wall.isExit()) {
                 m[x][y] = new Exit();
-            }
-
-            else if (m[x][y].getStrength() - damage <= 0) {
-                m[x][y] = new EmptyField();
-            } else {
-                m[x][y].setStrength(m[x][y].getStrength() - damage);
+            }else{
+                if (m[x][y].getStrength() - damage <= 0) {
+                    m[x][y] = new EmptyField();
+                } else {
+                    m[x][y].setStrength(m[x][y].getStrength() - damage);
+                }
             }
         }
 
@@ -140,8 +141,7 @@ public class Map {
      *            - vertical axis
      */
     public void setExit(int x, int y) {
-        if (exit)
-            m[x][y] = new DestructibleWall(1, "ExtWall",
-                    ImageLoader.getNormalWallImage());
+        DestructibleWall exitWall = new DestructibleWall(1, ImageLoader.getNormalWallImage());
+        exitWall.setExit(true);
     }
 }

@@ -5,12 +5,10 @@ import java.awt.Image;
 public abstract class Field {
 
     private int strength;
-    private String name;
     private Image img;
 
-    public Field(int strength, String name, Image img) {
+    public Field(int strength, Image img) {
         this.strength = strength;
-        this.name = name;
         this.img = img;
     }
 
@@ -19,13 +17,6 @@ public abstract class Field {
      */
     public int getStrength() {
         return strength;
-    }
-
-    /**
-     * @return name of the field
-     */
-    public String getName() {
-        return name;
     }
 
     /**
