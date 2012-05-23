@@ -63,7 +63,6 @@ public class ImageLoader {
      * @return an image
      */
     public static Image getImage(String name) {
-        System.out.println("trying to load " + name + " which is: " + images.get(name));
         return images.get(name);
     }
 /*
