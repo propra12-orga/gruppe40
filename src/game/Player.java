@@ -3,6 +3,7 @@ package game;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.Timer;
 
@@ -16,18 +17,22 @@ public class Player extends Drawable implements ActionListener {
 	//private int x; //player's x-coordinate
 	//private int y;// player's y-coordinate
 	private Map map; // player knows which field he is playing on
-	private Bomb mybomb;
 	private int direction; // players moving direction 0:no movement, 1:up, 2:right, 3:down, 4:left
 	private Timer timer;
 	private int speed;
+	private LinkedList<Drawable> drawables;
 	
-	public Player(int x, int y, int speed, Map map, Image img){
+    // Became obsolete?
+    private Bomb bomb;
+	
+	public Player(int x, int y, int speed, Map map, Image img, LinkedList<Drawable> drawables){
 		super(img, x, y);
 		this.map = map;
-		this.mybomb = new Bomb(-1, -1);
+		this.bomb = new Bomb(-1, -1, map);
 		this.direction = 0;
 		this.speed = speed;
 		this.timer = new Timer(this.speed,this);
+		this.drawables = drawables;
 	}
 	
 	public int getSpeed(){
@@ -127,14 +132,15 @@ public class Player extends Drawable implements ActionListener {
 	}
 	
 	public boolean hasBomb(){
-		return (this.mybomb instanceof Bomb); //has to be changed, when bomb explodes, array, when more bombs are available
+		return (this.bomb instanceof Bomb); //has to be changed, when bomb explodes, array, when more bombs are available
 	}
 	
-	public void putBomb(){//puts bomb on his position
-		this.mybomb.setXY(this.x,this.y,this.map);
-		//TODO: send bomb to field
-		this.mybomb.startTimer();
-		//this.mybomb = null; //bomb doesn't exist any longer
+	public void putBomb(){
+	    Bomb bomb = new Bomb(x, y, map);
+	    bomb.startTimer();
+	    synchronized (drawables) {
+	        drawables.add(bomb);
+	    }
 	}
 	
 	@Override

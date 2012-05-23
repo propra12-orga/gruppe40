@@ -25,7 +25,7 @@ public class Bomberman {
     Map                  map       = new Map(11, 11, true);
     LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     GamePanel            gamePanel = new GamePanel(map, drawables);
-    Player               player1   = new Player(1, 1, 2, map, ImageLoader.getPlayerImage());
+    Player               player1   = new Player(1, 1, 2, map, ImageLoader.getPlayerImage(), drawables);
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
         this.menuFrame = menuFrame;

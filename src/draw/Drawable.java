@@ -33,6 +33,10 @@ public abstract class Drawable {
     public Image getImage() {
         return img;
     }
+    
+    public boolean isExpired() {
+        return false;
+    }
 
     public int getX() {
         return x;

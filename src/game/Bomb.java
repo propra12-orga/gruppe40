@@ -11,7 +11,7 @@ import draw.Drawable;
 
 import map.Map;
 
-public class Bomb extends Drawable implements ActionListener{
+public class Bomb extends Drawable implements ActionListener {
 	
 	private int radius;
     // inherits x/y from drawable
@@ -23,13 +23,13 @@ public class Bomb extends Drawable implements ActionListener{
 	private Timer timer;
 	private long startTime;
 	
-	public Bomb(int x, int y){
+	public Bomb(int x, int y, Map map){
         super(ImageLoader.getBombImage(), x, y);
 		this.radius = 1;
 		this.strength = 1;
-		this.delay = 300; //milliseconds
+		this.delay = 1000; //milliseconds
 		this.startTime = -1;
-		
+		this.map = map;
 	}
 	
 	public void setXY(int x, int y, Map map){
@@ -96,4 +96,7 @@ public class Bomb extends Drawable implements ActionListener{
         return radius;
     }
 	
+    public boolean isExpired() {
+        return !timer.isRunning();
+    }
 }

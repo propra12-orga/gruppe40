@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
@@ -43,8 +44,14 @@ public class GamePanel extends JPanel {
             }
         }
         synchronized (drawables) {
-            for (Drawable drawable : drawables) {
-                drawTile(g, drawable.getImage(), drawable.getX(), drawable.getY(), tileWidth, tileHeight);
+            ListIterator<Drawable> it = drawables.listIterator();
+            while (it.hasNext()) {
+                Drawable drawable = it.next();
+                if (drawable.isExpired()) {
+                    it.remove();
+                }else {
+                    drawTile(g, drawable.getImage(), drawable.getX(), drawable.getY(), tileWidth, tileHeight);
+                }
             }
         }
     }
