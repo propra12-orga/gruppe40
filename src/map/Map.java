@@ -10,7 +10,7 @@ public class Map {
     public Map(int width, int height, boolean singleplayer) {
         this.width = width;
         this.height = height;
-        this.multiplayer = multiplayer;
+        this.singleplayer = singleplayer;
         m = new Field[width][height]; /* sets mapsize */
 
         /* sets normal Fields everywhere */
