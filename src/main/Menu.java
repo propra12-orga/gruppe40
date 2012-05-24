@@ -11,7 +11,7 @@ import java.awt.Dimension;
 
 public class Menu {
 	
-	static int x = 800, y = 600;
+	static int x = 600, y = 600;
 	// TODO button to (de)select fullscreen
 	static boolean fullscreen = true;
 	

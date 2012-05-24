@@ -41,16 +41,23 @@ public class Bomb extends Drawable implements ActionListener {
 	
 	public void explode(){
 		map.destroy(x, y, strength);
+		// All directions (right, up, left, down)
 		int dx[] = {1, 0, -1, 0};
 		int dy[] = {0, 1, 0, -1};
+		// Add new explosion at (x, y)
         drawables.add(new Explosion(x, y));
+        // For all directions
 		for (int j=0; j<4; j++) {
 		    int x2 = x;
 		    int y2 = y;
+		    // For radius
 		    for (int i=1; i<=radius; i++) {
+		        // Walk towards direction
                 x2 += dx[j];
                 y2 += dy[j];
+                // destroy field
                 map.destroy(x2, y2, strength);
+                // Stop if blocked
                 if (map.isBlocked(x2, y2)) break;
                 drawables.add(new Explosion(x2, y2));
 		    }
@@ -113,6 +120,7 @@ public class Bomb extends Drawable implements ActionListener {
     }
 	
     public boolean isExpired() {
+        // Bomb is expired if timer is not running anymore
         return !timer.isRunning();
     }
 }

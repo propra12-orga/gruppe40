@@ -20,13 +20,13 @@ import game.Player;
 
 public class Bomberman {
 
-    JFrame               menuFrame;
-    JFrame               frame     = new JFrame();
-    Container            pane      = frame.getContentPane();
-    Map                  map       = new Map(11, 11);
-    LinkedList<Drawable> drawables = new LinkedList<Drawable>();
-    GamePanel            gamePanel = new GamePanel(map, drawables);
-    Player               player1   = new Player(1, 1, 2, map, drawables);
+    private JFrame               menuFrame;
+    private JFrame               frame     = new JFrame();
+    private Container            pane      = frame.getContentPane();
+    private Map                  map       = new Map(11, 11);
+    private LinkedList<Drawable> drawables = new LinkedList<Drawable>();
+    private GamePanel            gamePanel = new GamePanel(map, drawables);
+    private Player               player1   = new Player(1, 1, 2, map, drawables);
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
         this.menuFrame = menuFrame;
@@ -35,8 +35,11 @@ public class Bomberman {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         if (fullscreen) {
+            // Remove title bar etc.
             frame.setUndecorated(true);
+            // Set size to fill the whole screen
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            // Make fullscreen window stay on top of other windows
             frame.setAlwaysOnTop(true);
         }
 
@@ -110,14 +113,16 @@ public class Bomberman {
                     default:
                     break;
                 }
-                int x = player1.getX();
-                int y = player1.getY();
-                Field field = map.getField(x, y);
+                // Get field the player is standing on
+                Field field = map.getField(player1.getX(), player1.getY());
+                // If player stands on exit
                 if (field instanceof Exit) {
+                    // Show win dialog
                     JOptionPane.showMessageDialog(frame, "You won!");
                     exit();
                 }
-                // Force repaint to make sure everything is drawn even if there is no animated gif
+                // Force repaint to make sure everything is drawn
+                // If there are no animated gifs visible nothing will be updated automatically
                 frame.repaint();
             }
 
@@ -140,6 +145,7 @@ public class Bomberman {
 
     /**
      * Resizes the game panel so it stays square
+     * TODO preserver other aspect ratios if map is not square
      */
     public void resizeGamePanel() {
         int width = pane.getWidth();
