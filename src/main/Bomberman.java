@@ -23,7 +23,7 @@ public class Bomberman {
     private JFrame               menuFrame;
     private JFrame               frame     = new JFrame();
     private Container            pane      = frame.getContentPane();
-    private Map                  map       = new Map(11, 11);
+    private Map                  map       = new Map(11, 11, true);
     private LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     private GamePanel            gamePanel = new GamePanel(map, drawables);
     private Player               player1   = new Player(1, 1, 2, map, drawables);
