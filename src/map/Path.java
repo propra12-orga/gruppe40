@@ -11,16 +11,22 @@ public class Path {
      * @param y0 start y-coordinate
      * @param xEnd end x-coordinate
      * @param yEnd end y-coordinate
-     * @return
+     * @return walking distance from (x0, y0) to (xEnd, yEnd)
      */
     public static int find(Map map, int x0, int y0, int xEnd, int yEnd) {
         int w = map.getWidth();
         int h = map.getHeight();
+        // Walking distance from (x0, y0) to any point (x, y)
+        // Considers blocked paths
         int[][] distance = new int[w][h];
+        // Previous point from which to reach this point
+        // This starts at (x0, y0) and spreads towards all directions
+        // But only if the path is not blocked
         int[][] prev = new int[w][h];
         int[] stackX = new int[w * h];
         int[] stackY = new int[w * h];
         
+        // Set all distances to some value to represent unused
         for (int y=0; y<h; y++) for (int x=0; x<w; x++) distance[x][y] = -1;
 
         boolean pathFound = false;
@@ -59,6 +65,7 @@ public class Path {
                 stackY[stackSize] = y2;
                 stackSize++;
                 
+                // If exit is found
                 if (x2 == xEnd && y2 == yEnd) {
                     pathFound = true;
                     System.out.println("found path");
