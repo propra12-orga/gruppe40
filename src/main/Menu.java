@@ -99,7 +99,7 @@ public class Menu {
 		//Multiplayer coming soon
 		ActionListener mp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				//starte Multiplayer
+				System.exit(0);
 			}
 		};
 		

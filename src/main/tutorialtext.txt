@@ -1,8 +1,8 @@
 Steuerung:
 
-? - nach links gehen
-? - nach rechts gehen
-? - nach oben
-? - nach unten
+a - nach links gehen
+d - nach rechts gehen
+w - nach oben
+s - nach unten
 
-? - Bombe platzieren
+e - Bombe platzieren
