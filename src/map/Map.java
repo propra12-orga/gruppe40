@@ -3,12 +3,14 @@ package map;
 public class Map {
 
     private int width, height;
+    private boolean singleplayer;
 
     private Field[][] m;
 
-    public Map(int width, int height) {
+    public Map(int width, int height, boolean singleplayer) {
         this.width = width;
         this.height = height;
+        this.multiplayer = multiplayer;
         m = new Field[width][height]; /* sets mapsize */
 
         /* sets normal Fields everywhere */
@@ -26,16 +28,20 @@ public class Map {
                     m[x][y] = new DestructibleWall(1);
             }
         }
-        DestructibleWall lastWall = null;
-        for (int y = 3; y < height - 3; y++) {
-            for (int x = 1; x < (width - 1); x++) {
-                if (Math.random() < 0.9) {
-                    lastWall = new DestructibleWall(1);
-                    m[x][y] = lastWall;
+
+        /* If it is a singleplayer-game spawn the exit */
+        if (singleplayer) {
+            DestructibleWall lastWall = null;
+            for (int y = 3; y < height - 3; y++) {
+                for (int x = 1; x < (width - 1); x++) {
+                    if (Math.random() < 0.9) {
+                        lastWall = new DestructibleWall(1);
+                        m[x][y] = lastWall;
+                    }
                 }
             }
+            if (lastWall != null) lastWall.setExit(true);
         }
-        if (lastWall != null) lastWall.setExit(true);
 
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
