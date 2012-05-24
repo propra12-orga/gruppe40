@@ -17,6 +17,7 @@ public abstract class Drawable {
     public Drawable(int x, int y) {
         this.x = x;
         this.y = y;
+        // Load image with which should be used for drawing this object
         this.image = ImageLoader.getImage(this);
     }
 
@@ -37,14 +38,26 @@ public abstract class Drawable {
         return image;
     }
 
+    /**
+     * Check if object is expired.
+     * Expired Objects will be removed every draw call.
+     * @return if this object is expired
+     */
     public boolean isExpired() {
         return false;
     }
 
+    /**
+     * Sets objects visible or not
+     * @param visible visible yes/no?
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    /**
+     * @return if this object is visible
+     */
     public boolean isVisible() {
         return visible;
     }
