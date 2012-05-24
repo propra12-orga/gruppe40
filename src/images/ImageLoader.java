@@ -12,29 +12,42 @@ public class ImageLoader {
      * NOTE THAT PATHS ARE CASE SENSITIVE!
      */
     private static String                 imagePaths[] = { "DestructibleWall.jpg", "IndestructibleWall.jpg", "EmptyField.jpg", "Exit.jpg", "Bomb.gif", "Player.gif", "Explosion.gif" };
-    
+
+    /**
+     * HashMap for storing images associated with their names
+     */
     private static HashMap<String, Image> images       = new HashMap<String, Image>();
 
+    // Loads images
     static {
-        // Loads images
         // This will be executed before first access to this class
+        // Class loader to have path to start searching at
         ClassLoader classLoader = ImageLoader.class.getClassLoader();
+        // Toolkit for loading images
         Toolkit toolkit = Toolkit.getDefaultToolkit();
+        // For all image paths load images
         for (int i = 0; i < imagePaths.length; i++) {
             String path = imagePaths[i];
+            // Add image folder path to image and find internal path
             URL url = classLoader.getResource("images/" + path);
             if (url == null) {
                 System.err.println("failed to locate image: " + path);
             } else {
+                // Create image from internal path
                 Image image = toolkit.createImage(url);
-                String ext = path.substring(path.lastIndexOf('.')+1, path.length());
+                // Get file extension
+                String ext = path.substring(path.lastIndexOf('.') + 1, path.length());
+                // If extension is not gif scale the image smoothly
                 if (!ext.equals("gif")) {
+                    // All scalings except smooth scaling appear to break animations
                     image = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
                 }
                 if (image == null) {
                     System.err.println("failed to create image: " + path);
                 } else {
+                    // Remove file extension for saving
                     path = path.substring(0, path.lastIndexOf('.'));
+                    // Save image in HashMap
                     images.put(path, image);
                 }
             }

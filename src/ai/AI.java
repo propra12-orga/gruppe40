@@ -24,8 +24,10 @@ public class AI {
         int w = map.getWidth();
         int h = map.getHeight();
         boolean dangerous[][] = new boolean[w][h];
+        // All directions (left, up, right, down)
         int dx[] = {-1, 0, 1,  0};
         int dy[] = { 0, 1, 0, -1};
+        // For all bombs set fields as dangerous or not
         for (Bomb bomb : bombs) {
             int x = bomb.getX();
             int y = bomb.getY();
