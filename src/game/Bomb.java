@@ -27,7 +27,7 @@ public class Bomb extends Drawable implements ActionListener {
         super(x, y);
 		this.radius = 1;
 		this.strength = 1;
-		this.delay = 300; //300 milliseconds is too short
+		this.delay = 1000; //1sek
 		this.startTime = -1;
 		this.map = map;
 		this.drawables = drawables;
