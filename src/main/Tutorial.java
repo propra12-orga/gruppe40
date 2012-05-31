@@ -20,7 +20,7 @@ public class Tutorial {
 		System.out.println("/bin/main/" + filepath);
 		try {
 			//Filereader will noch nicht (klappt bei mir nur mit komplettem Pfad...)
-			FileReader fileRead = new FileReader("./"+filepath);
+			FileReader fileRead = new FileReader("./main/"+filepath);
 			BufferedReader bufferRead = new BufferedReader(fileRead);
 			while((line = bufferRead.readLine()) != null) {
 				document = document + line + "\n";
