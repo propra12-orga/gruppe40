@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Map>
+<Width>2</Width>
+<Height>2</Height>
+<Line_1>
+<Element>NormalField</Element>
+<Element>NormalField</Element>
+</Line_1>
+<Line_2>
+<Element>IndestructibleField</Element>
+<Element>IndestructibleField</Element>
+</Line_2>
+</Map>
+
+
+
+
+
+
