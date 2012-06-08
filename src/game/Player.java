@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.Timer;
+import javax.swing.JFrame;
 
 import draw.Drawable;
 
 import map.Map;
+import map.Field;
 
 public class Player extends Drawable implements ActionListener {
 
@@ -20,18 +22,26 @@ public class Player extends Drawable implements ActionListener {
 	private Timer timer;
 	private int speed;
 	private LinkedList<Drawable> drawables;
+	private long startTime;
+	private JFrame frame;
+	private int progress;
+	private int delay;
 	
     // Became obsolete?
     private Bomb bomb;
 	
-	public Player(int x, int y, int speed, Map map, LinkedList<Drawable> drawables){
+	public Player(int x, int y, int speed, Map map, LinkedList<Drawable> drawables, JFrame frame){
 		super(x, y);
 		this.map = map;
 		this.bomb = new Bomb(-1, -1, map, drawables);
 		this.direction = 0;
 		this.speed = speed;
-		this.timer = new Timer(this.speed,this);
+		this.delay = 50;
+		this.timer = new Timer(this.delay,this);
 		this.drawables = drawables;
+		this.frame = frame;
+		this.progress = 0;
+		
 	}
 	
 	public int getSpeed(){
@@ -44,6 +54,38 @@ public class Player extends Drawable implements ActionListener {
 	
 	public int getX(){
 		return this.x;
+	}
+
+/** provides flowing movement (X) , used for drawing only */	
+	public double getFlowX(){
+		switch(this.direction){
+			case 1:
+			case 3:
+				return this.x;
+				break;
+			case 2:
+				return this.x + ((this.progress % this.speed) / this.delay);
+				break;
+			case 4:
+				return this.x - ((this.progress % this.speed) / this.delay);
+				break;
+		}
+	}
+	
+/** provides flowing movement (Y) , used for drawing only */
+	public double getFlowY(){
+		switch(this.direction){
+			case 2:
+			case 4:
+				return this.y;
+				break;
+			case 1:
+				return this.y - ((this.progress % this.speed) / this.delay);
+				break;
+			case 3:
+				return this.y + ((this.progress % this.speed) / this.delay);
+				break;
+		}
 	}
 	
 	public int getY(){
@@ -67,21 +109,23 @@ public class Player extends Drawable implements ActionListener {
 	public void startMove(int direction){
 	    this.direction = direction;
 		switch(direction){ 
-			case 1: move(this.x, this.y + 1); //1:up
+			case 1: move(0, -1); //1:up
 					break;
-			case 2: move(this.x + 1, this.y); //2:right
+			case 2: move(1,0); //2:right
 					break;
-			case 3: move(this.x, this.y - 1); //3:down
+			case 3: move(0,1); //3:down
 					break;
-			case 4: move(this.x - 1, this.y); //4:left
+			case 4: move(-1,0); //4:left
 					break;
-			default: move(this.x, this.y); 
+			default:  
 			        break;
 		}
 		this.timer.start();
+		this.startTime = System.currentTimeMillis();
 	}
 	
 	public void stopMove(){
+		this.progress = 0;
 		this.direction = 0;
 		this.timer.stop();
 	}
@@ -110,6 +154,7 @@ public class Player extends Drawable implements ActionListener {
 */
 	
 	public void move(int dx, int dy) {
+		System.out.println("newMOVE("+dx+","+dy+")");
 	    int x2 = x + dx;
 	    int y2 = y + dy;
         if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
@@ -144,18 +189,35 @@ public class Player extends Drawable implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
-	    /*
-		switch (this.direction){
-		case 1: this.moveUp();
+	    this.progress = this.progress + this.delay;
+		if (this.progress % this.speed == 0){
+			switch (this.direction){
+				case 1: this.move(0,-1); //1:up
 				break;
-		case 2: this.moveRight();
+				case 2: this.move(1,0);  //2:right
 				break;
-		case 3: this.moveDown();
+				case 3: this.move(0,1);  //3:down
 				break;
-		case 4: this.moveLeft();
+				case 4: this.move(-1,0); //4:left
 				break;
+			}
+		}
+	
+		// Get field the player is standing on
+		Field field = this.map.getField(this.getX(), this.getY());
+		
+		/*
+		// If player stands on exit
+		if (field instanceof Exit) {
+			// Show win dialog
+			JOptionPane.showMessageDialog(frame, "You won!");
+			exit();
 		}
 		*/
+		
+		// Force repaint to make sure everything is drawn
+		// If there are no animated gifs visible nothing will be updated automatically
+		this.frame.repaint();
 	}
 	
 

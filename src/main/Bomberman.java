@@ -26,7 +26,7 @@ public class Bomberman {
     private Map                  map       = new Map(11, 11, true);
     private LinkedList<Drawable> drawables = new LinkedList<Drawable>();
     private GamePanel            gamePanel = new GamePanel(map, drawables);
-    private Player               player1   = new Player(1, 1, 2, map, drawables);
+    private Player               player1   = new Player(1, 1, 200, map, drawables, frame);
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
         this.menuFrame = menuFrame;
@@ -78,6 +78,7 @@ public class Bomberman {
 
             @Override
             public void keyPressed(KeyEvent e) {
+			System.out.println("keyPressed: "+e.getKeyChar());
                 // TODO decide how to design server/client stuff
                 // there shouldn't be a direct connection between classes here
                 switch (e.getKeyChar()) {
@@ -86,7 +87,7 @@ public class Bomberman {
                         if (player1.hasBomb()) player1.putBomb();
                     break;
 
-                    case 'W':
+                  /*  case 'W':
                     case 'w':
                         player1.move(0, -1);
                     break;
@@ -104,7 +105,7 @@ public class Bomberman {
                     case 'D':
                     case 'd':
                         player1.move(1, 0);
-                    break;
+                    break; */
 
                     case KeyEvent.VK_ESCAPE:
                         exit();
@@ -127,10 +128,78 @@ public class Bomberman {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+			System.out.println("keyReleased: "+e.getKeyChar());
+			    switch (e.getKeyChar()) {
+                    
+                    case 'W':
+                    case 'w':
+                    case 'A':
+                    case 'a':
+                    case 'S':
+                    case 's':
+                    case 'D':
+                    case 'd':
+                        player1.stopMove();
+                    break;
+
+                    default:
+                    break;
+                }
+				
+			    // Get field the player is standing on
+                Field field = map.getField(player1.getX(), player1.getY());
+                // If player stands on exit
+                if (field instanceof Exit) {
+					// Show win dialog
+                    JOptionPane.showMessageDialog(frame, "You won!");
+                    exit();
+                }
+                // Force repaint to make sure everything is drawn
+                // If there are no animated gifs visible nothing will be updated automatically
+                frame.repaint();
+			}
 
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {               
+			System.out.println("keyTyped: "+e.getKeyChar());
+       			switch (e.getKeyChar()) {
+                    
+                    case 'W':
+                    case 'w':
+                        player1.startMove(1);
+                    break;
+
+                    case 'A':
+                    case 'a':
+                        player1.startMove(4);
+                    break;
+
+                    case 'S':
+                    case 's':
+                        player1.startMove(3);
+                    break;
+
+                    case 'D':
+                    case 'd':
+                        player1.startMove(2);
+                    break;
+
+                    default:
+                    break;
+                }
+                // Get field the player is standing on
+                Field field = map.getField(player1.getX(), player1.getY());
+                // If player stands on exit
+                if (field instanceof Exit) {
+                    // Show win dialog
+                    JOptionPane.showMessageDialog(frame, "You won!");
+                    exit();
+                }
+                // Force repaint to make sure everything is drawn
+                // If there are no animated gifs visible nothing will be updated automatically
+                frame.repaint();
+				}
         };
         frame.addKeyListener(keyListener);
         frame.setSize(width, height);
