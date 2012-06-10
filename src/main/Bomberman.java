@@ -87,26 +87,6 @@ public class Bomberman {
                         if (player1.hasBomb()) player1.putBomb();
                     break;
 
-                  /*  case 'W':
-                    case 'w':
-                        player1.move(0, -1);
-                    break;
-
-                    case 'A':
-                    case 'a':
-                        player1.move(-1, 0);
-                    break;
-
-                    case 'S':
-                    case 's':
-                        player1.move(0, 1);
-                    break;
-
-                    case 'D':
-                    case 'd':
-                        player1.move(1, 0);
-                    break; */
-
                     case KeyEvent.VK_ESCAPE:
                         exit();
                     break;
@@ -162,29 +142,29 @@ public class Bomberman {
 
             @Override
             public void keyTyped(KeyEvent e) {               
-			System.out.println("keyTyped: "+e.getKeyChar());
+    			System.out.println("keyTyped: "+e.getKeyChar());
        			switch (e.getKeyChar()) {
                     
                     case 'W':
                     case 'w':
                         player1.startMove(1);
                     break;
-
+    
                     case 'A':
                     case 'a':
                         player1.startMove(4);
                     break;
-
+    
                     case 'S':
                     case 's':
                         player1.startMove(3);
                     break;
-
+    
                     case 'D':
                     case 'd':
                         player1.startMove(2);
                     break;
-
+    
                     default:
                     break;
                 }
@@ -199,7 +179,7 @@ public class Bomberman {
                 // Force repaint to make sure everything is drawn
                 // If there are no animated gifs visible nothing will be updated automatically
                 frame.repaint();
-				}
+			}
         };
         frame.addKeyListener(keyListener);
         frame.setSize(width, height);
@@ -207,7 +187,7 @@ public class Bomberman {
     }
 
     private void exit() {
-        // TODO ask
+        player1.stopMove();
         menuFrame.setVisible(true);
         frame.dispose();
     }
@@ -217,14 +197,21 @@ public class Bomberman {
      * TODO preserver other aspect ratios if map is not square
      */
     public void resizeGamePanel() {
+        int mx = map.getWidth();
+        int my = map.getHeight();
         int width = pane.getWidth();
         int height = pane.getHeight();
-        if (width > height) {
-            int blackBarWidth = (width - height) / 2;
-            gamePanel.setBounds(blackBarWidth, 0, height, height);
-        } else {
-            int blackBarWidth = (height - width) / 2;
-            gamePanel.setBounds(0, blackBarWidth, width, width);
+        //Calculate width required to display the image at full height while preserving aspect ratio
+        int maxWidth = height*mx/my;
+        //If it fits on screen draw it
+        if (maxWidth <= width) {
+            int blackBarWidth = (width - maxWidth)/2;
+            gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
+        }else {
+            //If it does not fit calculate height which preserves aspect ratio and use that instead
+            int maxHeight = width*my/mx;
+            int blackBarHeight = (height - maxHeight)/2;
+            gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
         }
     }
 
