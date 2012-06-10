@@ -59,33 +59,29 @@ public class Player extends Drawable implements ActionListener {
 /** provides flowing movement (X) , used for drawing only */	
 	public double getFlowX(){
 		switch(this.direction){
-			case 1:
-			case 3:
-				return this.x;
-				break;
 			case 2:
 				return this.x + ((this.progress % this.speed) / this.delay);
-				break;
+			
 			case 4:
 				return this.x - ((this.progress % this.speed) / this.delay);
-				break;
-		}
+			
+			default:
+			    return this.x;
+		}//Fixed missing default case, removed unreachable code (Please do not push code with errors)
 	}
 	
 /** provides flowing movement (Y) , used for drawing only */
 	public double getFlowY(){
 		switch(this.direction){
-			case 2:
-			case 4:
-				return this.y;
-				break;
 			case 1:
 				return this.y - ((this.progress % this.speed) / this.delay);
-				break;
+
 			case 3:
 				return this.y + ((this.progress % this.speed) / this.delay);
-				break;
-		}
+
+			default:
+			    return this.y;
+		}//Fixed missing default case, removed unreachable code (Please do not push code with errors)
 	}
 	
 	public int getY(){
