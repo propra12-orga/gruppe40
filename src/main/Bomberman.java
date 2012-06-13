@@ -199,6 +199,8 @@ public class Bomberman {
     }
 
     private void exit(String message) {
+        if (data.gameOver) return;
+        data.gameOver = true;
         // Show win dialog
         JOptionPane.showMessageDialog(data.frame, message);
         for (Player player : data.players) {
