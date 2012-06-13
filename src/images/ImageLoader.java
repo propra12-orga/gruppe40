@@ -8,15 +8,17 @@ import java.util.HashMap;
 public class ImageLoader {
 
     /**
-     * Paths for images.
-     * NOTE THAT PATHS ARE CASE SENSITIVE!
+     * Paths for images. NOTE THAT PATHS ARE CASE SENSITIVE!
      */
-    private static String                 imagePaths[] = { "DestructibleWall.jpg", "NormalWall.jpg", "IndestructibleWall.jpg", "EmptyField.jpg", "Exit.jpg", "Bomb.gif", "Player.gif", "Explosion.gif" };
+    private static String imagePaths[] = { "DestructibleWall.jpg",
+            "NormalWall.jpg", "MediumWall.jpg", "IndestructibleWall.jpg",
+            "EmptyField.jpg", "Exit.jpg", "Bomb.gif", "Player.gif",
+            "Explosion.gif" };
 
     /**
      * HashMap for storing images associated with their names
      */
-    private static HashMap<String, Image> images       = new HashMap<String, Image>();
+    private static HashMap<String, Image> images = new HashMap<String, Image>();
 
     // Loads images
     static {
@@ -36,10 +38,12 @@ public class ImageLoader {
                 // Create image from internal path
                 Image image = toolkit.createImage(url);
                 // Get file extension
-                String ext = path.substring(path.lastIndexOf('.') + 1, path.length());
+                String ext = path.substring(path.lastIndexOf('.') + 1,
+                        path.length());
                 // If extension is not gif scale the image smoothly
                 if (!ext.equals("gif")) {
-                    // All scalings except smooth scaling appear to break animations
+                    // All scalings except smooth scaling appear to break
+                    // animations
                     image = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
                 }
                 if (image == null) {
@@ -55,11 +59,11 @@ public class ImageLoader {
     }
 
     /**
-     * Loads image by object name.
-     * Note that the image path is case sensitive.
+     * Loads image by object name. Note that the image path is case sensitive.
      * File extensions have to be omitted, e.g. "Image" instead of "Image.jpg".
      * 
-     * @param object Object whose name is used to load the image
+     * @param object
+     *            Object whose name is used to load the image
      * @return an image
      */
     public static Image getImage(Object object) {
@@ -67,11 +71,11 @@ public class ImageLoader {
     }
 
     /**
-     * Loads image by name.
-     * Note that the image path is case sensitive.
-     * File extension has to be omitted, e.g. "Image" instead of "Image.jpg".
+     * Loads image by name. Note that the image path is case sensitive. File
+     * extension has to be omitted, e.g. "Image" instead of "Image.jpg".
      * 
-     * @param name String which is used to load the image
+     * @param name
+     *            String which is used to load the image
      * @return an image
      */
     public static Image getImage(String name) {
