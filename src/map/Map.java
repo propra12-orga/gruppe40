@@ -1,11 +1,53 @@
 package map;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import xml_parser.MapParser;
+
 public class Map {
 
     private int width, height;
     private boolean singleplayer;
 
     private Field[][] m;
+    private ArrayList<String> MapArray = null;
+
+    public Map(String xml){
+        MapParser testing = new MapParser(xml);
+        testing.parse();
+        this.width = testing.get_width();
+        this.height = testing.get_height();
+        this.MapArray = testing.getMapElements();
+        m = new Field[width][height]; /* sets mapsize */
+        DestructibleWall exit = new DestructibleWall(1);
+        exit.setExit(true);
+
+        for (int y = 0, i = 0; y < height; y++) {
+            for (int x = 0; x < width; x++, i++) {
+                if (this.MapArray.get(i) == "Exit") {
+                    m[x][y] = exit;
+                } else
+                    try {
+                        m[x][y] = (Field) Class.forName(
+                                "map." + this.MapArray.get(i)).newInstance();
+                    } catch (InstantiationException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+            }
+        }
+    }
 
     public Map(int width, int height, boolean singleplayer) {
         this.width = width;
@@ -40,7 +82,8 @@ public class Map {
                     }
                 }
             }
-            if (lastWall != null) lastWall.setExit(true);
+            if (lastWall != null)
+                lastWall.setExit(true);
         }
 
         /* spawns walls as frame */
@@ -124,10 +167,10 @@ public class Map {
     public void destroy(int x, int y, int damage) {
         Field field = m[x][y];
         if (field instanceof DestructibleWall) { /* NormalWall etc. */
-            DestructibleWall wall = (DestructibleWall)field;
+            DestructibleWall wall = (DestructibleWall) field;
             if (wall.isExit()) {
                 m[x][y] = new Exit();
-            }else{
+            } else {
                 if (m[x][y].getStrength() - damage <= 0) {
                     m[x][y] = new EmptyField();
                 } else {
