@@ -1,5 +1,6 @@
 package draw;
 
+import game.GameData;
 import images.ImageLoader;
 
 import java.awt.Image;
@@ -14,11 +15,12 @@ public abstract class Drawable {
 
     protected Image   image   = null;
 
-    public Drawable(int x, int y) {
+    public Drawable(int x, int y, GameData data) {
         this.x = x;
         this.y = y;
         // Load image with which should be used for drawing this object
         this.image = ImageLoader.getImage(this);
+        data.drawables.add(this);
     }
 
     public void setXY(int x, int y) {

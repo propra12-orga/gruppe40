@@ -7,6 +7,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,41 +17,54 @@ import draw.GamePanel;
 import map.Exit;
 import map.Field;
 import map.Map;
+import game.Bomb;
+import game.GameData;
 import game.Player;
 
 public class Bomberman {
 
-    private JFrame               menuFrame;
-    private JFrame               frame     = new JFrame();
-    private Container            pane      = frame.getContentPane();
-    private Map                  map       = new Map(11, 11, true);
-    private LinkedList<Drawable> drawables = new LinkedList<Drawable>();
-    private GamePanel            gamePanel = new GamePanel(map, drawables);
-    private Player               player1   = new Player(1, 1, 200, map, drawables, frame);
+    private Container      pane;
+    private JFrame         menuFrame;
+    private GameData       data;
+    // This is just for milestone 2, will be changed later
+    private static boolean singlePlayer;
 
-    public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen) {
+    public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen, boolean singlePlayer) {
+        Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
-        // TODO ask first
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        data = new GameData();
+        data.gameOver = false;
+        data.frame = new JFrame();
+        data.drawables = new LinkedList<Drawable>();
+        data.bombs = new LinkedList<Bomb>();
+        data.players = new Vector<Player>();
+        data.bomberman = this;
+        data.map = new Map(11, 11, singlePlayer);
+        data.gamePanel = new GamePanel(data);
+        data.players.add(new Player("Player 1", 1, 1, 200, data));
+        if (!singlePlayer) data.players.add(new Player("Player 2", 9, 9, 200, data));
+
+        pane = data.frame.getContentPane();
+
+        data.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         if (fullscreen) {
             // Remove title bar etc.
-            frame.setUndecorated(true);
+            data.frame.setUndecorated(true);
             // Set size to fill the whole screen
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             // Make fullscreen window stay on top of other windows
-            frame.setAlwaysOnTop(true);
+            data.frame.setAlwaysOnTop(true);
         }
 
         // Remove layout so things can be placed manually
         pane.setLayout(null);
         // Add GamePanel
-        pane.add(gamePanel);
+        pane.add(data.gamePanel);
         // Set background color to black
         pane.setBackground(Color.BLACK);
         // add Player 1
-        drawables.add(player1);
 
         // Register resize/show events
         ComponentListener componentListener = new ComponentListener() {
@@ -75,43 +89,15 @@ public class Bomberman {
         pane.addComponentListener(componentListener);
 
         KeyListener keyListener = new KeyListener() {
+            // This is just for milestone 2, will be changed later
 
             @Override
-            public void keyPressed(KeyEvent e) {
-			System.out.println("keyPressed: "+e.getKeyChar());
-                // TODO decide how to design server/client stuff
-                // there shouldn't be a direct connection between classes here
-                switch (e.getKeyChar()) {
-                    case 'E':
-                    case 'e':
-                        if (player1.hasBomb()) player1.putBomb();
-                    break;
-
-                    case KeyEvent.VK_ESCAPE:
-                        exit();
-                    break;
-
-                    default:
-                    break;
-                }
-                // Get field the player is standing on
-                Field field = map.getField(player1.getX(), player1.getY());
-                // If player stands on exit
-                if (field instanceof Exit) {
-                    // Show win dialog
-                    JOptionPane.showMessageDialog(frame, "You won!");
-                    exit();
-                }
-                // Force repaint to make sure everything is drawn
-                // If there are no animated gifs visible nothing will be updated automatically
-                frame.repaint();
-            }
+            public void keyPressed(KeyEvent e) {}
 
             @Override
             public void keyReleased(KeyEvent e) {
-			System.out.println("keyReleased: "+e.getKeyChar());
-			    switch (e.getKeyChar()) {
-                    
+                switch (e.getKeyChar()) {
+
                     case 'W':
                     case 'w':
                     case 'A':
@@ -120,98 +106,177 @@ public class Bomberman {
                     case 's':
                     case 'D':
                     case 'd':
-                        player1.stopMove();
+                        data.players.get(0).stopMove();
+                    break;
+
+                    case 'I':
+                    case 'i':
+                    case 'J':
+                    case 'j':
+                    case 'K':
+                    case 'k':
+                    case 'L':
+                    case 'l':
+                        if (!Bomberman.singlePlayer) data.players.get(1).stopMove();
+                    break;
+
+                    case KeyEvent.VK_ESCAPE:
+                        exit("Game closed");
                     break;
 
                     default:
                     break;
                 }
-				
-			    // Get field the player is standing on
-                Field field = map.getField(player1.getX(), player1.getY());
-                // If player stands on exit
-                if (field instanceof Exit) {
-					// Show win dialog
-                    JOptionPane.showMessageDialog(frame, "You won!");
-                    exit();
-                }
-                // Force repaint to make sure everything is drawn
-                // If there are no animated gifs visible nothing will be updated automatically
-                frame.repaint();
-			}
+                forceRepaint();
+            }
 
             @Override
-            public void keyTyped(KeyEvent e) {               
-    			System.out.println("keyTyped: "+e.getKeyChar());
-       			switch (e.getKeyChar()) {
-                    
+            public void keyTyped(KeyEvent e) {
+
+                switch (e.getKeyChar()) {
+
                     case 'W':
                     case 'w':
-                        player1.startMove(1);
+                        data.players.get(0).startMove(1);
                     break;
-    
+
                     case 'A':
                     case 'a':
-                        player1.startMove(4);
+                        data.players.get(0).startMove(4);
                     break;
-    
+
                     case 'S':
                     case 's':
-                        player1.startMove(3);
+                        data.players.get(0).startMove(3);
                     break;
-    
+
                     case 'D':
                     case 'd':
-                        player1.startMove(2);
+                        data.players.get(0).startMove(2);
                     break;
-    
+
+                    case 'E':
+                    case 'e':
+                        if (data.players.get(0).hasBomb()) data.players.get(0).putBomb();
+                    break;
+
+                    // Horrible code, I know
+                    // Will be replaced with network at milestone 3
+                    case 'I':
+                    case 'i':
+                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(1);
+                    break;
+
+                    case 'J':
+                    case 'j':
+                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(4);
+                    break;
+
+                    case 'K':
+                    case 'k':
+                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(3);
+                    break;
+
+                    case 'L':
+                    case 'l':
+                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(2);
+                    break;
+
+                    case 'O':
+                    case 'o':
+                        if (!Bomberman.singlePlayer) if (data.players.get(1).hasBomb()) data.players.get(1).putBomb();
+                    break;
+
                     default:
                     break;
                 }
-                // Get field the player is standing on
-                Field field = map.getField(player1.getX(), player1.getY());
-                // If player stands on exit
-                if (field instanceof Exit) {
-                    // Show win dialog
-                    JOptionPane.showMessageDialog(frame, "You won!");
-                    exit();
-                }
-                // Force repaint to make sure everything is drawn
-                // If there are no animated gifs visible nothing will be updated automatically
-                frame.repaint();
-			}
+                forceRepaint();
+            }
         };
-        frame.addKeyListener(keyListener);
-        frame.setSize(width, height);
-        frame.setVisible(true);
+        data.frame.addKeyListener(keyListener);
+        data.frame.setSize(width, height);
+        data.frame.setVisible(true);
     }
 
-    private void exit() {
-        player1.stopMove();
+    private void exit(String message) {
+        // Show win dialog
+        JOptionPane.showMessageDialog(data.frame, message);
+        for (Player player : data.players) {
+            player.stopMove();
+        }
+        data.frame.dispose();
         menuFrame.setVisible(true);
-        frame.dispose();
     }
 
     /**
-     * Resizes the game panel so it stays square
-     * TODO preserver other aspect ratios if map is not square
+     * Resize the GamePanel so it always has maximum size while still preserving
+     * aspect ratio.
      */
     public void resizeGamePanel() {
-        int mx = map.getWidth();
-        int my = map.getHeight();
+        int mx = data.map.getWidth();
+        int my = data.map.getHeight();
         int width = pane.getWidth();
         int height = pane.getHeight();
-        //Calculate width required to display the image at full height while preserving aspect ratio
-        int maxWidth = height*mx/my;
-        //If it fits on screen draw it
+        // Calculate width required to display the image at full height while
+        // preserving aspect ratio
+        int maxWidth = height * mx / my;
+        // If it fits on screen draw it
         if (maxWidth <= width) {
-            int blackBarWidth = (width - maxWidth)/2;
-            gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
-        }else {
-            //If it does not fit calculate height which preserves aspect ratio and use that instead
-            int maxHeight = width*my/mx;
-            int blackBarHeight = (height - maxHeight)/2;
-            gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
+            int blackBarWidth = (width - maxWidth) / 2;
+            data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
+        } else {
+            // If it does not fit calculate height which preserves aspect ratio
+            // and use that instead
+            int maxHeight = width * my / mx;
+            int blackBarHeight = (height - maxHeight) / 2;
+            data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
+        }
+    }
+
+    /**
+     * Force repaint to make sure everything is drawn.
+     * If there are no animated gifs visible nothing will be updated
+     * automatically.
+     */
+    public void forceRepaint() {
+        data.frame.repaint();
+    }
+
+    /**
+     * Repaints the JFrame and checks if game is over.
+     */
+    public void update() {
+        if (data.gameOver) return;
+        //Delay update so tie can actually happen
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LinkedList<Player> alive = new LinkedList<Player>();
+        for (Player player : data.players) {
+            // Count living players
+            if (player.isAlive()) alive.add(player);
+
+            // Get field the player is standing on
+            Field field = data.map.getField(data.players.get(0).getX(), data.players.get(0).getY());
+            // If player stands on exit
+            if (field instanceof Exit) {
+                // If there is an exit it should be single player
+                exit("You won!");
+            }
+        }
+        switch (alive.size()) {
+            case 0:
+                exit("Tie");
+            break;
+            
+            case 1:
+                exit(alive.getFirst().getName() + " won the game");
+            break;
+            
+            default:
+            break;
         }
     }
 

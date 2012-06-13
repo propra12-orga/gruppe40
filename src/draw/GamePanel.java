@@ -1,6 +1,7 @@
 package draw;
 
 import draw.Drawable;
+import game.GameData;
 import map.Map;
 
 import javax.swing.JPanel;
@@ -16,9 +17,9 @@ public class GamePanel extends JPanel {
     private Map                  map;
     private LinkedList<Drawable> drawables;
 
-    public GamePanel(Map map, LinkedList<Drawable> drawables) {
-        this.map = map;
-        this.drawables = drawables;
+    public GamePanel(GameData data) {
+        this.map = data.map;
+        this.drawables = data.drawables;
     }
 
     private void drawTile(Graphics g, Image img, int x, int y, double width, double height) {
@@ -49,7 +50,7 @@ public class GamePanel extends JPanel {
                 Drawable drawable = it.next();
                 if (drawable.isExpired()) {
                     it.remove();
-                }else {
+                } else {
                     if (drawable.isVisible()) {
                         drawTile(g, drawable.getImage(), drawable.getX(), drawable.getY(), tileWidth, tileHeight);
                     }

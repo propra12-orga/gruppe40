@@ -146,16 +146,14 @@ public class Map {
     public Field getField(int x, int y) {
         return m[x][y];
     }
-
+    
     /**
-     * @param x
-     *            - horizontal axis
-     * @param y
-     *            - vertical axis
-     * @param damage
-     *            - damage suffered
+     * @param x - horizontal axis
+     * @param y - vertical axis
+     * @param damage - damage suffered
+     * @return if the field was destroyed
      */
-    public void destroy(int x, int y, int damage) {
+    public boolean destroy(int x, int y, int damage) {
         Field field = m[x][y];
         if (field instanceof DestructibleWall) { /* NormalWall etc. */
             DestructibleWall wall = (DestructibleWall) field;
@@ -168,8 +166,9 @@ public class Map {
                     m[x][y].setStrength(m[x][y].getStrength() - damage);
                 }
             }
+            return true;
         }
-
+        return false;
     }
 
     /**

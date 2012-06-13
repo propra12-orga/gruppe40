@@ -2,7 +2,6 @@ package game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
 import javax.swing.Timer;
 
@@ -21,16 +20,19 @@ public class Bomb extends Drawable implements ActionListener {
 	private int delay;
 	private Timer timer;
 	private long startTime;
-	private LinkedList<Drawable> drawables;
+	private boolean exploding;
+	private GameData data;
 	
-	public Bomb(int x, int y, Map map, LinkedList<Drawable> drawables){
-        super(x, y);
+	public Bomb(int x, int y, GameData data){
+        super(x, y, data);
 		this.radius = 1;
 		this.strength = 1;
 		this.delay = 1000; //1sek
 		this.startTime = -1;
-		this.map = map;
-		this.drawables = drawables;
+		this.map = data.map;
+		this.exploding = false;
+		this.data = data;
+		data.bombs.add(this);
 	}
 	
 	public void setXY(int x, int y, Map map){
@@ -39,13 +41,43 @@ public class Bomb extends Drawable implements ActionListener {
 		this.map = map;
 	}
 	
+	private boolean explodeAt(int x2, int y2) {
+        // destroy field
+        if (map.destroy(x2, y2, strength)) {
+            synchronized (data.drawables) {
+                data.drawables.add(new Explosion(x2, y2, data));
+            }
+            return false;
+        }
+        // Stop if blocked
+        if (map.isBlocked(x2, y2)) return false;
+        synchronized (data.drawables) {
+            data.drawables.add(new Explosion(x2, y2, data));
+        }
+        //Kill players
+        for (Player p : data.players) {
+            if (p.getX() == x2 && p.getY() == y2) p.setAlive(false);
+        }
+        //Chain reaction
+        for (Bomb b : data.bombs) {
+            if (b != this && b.getX() == x2 && b.getY() == y2) b.explode();
+        }
+        return true;
+	}
+	
+	/**
+	 * Makes the bomb explode.
+	 */
 	public void explode(){
+	    //Prevent infinite loop from two bombs triggering each other
+	    if (exploding) return;
+	    exploding = true;
 		map.destroy(x, y, strength);
 		// All directions (right, up, left, down)
 		int dx[] = {1, 0, -1, 0};
 		int dy[] = {0, 1, 0, -1};
 		// Add new explosion at (x, y)
-        drawables.add(new Explosion(x, y));
+		explodeAt(x, y);
         // For all directions
 		for (int j=0; j<4; j++) {
 		    int x2 = x;
@@ -55,36 +87,11 @@ public class Bomb extends Drawable implements ActionListener {
 		        // Walk towards direction
                 x2 += dx[j];
                 y2 += dy[j];
-                // destroy field
-                map.destroy(x2, y2, strength);
-                // Stop if blocked
-                if (map.isBlocked(x2, y2)) break;
-                drawables.add(new Explosion(x2, y2));
+                if (!explodeAt(x2, y2)) break;
 		    }
 		}
-		/*
-        boolean proceedLeft = true;
-        boolean proceedRight = true;
-        boolean proceedUp = true;
-        boolean proceedDown = true;
-		for (int i=1; i<=this.radius; i++){
-			if (proceedRight){
-				this.map.destroy(this.x + i,this.y, this.strength);
-				proceedRight = !this.map.isBlocked(this.x + i,this.y);
-			}
-			if (proceedLeft){
-				this.map.destroy(this.x - i,this.y, this.strength);
-				proceedLeft = !this.map.isBlocked(this.x-i,this.y);
-			}
-			if (proceedUp){
-				this.map.destroy(this.x,this.y + i,this.strength);
-				proceedUp = !this.map.isBlocked(this.x,this.y+i);
-			}
-			if (proceedDown){
-				this.map.destroy(this.x,this.y - i,this.strength);
-				proceedDown = !this.map.isBlocked(this.x,this.y-i);
-			}
-		}*/
+        //Check for game over
+        data.bomberman.update();
 	}
 	
 	public void startTimer(){
@@ -121,6 +128,6 @@ public class Bomb extends Drawable implements ActionListener {
 	
     public boolean isExpired() {
         // Bomb is expired if timer is not running anymore
-        return !timer.isRunning();
+        return exploding || !timer.isRunning();
     }
 }
