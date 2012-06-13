@@ -1,12 +1,6 @@
 package map;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import xml_parser.MapParser;
 
 public class Map {
@@ -17,32 +11,29 @@ public class Map {
     private Field[][] m;
     private ArrayList<String> MapArray = null;
 
-    public Map(String xml){
+    public Map(String xml) {
         MapParser testing = new MapParser(xml);
         testing.parse();
         this.width = testing.get_width();
         this.height = testing.get_height();
         this.MapArray = testing.getMapElements();
         m = new Field[width][height]; /* sets mapsize */
-        DestructibleWall exit = new DestructibleWall(1);
-        exit.setExit(true);
-
+        
         for (int y = 0, i = 0; y < height; y++) {
             for (int x = 0; x < width; x++, i++) {
-                if (this.MapArray.get(i) == "Exit") {
+                if (this.MapArray.get(i).equals("Exit")) {
+                    DestructibleWall exit = new DestructibleWall(1);
+                    exit.setExit(true);
                     m[x][y] = exit;
                 } else
                     try {
                         m[x][y] = (Field) Class.forName(
                                 "map." + this.MapArray.get(i)).newInstance();
                     } catch (InstantiationException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
             }
