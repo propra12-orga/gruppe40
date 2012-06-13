@@ -18,7 +18,7 @@ public class Map {
         this.height = testing.get_height();
         this.MapArray = testing.getMapElements();
         m = new Field[width][height]; /* sets mapsize */
-        
+
         for (int y = 0, i = 0; y < height; y++) {
             for (int x = 0; x < width; x++, i++) {
                 if (this.MapArray.get(i).equals("Exit")) {
