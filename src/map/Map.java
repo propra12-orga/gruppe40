@@ -17,7 +17,7 @@ public class Map {
         this.width = testing.get_width();
         this.height = testing.get_height();
         this.MapArray = testing.getMapElements();
-        m = new Field[width][height]; /* sets mapsize */
+        m = new Field[this.width][this.height]; /* sets mapsize */
 
         for (int y = 0, i = 0; y < height; y++) {
             for (int x = 0; x < width; x++, i++) {
@@ -63,7 +63,7 @@ public class Map {
         }
 
         /* If it is a singleplayer-game spawn the exit */
-        if (singleplayer) {
+        if (this.singleplayer) {
             DestructibleWall lastWall = null;
             for (int y = 3; y < height - 3; y++) {
                 for (int x = 1; x < (width - 1); x++) {
