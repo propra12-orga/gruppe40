@@ -9,7 +9,7 @@ import java.awt.Toolkit;
 public class Tutorial {
 	
 	public Tutorial(String filepath) {
-		JFrame tutWindow = new JFrame("Tutorial");		
+		JFrame tutWindow = new JFrame("Steuerung");		
 		JTextArea tutText = new JTextArea();
 		
 		String line = null, document = "";
@@ -26,7 +26,7 @@ public class Tutorial {
 			//editing JTextArea
 			tutText.setText(document);
 			tutText.setEditable(false);
-			tutText.setFont(new Font("Arial", Font.PLAIN, 32));
+			tutText.setFont(new Font("Arial", Font.PLAIN, 24));
 		}
 		catch (IOException e) {
 			tutText.setText("Datei nicht gefunden");

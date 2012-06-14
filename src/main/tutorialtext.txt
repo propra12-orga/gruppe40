@@ -1,19 +1,8 @@
-Steuerung:
+	Spieler 1	Spieler 2	
 
-Spieler 1:
+   nach links	  - a -	  - j -	
+   nach rechts	  - d -	  - l -	
+   nach oben	  - w -	  - i -	
+   nach unten	  - s -	  - k -	
 
-a - nach links gehen
-d - nach rechts gehen
-w - nach oben
-s - nach unten
-
-e - Bombe platzieren
-
-Spieler 2:
-
-k - nach links
-ö - nach rechts
-o - nach oben
-l - nach unten
-
-p - Bombe
+   Bombe	  - e -	  - o -	
