@@ -6,7 +6,6 @@ import xml_parser.MapParser;
 public class Map {
 
     private int width, height;
-    private boolean singleplayer;
 
     private Field[][] m;
     private ArrayList<String> MapArray = null;
@@ -43,7 +42,6 @@ public class Map {
     public Map(int width, int height, boolean singleplayer) {
         this.width = width;
         this.height = height;
-        this.singleplayer = singleplayer;
         m = new Field[width][height]; /* sets mapsize */
 
         /* sets normal Fields everywhere */
@@ -57,13 +55,13 @@ public class Map {
         /* no walls at the spawnpoint */
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
-                if (Math.random() < 0.5)
+                if (Math.random() < 0.9)
                     m[x][y] = new DestructibleWall(1);
             }
         }
 
         /* If it is a singleplayer-game spawn the exit */
-        if (this.singleplayer) {
+        if (singleplayer) {
             DestructibleWall lastWall = null;
             for (int y = 3; y < height - 3; y++) {
                 for (int x = 1; x < (width - 1); x++) {
