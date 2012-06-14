@@ -1,8 +1,19 @@
 Steuerung:
 
+Spieler 1:
+
 a - nach links gehen
 d - nach rechts gehen
 w - nach oben
 s - nach unten
 
 e - Bombe platzieren
+
+Spieler 2:
+
+k - nach links
+ö - nach rechts
+o - nach oben
+l - nach unten
+
+p - Bombe
