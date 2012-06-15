@@ -92,15 +92,17 @@ public class Menu {
 		ActionListener sp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
-			    boolean singlePlayer = false;
+			    boolean singlePlayer = true;
 			    new Bomberman(base, x, y, fullscreen, singlePlayer);
 			}
 		};
 		
-		//Multiplayer coming soon
+		//Multiplayer
 		ActionListener mp = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+			    base.setVisible(false);
+                boolean singlePlayer = false;
+                new Bomberman(base, x, y, fullscreen, singlePlayer);
 			}
 		};
 		
