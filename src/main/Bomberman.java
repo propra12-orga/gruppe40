@@ -23,13 +23,14 @@ import game.Player;
 
 public class Bomberman {
 
-    private Container      pane;
-    private JFrame         menuFrame;
-    private GameData       data;
+    private Container pane;
+    private JFrame menuFrame;
+    private GameData data;
     // This is just for milestone 2, will be changed later
     private static boolean singlePlayer;
 
-    public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen, boolean singlePlayer) {
+    public Bomberman(JFrame menuFrame, int width, int height,
+            boolean fullscreen, boolean singlePlayer) {
         Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
@@ -43,7 +44,8 @@ public class Bomberman {
         data.map = new Map(11, 11, singlePlayer);
         data.gamePanel = new GamePanel(data);
         data.players.add(new Player("Player 1", 1, 1, 200, data));
-        if (!singlePlayer) data.players.add(new Player("Player 2", 9, 9, 200, data));
+        if (!singlePlayer)
+            data.players.add(new Player("Player 2", 9, 9, 200, data));
 
         pane = data.frame.getContentPane();
 
@@ -80,10 +82,12 @@ public class Bomberman {
             }
 
             @Override
-            public void componentHidden(ComponentEvent e) {}
+            public void componentHidden(ComponentEvent e) {
+            }
 
             @Override
-            public void componentMoved(ComponentEvent e) {}
+            public void componentMoved(ComponentEvent e) {
+            }
 
         };
         pane.addComponentListener(componentListener);
@@ -92,39 +96,41 @@ public class Bomberman {
             // This is just for milestone 2, will be changed later
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyChar()) {
 
-                    case 'W':
-                    case 'w':
-                    case 'A':
-                    case 'a':
-                    case 'S':
-                    case 's':
-                    case 'D':
-                    case 'd':
-                        data.players.get(0).stopMove();
+                case 'W':
+                case 'w':
+                case 'A':
+                case 'a':
+                case 'S':
+                case 's':
+                case 'D':
+                case 'd':
+                    data.players.get(0).stopMove();
                     break;
 
-                    case 'I':
-                    case 'i':
-                    case 'J':
-                    case 'j':
-                    case 'K':
-                    case 'k':
-                    case 'L':
-                    case 'l':
-                        if (!Bomberman.singlePlayer) data.players.get(1).stopMove();
+                case 'I':
+                case 'i':
+                case 'J':
+                case 'j':
+                case 'K':
+                case 'k':
+                case 'L':
+                case 'l':
+                    if (!Bomberman.singlePlayer)
+                        data.players.get(1).stopMove();
                     break;
 
-                    case KeyEvent.VK_ESCAPE:
-                        exit("Game closed");
+                case KeyEvent.VK_ESCAPE:
+                    exit("Game closed");
                     break;
 
-                    default:
+                default:
                     break;
                 }
                 forceRepaint();
@@ -135,59 +141,66 @@ public class Bomberman {
 
                 switch (e.getKeyChar()) {
 
-                    case 'W':
-                    case 'w':
-                        data.players.get(0).startMove(1);
+                case 'W':
+                case 'w':
+                    data.players.get(0).startMove(1);
                     break;
 
-                    case 'A':
-                    case 'a':
-                        data.players.get(0).startMove(4);
+                case 'A':
+                case 'a':
+                    data.players.get(0).startMove(4);
                     break;
 
-                    case 'S':
-                    case 's':
-                        data.players.get(0).startMove(3);
+                case 'S':
+                case 's':
+                    data.players.get(0).startMove(3);
                     break;
 
-                    case 'D':
-                    case 'd':
-                        data.players.get(0).startMove(2);
+                case 'D':
+                case 'd':
+                    data.players.get(0).startMove(2);
                     break;
 
-                    case 'E':
-                    case 'e':
-                        if (data.players.get(0).hasBomb()) data.players.get(0).putBomb();
+                case 'E':
+                case 'e':
+                    if (data.players.get(0).hasBomb())
+                        data.players.get(0).putBomb();
                     break;
 
-                    // Horrible code, I know
-                    // Will be replaced with network at milestone 3
-                    case 'I':
-                    case 'i':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(1);
+                // Horrible code, I know
+                // Will be replaced with network at milestone 3
+                case 'I':
+                case 'i':
+                    if (!Bomberman.singlePlayer)
+                        data.players.get(1).startMove(1);
                     break;
 
-                    case 'J':
-                    case 'j':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(4);
+                case 'J':
+                case 'j':
+                    if (!Bomberman.singlePlayer)
+                        data.players.get(1).startMove(4);
                     break;
 
-                    case 'K':
-                    case 'k':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(3);
+                case 'K':
+                case 'k':
+                    if (!Bomberman.singlePlayer)
+                        data.players.get(1).startMove(3);
                     break;
 
-                    case 'L':
-                    case 'l':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(2);
+                case 'L':
+                case 'l':
+                    if (!Bomberman.singlePlayer)
+                        data.players.get(1).startMove(2);
                     break;
 
-                    case 'O':
-                    case 'o':
-                        if (!Bomberman.singlePlayer) if (data.players.get(1).hasBomb()) data.players.get(1).putBomb();
+                case 'O':
+                case 'o':
+                    if (!Bomberman.singlePlayer)
+                        if (data.players.get(1).hasBomb())
+                            data.players.get(1).putBomb();
                     break;
 
-                    default:
+                default:
                     break;
                 }
                 forceRepaint();
@@ -199,7 +212,8 @@ public class Bomberman {
     }
 
     private void exit(String message) {
-        if (data.gameOver) return;
+        if (data.gameOver)
+            return;
         data.gameOver = true;
         // Show win dialog
         JOptionPane.showMessageDialog(data.frame, message);
@@ -236,9 +250,8 @@ public class Bomberman {
     }
 
     /**
-     * Force repaint to make sure everything is drawn.
-     * If there are no animated gifs visible nothing will be updated
-     * automatically.
+     * Force repaint to make sure everything is drawn. If there are no animated
+     * gifs visible nothing will be updated automatically.
      */
     public void forceRepaint() {
         data.frame.repaint();
@@ -248,8 +261,9 @@ public class Bomberman {
      * Repaints the JFrame and checks if game is over.
      */
     public void update() {
-        if (data.gameOver) return;
-        //Delay update so tie can actually happen
+        if (data.gameOver)
+            return;
+        // Delay update so tie can actually happen
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -258,28 +272,38 @@ public class Bomberman {
         LinkedList<Player> alive = new LinkedList<Player>();
         for (Player player : data.players) {
             // Count living players
-            if (player.isAlive()) alive.add(player);
+            if (player.isAlive())
+                alive.add(player);
 
-            // Get field the player is standing on
-            Field field = data.map.getField(data.players.get(0).getX(), data.players.get(0).getY());
-            // If player stands on exit
-            if (field instanceof Exit) {
-                // If there is an exit it should be single player
-                exit("You won!");
+            if (singlePlayer) {
+                // Get field the player is standing on
+                Field field = data.map.getField(data.players.get(0).getX(),
+                        data.players.get(0).getY());
+                // If player stands on exit
+                if (field instanceof Exit) {
+                    // If there is an exit it should be single player
+                    exit("You won!");
+                }
             }
         }
         switch (alive.size()) {
-            case 0:
+        case 0:
+            if (singlePlayer)
+                exit("You died");
+            else
                 exit("Tie");
             break;
-            
-            case 1:
+
+        case 1:
+
+            if (!singlePlayer)
                 exit(alive.getFirst().getName() + " won the game");
             break;
-            
-            default:
+
+        default:
             break;
         }
+
     }
 
 }
