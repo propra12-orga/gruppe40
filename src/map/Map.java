@@ -10,6 +10,10 @@ public class Map {
     private Field[][] m;
     private ArrayList<String> MapArray = null;
 
+    /**
+     * @param xml
+     *            - path of the xml-file
+     */
     public Map(String xml) {
         MapParser testing = new MapParser(xml);
         testing.parse();
@@ -144,11 +148,14 @@ public class Map {
     public Field getField(int x, int y) {
         return m[x][y];
     }
-    
+
     /**
-     * @param x - horizontal axis
-     * @param y - vertical axis
-     * @param damage - damage suffered
+     * @param x
+     *            - horizontal axis
+     * @param y
+     *            - vertical axis
+     * @param damage
+     *            - damage suffered
      * @return if the field was destroyed
      */
     public boolean destroy(int x, int y, int damage) {
