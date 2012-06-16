@@ -14,6 +14,7 @@ public class Menu {
 	static int x = 600, y = 600;
 	// TODO button to (de)select fullscreen
 	static boolean fullscreen = true;
+	static String mapName = "random";
 	
 	public static void main(String[] args) {
 		
@@ -27,69 +28,84 @@ public class Menu {
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
+		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
+		JLabel mapNames = new JLabel("Bitte wähle die entsprechende Karte:");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
-		final Dimension buttonSize = new Dimension(190,60);
-		final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		final Dimension dimButtonSize = new Dimension(190,60);
+		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 		final JButton buttonSP = new JButton("Starte Singleplayer");
 		final JButton buttonMP = new JButton("Starte Multiplayer");
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		
-		JRadioButton small = new JRadioButton("800 x 600", true);
-		JRadioButton medium = new JRadioButton("1024 x 768");
-		JRadioButton large = new JRadioButton("1280 x 1024");
+		JRadioButton rbSmall = new JRadioButton("800 x 600", true);
+		JRadioButton rbMedium = new JRadioButton("1024 x 768");
+		JRadioButton rbLarge = new JRadioButton("1280 x 1024");
 		
+		//drop-down menu
+		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
+		JComboBox cbMapChoice = new JComboBox(mapList);
+		
+		//screen solution buttons
 		ButtonGroup gameSizes = new ButtonGroup();
-		gameSizes.add(small);
-		buttonsSize.add(small);
-		gameSizes.add(medium);
-		buttonsSize.add(medium);
-		gameSizes.add(large);
-		buttonsSize.add(large);
+		gameSizes.add(rbSmall);
+		buttonsSize.add(rbSmall);
+		gameSizes.add(rbMedium);
+		buttonsSize.add(rbMedium);
+		gameSizes.add(rbLarge);
+		buttonsSize.add(rbLarge);
 		
+		//close window - adding options
 		base.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		base.addWindowListener(new MenuListener());
+		
 		//setting up layout
-		base.setSize(600, 300);
+		base.setSize(600, 400);
 		base.setLayout(cards);
-		menu.setLayout(new GridLayout(4, 1));
-		base.setLocation((int)screenSize.getWidth()/2 - base.getWidth()/2, (int)screenSize.getHeight()/2 - base.getHeight()/2);
+		menu.setLayout(new GridLayout(5, 1));
+		base.setLocation((int)dimScreenSize.getWidth()/2 - base.getWidth()/2, (int)dimScreenSize.getHeight()/2 - base.getHeight()/2);
 		base.setResizable(false);
 		buttons.setLayout(new FlowLayout());
 		title.setHorizontalAlignment(0);
 		creators.setHorizontalAlignment(0);
 		
-		buttonSP.setPreferredSize(buttonSize);
-		buttonMP.setPreferredSize(buttonSize);
-		buttonTutorial.setPreferredSize(buttonSize);
+        //setting up button size
+		buttonSP.setPreferredSize(dimButtonSize);
+		buttonMP.setPreferredSize(dimButtonSize);
+		buttonTutorial.setPreferredSize(dimButtonSize);
 		
 		title.setFont(new Font("Arial", Font.PLAIN, 72));
 		
-		//adding Buttons to Panel
+		//adding buttons to panel
 		buttons.add(buttonSP);
 		buttons.add(buttonMP);
 		buttons.add(buttonTutorial);
+		
+		//adding drop-down menu to panel
+		chooseMap.add(mapNames);
+		chooseMap.add(cbMapChoice);
 		
 		//adding everything to Frame
 		menu.add(title);
 		menu.add(buttons);
 		menu.add(buttonsSize);
+		menu.add(chooseMap);
+		menu.add(creators);
 		
 		base.add(menu, "menue");
-		menu.add(creators);
 		
 		//menu.pack();
 		base.setVisible(true);
 		cards.show(base.getContentPane(), "menue");
 		
-		/*************************************
-		 * Actions taken when Button clicked *
-		 *************************************/
+		/*****************************************************
+		 * Actionlistner - Actions taken when Button clicked *
+		 *****************************************************/
 		
 		//Singleplayer
-		ActionListener sp = new ActionListener() {
+		ActionListener alSP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
 			    boolean singlePlayer = true;
@@ -98,7 +114,7 @@ public class Menu {
 		};
 		
 		//Multiplayer
-		ActionListener mp = new ActionListener() {
+		ActionListener alMP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
                 boolean singlePlayer = false;
@@ -107,40 +123,47 @@ public class Menu {
 		};
 		
 		//Tutorial
-		ActionListener tut = new ActionListener() {
+		ActionListener alTut = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				new Tutorial("tutorialtext.txt");
 			}
 		};
 		
-		ActionListener butSmall = new ActionListener() {
+		ActionListener alSmall = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				x = 800;
 				y = 600;
 			}
 		};
 		
-		ActionListener butMedium = new ActionListener() {
+		ActionListener alMedium = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				x = 1024;
 				y = 768;
 			}
 		};
 		
-		ActionListener butLarge = new ActionListener() {
+		ActionListener alLarge = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				x = 1280;
 				y = 1024;
 			}
 		};
 		
+		ActionListener alMapChoice = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				mapName = (String)((JComboBox)e.getSource()).getSelectedItem();
+			}
+		};
+		
 		//adding listeners
-		buttonSP.addActionListener(sp);
-		buttonMP.addActionListener(mp);
-		buttonTutorial.addActionListener(tut);
-		small.addActionListener(butSmall);
-		medium.addActionListener(butMedium);
-		large.addActionListener(butLarge);
+		buttonSP.addActionListener(alSP);
+		buttonMP.addActionListener(alMP);
+		buttonTutorial.addActionListener(alTut);
+		rbSmall.addActionListener(alSmall);
+		rbMedium.addActionListener(alMedium);
+		rbLarge.addActionListener(alLarge);
+		cbMapChoice.addActionListener(alMapChoice);
 		
 	}
 	
