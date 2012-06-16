@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.awt.Dimension;
 
 public class Menu {
@@ -46,7 +47,7 @@ public class Menu {
 		
 		//drop-down menu
 		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
-		JComboBox cbMapChoice = new JComboBox(mapList);
+		JComboBox<String> cbMapChoice = new JComboBox<String>(mapList);
 		
 		//screen solution buttons
 		ButtonGroup gameSizes = new ButtonGroup();
@@ -152,7 +153,8 @@ public class Menu {
 		
 		ActionListener alMapChoice = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				mapName = (String)((JComboBox)e.getSource()).getSelectedItem();
+				JComboBox<String> comboBox = (JComboBox<String>)e.getSource();
+				mapName = (String)comboBox.getSelectedItem();
 			}
 		};
 		
