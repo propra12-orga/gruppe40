@@ -46,7 +46,7 @@ public class Bomberman {
         	data.map = new Map(11, 11, singlePlayer);
         	break;
         default:
-        	data.map = new Map(11, 11, singlePlayer, mapName);
+        	data.map = new Map(mapName);
         	break;
         }
         
