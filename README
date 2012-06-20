@@ -10,64 +10,22 @@
       (_/     \_) 
 
 
-*************
-offene Fragen
-*************
-Ich muss die Bombe und die Spielfigur noch verschwinden lassen (Objekte zerstören).
-Bombe: Bombe zerstören erst nachdem Timer abgelaufen ist, wie lösche ich die Referenz (=null geht hier nicht)?
-Figuer: Wie kann man das bei einem Multiplayer-Spiel umsetzen?
+********
+Generell
+********
+PARSER FUNZELT NICHT!
 
-
-
-************
-offene Ziele
-************
-
-Weitere Ziele: Laufende Bewegung fließend machen
+++++++ to do ++++++
+Laufende Bewegung fließend machen
 Superbombe einführen
 Geschwindigkeit der Spielfigur durch Item ändern
 
-
-***************
-geklärte Fragen
-***************
-
-- Um irgendwas in verschiedene Richtungen zu tun kann man zwei Arrays verwenden (siehe z.B. Pathfinding/AI code)
-- final static Variablen fuer alle willkuerlich gewaehlten Werte (Richtungen, strength)?
-- Wozu ist Item?
-+++++++ falls es neben Bombe noch weitere Items später gibt, würde ich dann entsprechend gucken, ob das noch Sinn ergibt +++++
-
-- Hat Bomberman nur eine Bombe? Und wenn ja, warum hat der die? Der wirft die doch Weg
-+++++++ er soll sie wegwerfen, ich weiß leider nicht, wie das geht ++++++
-
-- Wo soll der Einstiegspunkt sein? (public static void main)
-- Wer fuegt alles zusammen?
-
 	  
-******
-NEWS
-******
-_____________________________________________________________________________________________________
-Korred:
-- XML-Parser + Beispiel-Code sind jetzt verfügbar
-- Dominik muss nurnoch etwas am Map Konstruktor machen (und evtl. noch den Code von "keiner" hinzufügen)
-_____________________________________________________________________________________________________
-Keiner:
-Ausserdem scheint im pdf zum dritten Milestone Netzwerk verpflichtend zu werden, was viele Probleme aufwirft
-- Server/Client/P2P?
-- Wie synchronisieren (Timer problematisch)?
-______________________________________________________________________________________________________
-
-************************************************/
-
-
-Aufgabenverteilung:
 
 Philipp
 ----------
 Grafiken/Oberflaeche
-XML-Parser - Map Auslesen
-(XML_Map-Generator falls Zeit ist)
+
 
 Dominik
 ----------
