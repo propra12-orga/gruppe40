@@ -21,6 +21,7 @@ public class StartNetwork {
 		final JButton startServer = new JButton("Server starten");
 		final JButton editIP = new JButton("IP aendern");
 		final JTextArea ipText = new JTextArea();
+		String iP;
 		
 		base.setLayout(new GridLayout(2,1));
 		buttonsStart.setLayout(new FlowLayout());
@@ -42,12 +43,12 @@ public class StartNetwork {
 
 		//editing JTextArea
 		ipText.setText("127.0.0.1");
-		ipText.setEditable(false);
+		ipText.setEditable(true);
 		ipText.setFont(new Font("Arial", Font.PLAIN, 24));
 		
 		ActionListener alChange = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				ipText.setEditable(true);
+				iP = ipText.getText();
 			}
 		};
 		

@@ -65,7 +65,7 @@ public class Menu {
 		base.addWindowListener(new MenuListener());
 		
 		//setting up layout
-		base.setSize(600, 400);
+		base.setSize(600, 450);
 		base.setLayout(cards);
 		menu.setLayout(new GridLayout(6, 1));
 		base.setLocation((int)dimScreenSize.getWidth()/2 - base.getWidth()/2, (int)dimScreenSize.getHeight()/2 - base.getHeight()/2);
