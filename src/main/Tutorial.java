@@ -39,10 +39,11 @@ public class Tutorial {
 		Dimension windowSize = tutText.getPreferredSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		//setting popup size to match JTextArea
+		//setting up popup size to match JTextArea
 		tutWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		tutWindow.setSize(windowSize.width+20, windowSize.height+40);
 		tutWindow.setVisible(true);
+		tutWindow.setResizable(false);
 		
 		Dimension center = new Dimension((int)screenSize.getWidth()/2 - tutWindow.getWidth()/2, (int)screenSize.getHeight()/2 - tutWindow.getHeight()/2);
 		tutWindow.setLocation((int)center.getWidth(), (int)center.getHeight());

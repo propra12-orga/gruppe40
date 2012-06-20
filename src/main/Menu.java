@@ -29,6 +29,7 @@ public class Menu {
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
+		JPanel network = new JPanel();
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
 		JLabel mapNames = new JLabel("Karte:");
@@ -40,6 +41,7 @@ public class Menu {
 		final JButton buttonSP = new JButton("Starte Singleplayer");
 		final JButton buttonMP = new JButton("Starte Multiplayer");
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
+		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
 		
 		JRadioButton rbSmall = new JRadioButton("800 x 600", true);
 		JRadioButton rbMedium = new JRadioButton("1024 x 768");
@@ -65,7 +67,7 @@ public class Menu {
 		//setting up layout
 		base.setSize(600, 400);
 		base.setLayout(cards);
-		menu.setLayout(new GridLayout(5, 1));
+		menu.setLayout(new GridLayout(6, 1));
 		base.setLocation((int)dimScreenSize.getWidth()/2 - base.getWidth()/2, (int)dimScreenSize.getHeight()/2 - base.getHeight()/2);
 		base.setResizable(false);
 		buttons.setLayout(new FlowLayout());
@@ -76,6 +78,7 @@ public class Menu {
 		buttonSP.setPreferredSize(dimButtonSize);
 		buttonMP.setPreferredSize(dimButtonSize);
 		buttonTutorial.setPreferredSize(dimButtonSize);
+		buttonNetwork.setPreferredSize(dimButtonSize);
 		
 		title.setFont(new Font("Arial", Font.PLAIN, 72));
 		
@@ -88,11 +91,15 @@ public class Menu {
 		chooseMap.add(mapNames);
 		chooseMap.add(cbMapChoice);
 		
+		//adding button to networkpanel
+		network.add(buttonNetwork);
+		
 		//adding everything to Frame
 		menu.add(title);
 		menu.add(buttons);
 		menu.add(buttonsSize);
 		menu.add(chooseMap);
+		menu.add(network);
 		menu.add(creators);
 		
 		base.add(menu, "menue");
@@ -130,6 +137,13 @@ public class Menu {
 			}
 		};
 		
+		//Netzwerk
+		ActionListener alNetwork = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				new StartNetwork();
+			}
+		};
+		
 		ActionListener alSmall = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				x = 800;
@@ -162,6 +176,7 @@ public class Menu {
 		buttonSP.addActionListener(alSP);
 		buttonMP.addActionListener(alMP);
 		buttonTutorial.addActionListener(alTut);
+		buttonNetwork.addActionListener(alNetwork);
 		rbSmall.addActionListener(alSmall);
 		rbMedium.addActionListener(alMedium);
 		rbLarge.addActionListener(alLarge);
