@@ -31,7 +31,7 @@ public class Menu {
 		JPanel buttonsSize = new JPanel();
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
-		JLabel mapNames = new JLabel("Bitte w�hle die entsprechende Karte:");
+		JLabel mapNames = new JLabel("Karte:");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
 		final Dimension dimButtonSize = new Dimension(190,60);
