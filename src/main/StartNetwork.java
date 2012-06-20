@@ -1,12 +1,11 @@
 package main;
 
 import javax.swing.*;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,50 +13,77 @@ import java.awt.event.ActionListener;
 public class StartNetwork {
 	
 	public StartNetwork() {
+		//panels etc...
 		JFrame networkWindow = new JFrame("Netzwerkeinstellungen");
 		JPanel base = new JPanel();
 		JPanel buttonsStart = new JPanel();
-		final JButton startGame = new JButton("Verbinde zum Spiel");
-		final JButton startServer = new JButton("Server starten");
-		final JButton editIP = new JButton("IP aendern");
-		final JTextArea ipText = new JTextArea();
+		final JButton buttonConnectGame = new JButton("Verbinde zum Spiel");
+		final JButton buttonStartServer = new JButton("Server starten");
+		final JButton buttonEditIP = new JButton("IP aendern");
+		final JTextPane paneIP = new JTextPane();
 		
 		base.setLayout(new FlowLayout());
 		buttonsStart.setLayout(new FlowLayout());
-		Dimension defaultSize = new Dimension(180,70);
-		startGame.setPreferredSize(defaultSize);
-		startServer.setPreferredSize(defaultSize);
-		ipText.setPreferredSize(new Dimension(350, 70));
-		editIP.setPreferredSize(new Dimension(350,35));
 		
-		buttonsStart.add(startGame);
-		buttonsStart.add(startServer);
+		buttonsStart.add(buttonConnectGame);
+		buttonsStart.add(buttonStartServer);
 		
 		base.add(buttonsStart);
-		base.add(ipText);
-		base.add(editIP);
+		base.add(paneIP);
+		base.add(buttonEditIP);
 
-		//editing JTextArea
-		ipText.setText("127.0.0.1");
-		ipText.setEditable(true);
-		ipText.setFont(new Font("Arial", Font.PLAIN, 24));
+		//editing JTextPane
+		StyleContext.NamedStyle styleCenter = StyleContext.getDefaultStyleContext().new NamedStyle();
+		StyleConstants.setAlignment(styleCenter, StyleConstants.ALIGN_CENTER);
+		paneIP.setText("127.0.0.1");
+		paneIP.setEditable(false);
+		paneIP.setLogicalStyle(styleCenter);
 		
+		//changing ip
 		ActionListener alChange = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				String iP = ipText.getText();
+				if(paneIP.isEditable()) {
+					paneIP.setEditable(false);
+					buttonEditIP.setText("IP aendern");
+				}
+				else {
+					paneIP.setEditable(true);
+					buttonEditIP.setText("IP bestaetigen");
+				}
 			}
 		};
 		
-		editIP.addActionListener(alChange);
+		//start server
+		ActionListener alServer = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		};
 		
-		//setting popup size to match JTextArea
+		//connect to game
+		ActionListener alConnect = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		};
+		
+		buttonEditIP.addActionListener(alChange);
+		buttonStartServer.addActionListener(alServer);
+		buttonConnectGame.addActionListener(alConnect);
+		
+		
+		//setting up sizes to match everything
+		buttonConnectGame.setPreferredSize(new Dimension(180, 70));
+		buttonStartServer.setPreferredSize(new Dimension(180, 70));
+		paneIP.setPreferredSize(new Dimension(350, 35));
+		buttonEditIP.setPreferredSize(new Dimension(350, 35));
+		base.setPreferredSize(new Dimension(435, 175));
 		networkWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		networkWindow.setSize(450, 250);
-		base.setPreferredSize(new Dimension(435,210));
+		networkWindow.setSize(450, 215);
 		networkWindow.setVisible(true);
 		networkWindow.setResizable(false);
 		
-		//gets dimensions from JTextArea (calculation based on font-size etc.)
+		//gets dimensions from screen and calculates center
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension center = new Dimension((int)screenSize.getWidth()/2 - networkWindow.getWidth()/2, (int)screenSize.getHeight()/2 - networkWindow.getHeight()/2);
 		
