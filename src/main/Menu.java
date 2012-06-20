@@ -31,7 +31,7 @@ public class Menu {
 		JPanel buttonsSize = new JPanel();
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
-		JLabel mapNames = new JLabel("Bitte wähle die entsprechende Karte:");
+		JLabel mapNames = new JLabel("Bitte wï¿½hle die entsprechende Karte:");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
 		final Dimension dimButtonSize = new Dimension(190,60);
@@ -47,7 +47,7 @@ public class Menu {
 		
 		//drop-down menu
 		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
-		JComboBox<String> cbMapChoice = new JComboBox<String>(mapList);
+		JComboBox cbMapChoice = new JComboBox(mapList);
 		
 		//screen solution buttons
 		ButtonGroup gameSizes = new ButtonGroup();
@@ -153,7 +153,7 @@ public class Menu {
 		
 		ActionListener alMapChoice = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				JComboBox<String> comboBox = (JComboBox<String>)e.getSource();
+				JComboBox comboBox = (JComboBox)e.getSource();
 				mapName = (String)comboBox.getSelectedItem();
 			}
 		};
