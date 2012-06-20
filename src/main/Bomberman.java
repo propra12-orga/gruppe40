@@ -46,7 +46,7 @@ public class Bomberman {
         	data.map = new Map(11, 11, singlePlayer);
         	break;
         default:
-        	data.map = new Map(mapName);
+        	data.map = new Map(System.getProperty("user.dir")+"\\bin\\xml_parser\\"+mapName+".xml");
         	break;
         }
         
