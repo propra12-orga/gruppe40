@@ -183,6 +183,8 @@ public class Player extends Drawable implements ActionListener {
         // If there are no animated gifs visible nothing will be updated
         // automatically
         data.frame.repaint();
+        //Check win conditions
+        data.bomberman.update();
     }
 
     public void setAlive(boolean alive) {
