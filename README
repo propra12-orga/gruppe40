@@ -13,50 +13,38 @@
 ********
 Generell
 ********
-PARSER FUNZELT NICHT!
+!!! PARSER FUNZELT NICHT !!!
 
 ++++++ to do ++++++
 Laufende Bewegung fließend machen
-Superbombe einführen
-Geschwindigkeit der Spielfigur durch Item ändern
+Anzahl der Bomben limitieren!
+Items(+Geschwindigkeit, +Bombenradius, +Anzahl)
+Netzwerk
+AI?
+neue Grafiken
 
 	  
 
 Philipp
 ----------
-Grafiken/Oberflaeche
+Grafiken/Oberflaeche zeichnen
 
 
 Dominik
 ----------
-Spielfeld
-- Groesse
--verschiedene Felder?
-- feste Mauern
-- zerstoerbare Mauern (random)
---verschiedene Mauern?
-- AUSGANG!
---Zufällig oder fest plaziert?
+Spielfeld (Maps)
 
 
 Thomas
 ----------
-AI
+Maedchen für alles
 
 
 Lisa
 ----------
-"drawable"
-- Figur
--- move/Bombe legen
-
-- Bombe
--- Radius
+"drawables" - Figuren, Bomben, Items
 
 
 Sebastian
 ----------
-Menue
-- Neustart
-- Stop
-- Beenden
+Menuefuehrung
