@@ -97,6 +97,10 @@ public class Map {
             }
         }
     }
+    
+    public Map(int width, int height, boolean SinglePlayer, String mapName) {
+    	
+    }
 
     /**
      * checking if the field is blocked

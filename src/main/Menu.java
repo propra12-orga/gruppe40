@@ -15,7 +15,7 @@ public class Menu {
 	static int x = 600, y = 600;
 	// TODO button to (de)select fullscreen
 	static boolean fullscreen = true;
-	static String mapName = "random";
+	static String mapName = "Zufall";
 	
 	public static void main(String[] args) {
 		
@@ -110,7 +110,7 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
 			    boolean singlePlayer = true;
-			    new Bomberman(base, x, y, fullscreen, singlePlayer);
+			    new Bomberman(base, x, y, fullscreen, singlePlayer, mapName);
 			}
 		};
 		
@@ -119,7 +119,7 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
                 boolean singlePlayer = false;
-                new Bomberman(base, x, y, fullscreen, singlePlayer);
+                new Bomberman(base, x, y, fullscreen, singlePlayer, mapName);
 			}
 		};
 		

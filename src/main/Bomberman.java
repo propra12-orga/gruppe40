@@ -30,7 +30,7 @@ public class Bomberman {
     private static boolean singlePlayer;
 
     public Bomberman(JFrame menuFrame, int width, int height,
-            boolean fullscreen, boolean singlePlayer) {
+            boolean fullscreen, boolean singlePlayer, String mapName) {
         Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
@@ -41,7 +41,15 @@ public class Bomberman {
         data.bombs = new LinkedList<Bomb>();
         data.players = new Vector<Player>();
         data.bomberman = this;
-        data.map = new Map(11, 11, singlePlayer);
+        switch(mapName) {
+        case "Zufall":
+        	data.map = new Map(11, 11, singlePlayer);
+        	break;
+        default:
+        	data.map = new Map(11, 11, singlePlayer, mapName);
+        	break;
+        }
+        
         data.gamePanel = new GamePanel(data);
         data.players.add(new Player("Player 1", 1, 1, 200, data));
         if (!singlePlayer)
