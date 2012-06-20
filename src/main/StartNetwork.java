@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
@@ -16,30 +17,25 @@ public class StartNetwork {
 		JFrame networkWindow = new JFrame("Netzwerkeinstellungen");
 		JPanel base = new JPanel();
 		JPanel buttonsStart = new JPanel();
-		JPanel ipChange = new JPanel();
 		final JButton startGame = new JButton("Verbinde zum Spiel");
 		final JButton startServer = new JButton("Server starten");
 		final JButton editIP = new JButton("IP aendern");
 		final JTextArea ipText = new JTextArea();
-		String iP;
 		
-		base.setLayout(new GridLayout(2,1));
+		base.setLayout(new FlowLayout());
 		buttonsStart.setLayout(new FlowLayout());
-		ipChange.setLayout(new FlowLayout());
-		Dimension defaultSize = new Dimension(150,70);
-		ipText.setPreferredSize(defaultSize);
+		Dimension defaultSize = new Dimension(180,70);
 		startGame.setPreferredSize(defaultSize);
 		startServer.setPreferredSize(defaultSize);
-		editIP.setPreferredSize(defaultSize);
+		ipText.setPreferredSize(new Dimension(350, 70));
+		editIP.setPreferredSize(new Dimension(350,35));
 		
 		buttonsStart.add(startGame);
 		buttonsStart.add(startServer);
 		
-		ipChange.add(ipText);
-		ipChange.add(editIP);
-		
 		base.add(buttonsStart);
-		base.add(ipChange);
+		base.add(ipText);
+		base.add(editIP);
 
 		//editing JTextArea
 		ipText.setText("127.0.0.1");
@@ -48,7 +44,7 @@ public class StartNetwork {
 		
 		ActionListener alChange = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				iP = ipText.getText();
+				String iP = ipText.getText();
 			}
 		};
 		
@@ -56,12 +52,10 @@ public class StartNetwork {
 		
 		//setting popup size to match JTextArea
 		networkWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		networkWindow.setSize(400, 200);
+		networkWindow.setSize(450, 250);
+		base.setPreferredSize(new Dimension(435,210));
 		networkWindow.setVisible(true);
 		networkWindow.setResizable(false);
-		ipChange.setAlignmentX(0);
-		ipChange.setAlignmentY(0);
-		buttonsStart.setSize(200, 200);
 		
 		//gets dimensions from JTextArea (calculation based on font-size etc.)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
