@@ -40,14 +40,16 @@ public class Bomberman {
         data.bombs = new LinkedList<Bomb>();
         data.players = new Vector<Player>();
         data.bomberman = this;
-        if (mapName.equals("Zufall")) data.map = new Map(11, 11, singlePlayer);
-        else data.map = new Map(mapName);
-        /*
-         * switch(mapName) { case "Zufall": data.map = new Map(11, 11,
-         * singlePlayer); break; default: data.map = new
-         * Map(System.getProperty("user.dir"
-         * )+"\\bin\\xml_parser\\"+mapName+".xml"); break; }
-         */
+
+         switch(mapName) { 
+         	case "Zufall": 
+         		data.map = new Map(11, 11, singlePlayer); 
+         		break; 
+         	default: 
+         		data.map = new Map(mapName); 
+         		break; 
+        }
+         		
         data.gamePanel = new GamePanel(data);
         data.players.add(new Player("Player 1", 1, 1, 200, data));
         if (!singlePlayer) data.players.add(new Player("Player 2", 9, 9, 200, data));
