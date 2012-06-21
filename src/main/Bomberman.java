@@ -41,7 +41,7 @@ public class Bomberman {
         data.players = new Vector<Player>();
         data.bomberman = this;
         if (mapName.equals("Zufall")) data.map = new Map(11, 11, singlePlayer);
-        else data.map = new Map(mapName + ".xml");
+        else data.map = new Map(mapName);
         /*
          * switch(mapName) { case "Zufall": data.map = new Map(11, 11,
          * singlePlayer); break; default: data.map = new

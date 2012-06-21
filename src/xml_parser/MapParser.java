@@ -36,7 +36,7 @@ package xml_parser;
                     XMLReader reader = saxParser.getXMLReader();
                     MapHandler handler = new MapHandler();
                     reader.setContentHandler(handler);
-                    reader.parse(this.map);
+                    reader.parse(this.getClass().getClassLoader().getResource("xml_parser/" + this.map + ".xml").getPath());
                     this.MapArray = handler.getMapElements();
                     this.width = handler.get_width();
                     this.height = handler.get_height();
