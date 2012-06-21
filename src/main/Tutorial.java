@@ -42,16 +42,12 @@ public class Tutorial {
 		//setting up popup size to match JTextArea
 		tutWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		tutWindow.setSize(windowSize.width+20, windowSize.height+40);
+		tutWindow.add(tutText);
 		tutWindow.setVisible(true);
 		tutWindow.setResizable(false);
 		
 		Dimension center = new Dimension((int)screenSize.getWidth()/2 - tutWindow.getWidth()/2, (int)screenSize.getHeight()/2 - tutWindow.getHeight()/2);
 		tutWindow.setLocation((int)center.getWidth(), (int)center.getHeight());
-		
-		//class popup is protected, so we use a factory to obtain instances
-		PopupFactory factory = PopupFactory.getSharedInstance();
-		final Popup tutorial = factory.getPopup(tutWindow, tutText, (int)center.getWidth()+10, (int)center.getHeight()+30);
-		tutorial.show();
 	}
 
 }
