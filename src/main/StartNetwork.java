@@ -77,7 +77,7 @@ public class StartNetwork {
 		buttonStartServer.setPreferredSize(new Dimension(180, 70));
 		paneIP.setPreferredSize(new Dimension(350, 35));
 		buttonEditIP.setPreferredSize(new Dimension(350, 35));
-		base.setPreferredSize(new Dimension(435, 175));
+		base.setPreferredSize(new Dimension(500, 175));
 		networkWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		networkWindow.setSize(450, 215);
 		networkWindow.setVisible(true);
@@ -90,9 +90,12 @@ public class StartNetwork {
 		networkWindow.setLocation((int)center.getWidth(), (int)center.getHeight());
 		
 		//class popup is protected, so we use a factory to obtain instances
-		PopupFactory factory = PopupFactory.getSharedInstance();
-		final Popup tutorial = factory.getPopup(networkWindow, base, (int)center.getWidth()+10, (int)center.getHeight()+30);
-		tutorial.show();
+		//PopupFactory factory = PopupFactory.getSharedInstance();
+		//final Popup tutorial = factory.getPopup(networkWindow, base, (int)center.getWidth()+10, (int)center.getHeight()+30);
+		//tutorial.show();
+		networkWindow.add(base);
+		networkWindow.pack();
+		networkWindow.setVisible(true);
 	}
 
 }
