@@ -64,15 +64,16 @@ public class Map {
             }
         }
 
-        /* If it is a singleplayer-game spawn the exit */
-        if (singleplayer) {
-            DestructibleWall lastWall = null;
-            for (int y = 3; y < height - 3; y++) {
-                for (int x = 1; x < (width - 1); x++) {
-                    if (Math.random() < 0.9) {
+        DestructibleWall lastWall = null;
+        for (int y = 3; y < height - 3; y++) {
+            for (int x = 1; x < (width - 1); x++) {
+                if (Math.random() < 0.9) {
+                    /* If it is a singleplayer-game spawn the exit */
+                    if (singleplayer) {
                         lastWall = new DestructibleWall(1);
                         m[x][y] = lastWall;
-                    }
+                    } else
+                        m[x][y] = new DestructibleWall(1);
                 }
             }
             if (lastWall != null)
