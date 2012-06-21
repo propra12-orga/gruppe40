@@ -72,6 +72,7 @@ public class Bomb extends Drawable implements ActionListener {
 	    //Prevent infinite loop from two bombs triggering each other
 	    if (exploding) return;
 	    exploding = true;
+        map.setBlocked(this.x, this.y, false);
 		map.destroy(x, y, strength);
 		// All directions (right, up, left, down)
 		int dx[] = {1, 0, -1, 0};
@@ -91,7 +92,6 @@ public class Bomb extends Drawable implements ActionListener {
 		    }
 		}
         //Check for game over
-        map.setBlocked(this.x, this.y, false);
         data.bomberman.update();
 	}
 	
