@@ -40,19 +40,16 @@ public class Bomberman {
         data.bombs = new LinkedList<Bomb>();
         data.players = new Vector<Player>();
         data.bomberman = this;
-
-         switch(mapName) { 
-         	case "Zufall": 
-         		data.map = new Map(11, 11, singlePlayer); 
-         		break; 
-         	default: 
-         		data.map = new Map(mapName); 
-         		break; 
+        
+        if (mapName.equals("Zufall")) {
+            data.map = new Map(11, 11, singlePlayer);             
+        }else {
+            data.map = new Map(mapName); 
         }
          		
         data.gamePanel = new GamePanel(data);
-        data.players.add(new Player("Player 1", 1, 1, 200, data));
-        if (!singlePlayer) data.players.add(new Player("Player 2", 9, 9, 200, data));
+        data.players.add(new Player("Spieler 1", 1, 1, 200, data));
+        if (!singlePlayer) data.players.add(new Player("Spieler 2", 9, 9, 200, data));
 
         pane = data.frame.getContentPane();
 
@@ -130,7 +127,7 @@ public class Bomberman {
                     break;
 
                     case KeyEvent.VK_ESCAPE:
-                        exit("Game closed");
+                        exit("Spiel beendet.");
                     break;
 
                     default:
@@ -274,18 +271,18 @@ public class Bomberman {
                 // If player stands on exit
                 if (field instanceof Exit) {
                     // If there is an exit it should be single player
-                    exit("You won!");
+                    exit("Du hast gewonnen!");
                 }
             }
         }
         switch (alive.size()) {
             case 0:
-                if (singlePlayer) exit("You died");
+                if (singlePlayer) exit("Du hast verloren.");
                 else exit("Tie");
             break;
 
             case 1:
-                if (!singlePlayer) exit(alive.getFirst().getName() + " won the game");
+                if (!singlePlayer) exit(alive.getFirst().getName() + " hat das Spiel gewonnen.");
             break;
 
             default:

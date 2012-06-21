@@ -36,6 +36,7 @@ package xml_parser;
                     XMLReader reader = saxParser.getXMLReader();
                     MapHandler handler = new MapHandler();
                     reader.setContentHandler(handler);
+                    //Resource loader is able to locate resource by relative path and can give absolute path
                     reader.parse(this.getClass().getClassLoader().getResource("xml_parser/" + this.map + ".xml").getPath());
                     this.MapArray = handler.getMapElements();
                     this.width = handler.get_width();
