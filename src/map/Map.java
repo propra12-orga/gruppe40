@@ -111,6 +111,15 @@ public class Map {
     public boolean isBlocked(int x, int y) {
         return m[x][y].getStrength() != 0;
     }
+    
+    public void setBlocked(int x, int y, boolean block) {
+        if(block) {
+        	m[x][y].setStrength(10);
+        }
+        else {
+        	m[x][y].setStrength(0);
+        }
+    }
 
     /**
      * checking if the field is part of the map

@@ -91,6 +91,7 @@ public class Bomb extends Drawable implements ActionListener {
 		    }
 		}
         //Check for game over
+        map.setBlocked(this.x, this.y, false);
         data.bomberman.update();
 	}
 	

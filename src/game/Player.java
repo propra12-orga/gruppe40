@@ -156,6 +156,7 @@ public class Player extends Drawable implements ActionListener {
         if (!alive) return;
         Bomb bomb = new Bomb(x, y, data);
         bomb.startTimer();
+        map.setBlocked(x, y, true);
         synchronized (data.drawables) {
             data.drawables.add(bomb);
         }
