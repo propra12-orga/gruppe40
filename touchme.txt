@@ -1,0 +1,69 @@
+             \|/
+            .-*-         
+           / /|\         
+          _L_            
+        ,"   ".          
+    (\ /  O O  \ /)      Bomberman
+     \|    _    |/       Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer
+       \  (_)  /         HHU - Propra 2012
+       _/.___,\_         
+      (_/     \_) 
+
+
+*************
+* DAS SPIEL *
+*************
+
+Du bist Bomberman. Schmeiß dich in die Schlacht und bombe alles weg.
+Unter manchen Kisten verstecken sich Power-UPs - wirst du die ultimative Killermaschine?
+Doch aufgepasst: Deine Gegner wollen dir ans Leder, denn es kann nur einen BOMBERMAN geben!
+Der Spaß für Jung und Alt. Bombenstimmung garantiert!
+
+
+
+
+
+*************
+* STEUERUNG *
+*************
+
+Das Menü wird vorzugsweise mit der Maus gesteuert.
+Sobald das Spiel startet - nicht erschrecken, fullscreen - geht's auch schon los.
+
+Spieler 1 bewegt sich per "wasd", Bombe legen mit "e".
+
+Spieler 2 entsprechend mit "ijkl" und Bombe per "o".
+
+Jederzeit nachlesbar per Klick auf "Steuerung ansehen".
+
+Das Spiel kann durch Tastendruck auf "esc" verlassen werden.
+
+
+Geheimtipp Multiplayer: alt+f4 bietet den ultimativen Cheat - werde der GOLDENE BOMBERMAN!
+
+
+
+
+
+*********************
+* SPIEL AN EINEM PC *
+*********************
+
+Einzelspieler: Du gegen den Rest der Welt - wirst du dieses Abenteuer heil überstehen?
+
+Mehrspieler: Messe dich mit deinem Freund (ein PC) und finde heraus wer die größten "Bomben" hat.
+
+
+
+
+
+************
+* NETZWERK *
+************
+
+Server starten: Einer muss es tun - kein Server, kein Spiel.
+
+Mit Spiel verbinden: Klinke dich in einen offenen Server ein - Achtung: IP korrekt?
+
+IP ändern/bestätigen: Der schwerste Part - zunächst IP freigeben per "IP ändern",
+	dann korrekte IP eintragen und das ganze per "IP bestätigen" festlegen! (Vorher startet das Spiel nicht!)
