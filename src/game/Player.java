@@ -131,6 +131,8 @@ public class Player extends Drawable implements ActionListener {
             // TODO set facing direction
             this.x = x2;
             this.y = y2;
+            //Check win conditions
+            data.bomberman.update();
         }
     }
 
@@ -183,8 +185,6 @@ public class Player extends Drawable implements ActionListener {
         // If there are no animated gifs visible nothing will be updated
         // automatically
         data.frame.repaint();
-        //Check win conditions
-        data.bomberman.update();
     }
 
     public void setAlive(boolean alive) {
