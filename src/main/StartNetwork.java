@@ -80,7 +80,6 @@ public class StartNetwork {
 		base.setPreferredSize(new Dimension(500, 175));
 		networkWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		networkWindow.setSize(450, 215);
-		networkWindow.setVisible(true);
 		networkWindow.setResizable(false);
 		
 		//gets dimensions from screen and calculates center
@@ -94,7 +93,7 @@ public class StartNetwork {
 		//final Popup tutorial = factory.getPopup(networkWindow, base, (int)center.getWidth()+10, (int)center.getHeight()+30);
 		//tutorial.show();
 		networkWindow.add(base);
-		networkWindow.pack();
+		//networkWindow.pack();
 		networkWindow.setVisible(true);
 	}
 
