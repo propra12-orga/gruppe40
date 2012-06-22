@@ -254,12 +254,6 @@ public class Bomberman {
      */
     public void update() {
         if (data.gameOver) return;
-        // Delay update so tie can actually happen
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         LinkedList<Player> alive = new LinkedList<Player>();
         for (Player player : data.players) {
             // Count living players
