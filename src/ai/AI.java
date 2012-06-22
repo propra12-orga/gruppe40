@@ -1,6 +1,7 @@
 package ai;
 
 import game.Bomb;
+import game.GameData;
 import game.Player;
 
 import java.util.LinkedList;
@@ -9,26 +10,23 @@ import map.Map;
 
 public class AI {
 
-    private Player           player;
-    private Map              map;
-    private LinkedList<Bomb> bombs;
-    private Player[]         players;
-
-    public AI(Player player, Map map, LinkedList<Bomb> bombs, Player[] players) {
-        this.player = player;
-        this.map = map;
+    private GameData data;
+    private Player player;
+    
+    public AI(GameData data, Player player) {
+        this.data = data;
     }
 
     public void nextStep() {
         //Dumb AI        
-        int w = map.getWidth();
-        int h = map.getHeight();
+        int w = data.map.getWidth();
+        int h = data.map.getHeight();
         boolean dangerous[][] = new boolean[w][h];
         // All directions (left, up, right, down)
         int dx[] = {-1, 0, 1,  0};
         int dy[] = { 0, 1, 0, -1};
         // For all bombs set fields as dangerous or not
-        for (Bomb bomb : bombs) {
+        for (Bomb bomb : data.bombs) {
             int x = bomb.getX();
             int y = bomb.getY();
             dangerous[x][y] = true;
@@ -38,7 +36,7 @@ public class AI {
                 for (int r=1; r<=bomb.getRadius(); r++) {
                     x2 += dx[i];
                     y2 += dy[i];
-                    if (map.contains(x2, y2)) dangerous[x2][y2] = true;
+                    if (data.map.contains(x2, y2)) dangerous[x2][y2] = true;
                 }
             }
         }
@@ -49,7 +47,7 @@ public class AI {
         for (int i=0; i<4; i++) {
             int x2 = player.getX() + dx[i];
             int y2 = player.getY() + dy[i];
-            if (map.contains(x2, y2) && !map.isBlocked(x2, y2) && !dangerous[x2][y2]) possibleDirections[c++] = i;
+            if (data.map.contains(x2, y2) && !data.map.isBlocked(x2, y2) && !dangerous[x2][y2]) possibleDirections[c++] = i;
         }
         // Walk towards random direction
         if (c > 0) {
