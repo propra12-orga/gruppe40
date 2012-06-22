@@ -13,6 +13,15 @@
 ********
 Generell
 ********
+
+Muss eventuell Player und Bombe umschreiben, sodass die nicht mehr eventorientiert sind wegen Serialisierung.
+Der entsprechende Code wird dann in eine Klasse kommen wo nen GameLoop die gleiche Aufgabe verwaltet.
+Das ganze ist wahrscheinlich notwendig, weil wir die Sachen ja irgendwie durchs Netzwerk kriegen sollen.
+Deshalb sollten die Drawables dann keine Referenzen mehr auf problematische Objekte haben.
+Man kann alternativ auch alle relevanten Daten der Drawables extrahieren und nur die Schicken.
+Allerdings erscheint mir das umstaendlicher.
+Wenn jemand ne bessere Idee hat, nur her damit :) - Tom
+
 Evtl. probiere ich am Wochenende neue Grafiken... wer was dagegen hat, der mag bitte laut rumschreien.
 
 ++++++ to do ++++++
