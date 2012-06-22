@@ -11,7 +11,7 @@ public class ImageLoader {
      * Paths for images. NOTE THAT PATHS ARE CASE SENSITIVE!
      */
     private static String imagePaths[] = { "DestructibleWall.jpg",
-            "NormalWall.jpg", "MediumWall.jpg", "IndestructibleWall.jpg",
+            "NormalWall.jpg", "MediumWall.jpg", "MediumWallCracked.jpg", "IndestructibleWall.jpg",
             "EmptyField.jpg", "Exit.jpg", "Bomb.gif", "Player.gif",
             "Explosion.gif" };
 
