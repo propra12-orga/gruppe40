@@ -133,7 +133,6 @@ public class Bomberman {
                     default:
                     break;
                 }
-                forceRepaint();
             }
 
             @Override
@@ -196,7 +195,6 @@ public class Bomberman {
                     default:
                     break;
                 }
-                forceRepaint();
             }
         };
         data.frame.addKeyListener(keyListener);
@@ -255,15 +253,7 @@ public class Bomberman {
             data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
         }
     }
-
-    /**
-     * Force repaint to make sure everything is drawn. If there are no animated
-     * gifs visible nothing will be updated automatically.
-     */
-    public void forceRepaint() {
-        data.frame.repaint();
-    }
-
+    
     /**
      * Repaints the JFrame and checks if game is over.
      */
