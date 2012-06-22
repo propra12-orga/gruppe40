@@ -4,8 +4,6 @@ import draw.Drawable;
 import game.GameData;
 import map.Map;
 
-import images.ImageLoader;
-
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,7 +16,6 @@ public class GamePanel extends JPanel {
 
     private Map                  map;
     private LinkedList<Drawable> drawables;
-    private ImageLoader imageLoader = new ImageLoader(this);
 
     public GamePanel(GameData data) {
         this.map = data.map;
@@ -44,7 +41,7 @@ public class GamePanel extends JPanel {
 
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
-                drawTile(g, map.getField(x, y).getImage(imageLoader), x, y, tileWidth, tileHeight);
+                drawTile(g, map.getField(x, y).getImage(), x, y, tileWidth, tileHeight);
             }
         }
         synchronized (drawables) {
@@ -65,7 +62,7 @@ public class GamePanel extends JPanel {
     private void drawDrawable(Graphics2D g, Drawable drawable, double width, double height) {
         int x = drawable.getX();
         int y = drawable.getY();
-        Image image = drawable.getImage(imageLoader);
+        Image image = drawable.getImage();
         int nw = drawable.getFrameCountX();
         int nh = drawable.getFrameCountY();
         int dx = image.getWidth(this)/nw;

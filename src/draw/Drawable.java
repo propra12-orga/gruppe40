@@ -39,8 +39,8 @@ public abstract class Drawable {
         return getPath();
     }
 
-    public Image getImage(ImageLoader imageLoader) {
-        return imageLoader.getImage(this);
+    public Image getImage() {
+        return ImageLoader.getImage(this);
     }
 
     public Drawable(int x, int y) {
