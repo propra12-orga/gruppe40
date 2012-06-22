@@ -76,10 +76,11 @@ public class Map {
                         m[x][y] = new DestructibleWall(1);
                 }
             }
-            if (lastWall != null)
-                lastWall.setExit(true);
         }
 
+        if (lastWall != null)
+            lastWall.setExit(true);
+        
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
             m[x][0] = new IndestructibleWall();
@@ -98,6 +99,7 @@ public class Map {
             }
         }
     }
+    
 
     /**
      * checking if the field is blocked
