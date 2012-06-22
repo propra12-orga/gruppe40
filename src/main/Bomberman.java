@@ -55,14 +55,13 @@ public class Bomberman {
 
         data.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //FIXME FULLSCREEN UNCOMMENTED FOR DEBUGGING
         if (fullscreen) {
             // Remove title bar etc.
-            //data.frame.setUndecorated(true);
+            data.frame.setUndecorated(true);
             // Set size to fill the whole screen
-            //data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             // Make fullscreen window stay on top of other windows
-            //data.frame.setAlwaysOnTop(true);
+            data.frame.setAlwaysOnTop(true);
         }
 
         // Remove layout so things can be placed manually
