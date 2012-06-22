@@ -4,10 +4,6 @@ import game.Bomb;
 import game.GameData;
 import game.Player;
 
-import java.util.LinkedList;
-
-import map.Map;
-
 public class AI {
 
     private GameData data;
