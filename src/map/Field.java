@@ -1,17 +1,14 @@
 package map;
 
-import images.ImageLoader;
+import draw.Drawable;
 
-import java.awt.Image;
-
-public abstract class Field {
+public abstract class Field extends Drawable {
 
     private int strength;
-    private Image img;
 
     public Field(int strength) {
+        super(-1, -1);
         this.strength = strength;
-        this.img = ImageLoader.getImage(this);
     }
 
     /**
@@ -27,12 +24,5 @@ public abstract class Field {
      */
     public void setStrength(int newStrength) {
         this.strength = newStrength;
-    }
-
-    /**
-     * @return the image of the field
-     */
-    public Image getImage() {
-        return img;
     }
 }

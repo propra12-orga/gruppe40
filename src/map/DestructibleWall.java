@@ -23,4 +23,9 @@ public class DestructibleWall extends Field {
     public DestructibleWall(int strength) {
         super(strength);
     }
+
+    @Override
+    public String getPath() {
+        return "DestructibleWall.jpg";
+    }
 }

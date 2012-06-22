@@ -55,13 +55,14 @@ public class Bomberman {
 
         data.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //FIXME FULLSCREEN UNCOMMENTED FOR DEBUGGING
         if (fullscreen) {
             // Remove title bar etc.
-            data.frame.setUndecorated(true);
+            //data.frame.setUndecorated(true);
             // Set size to fill the whole screen
-            data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            //data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             // Make fullscreen window stay on top of other windows
-            data.frame.setAlwaysOnTop(true);
+            //data.frame.setAlwaysOnTop(true);
         }
 
         // Remove layout so things can be placed manually
@@ -202,6 +203,21 @@ public class Bomberman {
         data.frame.addKeyListener(keyListener);
         data.frame.setSize(width, height);
         data.frame.setVisible(true);
+        
+        Thread repaintThread = new Thread() {
+            public void run() {
+                while (data.frame.isVisible()) {
+                    data.frame.repaint();
+                    try {
+                        Thread.sleep(1000/60);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    update();
+                }
+            }
+        };
+        repaintThread.start();
     }
 
     private void exit(String message) {
@@ -252,7 +268,7 @@ public class Bomberman {
     /**
      * Repaints the JFrame and checks if game is over.
      */
-    public void update() {
+    private void update() {
         if (data.gameOver) return;
         LinkedList<Player> alive = new LinkedList<Player>();
         for (Player player : data.players) {

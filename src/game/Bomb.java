@@ -24,7 +24,7 @@ public class Bomb extends Drawable implements ActionListener {
 	private GameData data;
 	
 	public Bomb(int x, int y, GameData data){
-        super(x, y, data);
+        super(x, y);
 		this.radius = 1;
 		this.strength = 1;
 		this.delay = 1000; //1sek
@@ -33,6 +33,7 @@ public class Bomb extends Drawable implements ActionListener {
 		this.exploding = false;
 		this.data = data;
 		data.bombs.add(this);
+        data.drawables.add(this);
 	}
 	
 	public void setXY(int x, int y, Map map){
@@ -91,8 +92,6 @@ public class Bomb extends Drawable implements ActionListener {
                 if (!explodeAt(x2, y2)) break;
 		    }
 		}
-        //Check for game over
-        data.bomberman.update();
 	}
 	
 	public void startTimer(){
@@ -130,5 +129,10 @@ public class Bomb extends Drawable implements ActionListener {
     public boolean isExpired() {
         // Bomb is expired if timer is not running anymore
         return exploding || !timer.isRunning();
+    }
+
+    @Override
+    public String getPath() {
+        return "Bomb.gif";
     }
 }

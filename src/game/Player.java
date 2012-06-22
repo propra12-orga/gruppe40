@@ -23,7 +23,7 @@ public class Player extends Drawable implements ActionListener {
     private String name;
 
     public Player(String name, int x, int y, int speed, GameData data) {
-        super(x, y, data);
+        super(x, y);
         this.name = name;
         this.map = data.map;
         this.direction = 0;
@@ -33,6 +33,7 @@ public class Player extends Drawable implements ActionListener {
         this.progress = 0;
         this.data = data;
         this.alive = true;
+        data.drawables.add(this);
     }
 
     public int getSpeed() {
@@ -131,8 +132,6 @@ public class Player extends Drawable implements ActionListener {
             // TODO set facing direction
             this.x = x2;
             this.y = y2;
-            //Check win conditions
-            data.bomberman.update();
         }
     }
 
@@ -199,6 +198,11 @@ public class Player extends Drawable implements ActionListener {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getPath() {
+        return "Player.gif";
     }
 
 }
