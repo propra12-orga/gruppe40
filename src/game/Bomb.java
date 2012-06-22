@@ -42,7 +42,11 @@ public class Bomb extends Drawable implements ActionListener {
 	}
 	
 	private boolean explodeAt(int x2, int y2) {
-        // destroy field
+        //Chain reaction
+        for (Bomb b : data.bombs) {
+            if (b != this && b.getX() == x2 && b.getY() == y2) b.explode();
+        }
+	    // destroy field
         if (map.destroy(x2, y2, strength)) {
             synchronized (data.drawables) {
                 data.drawables.add(new Explosion(x2, y2, data));
@@ -57,10 +61,6 @@ public class Bomb extends Drawable implements ActionListener {
         //Kill players
         for (Player p : data.players) {
             if (p.getX() == x2 && p.getY() == y2) p.setAlive(false);
-        }
-        //Chain reaction
-        for (Bomb b : data.bombs) {
-            if (b != this && b.getX() == x2 && b.getY() == y2) b.explode();
         }
         return true;
 	}
