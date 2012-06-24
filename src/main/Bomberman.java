@@ -204,8 +204,10 @@ public class Bomberman {
                 }
             }
         };
+        //TODO need some stuff to resize jframe so that it matches jpanel (regarding borders etc)
         data.frame.addKeyListener(keyListener);
         data.frame.setSize(width+25, height+25);
+       // data.frame.pack();
         data.frame.setVisible(true);
         
         Thread repaintThread = new Thread() {
