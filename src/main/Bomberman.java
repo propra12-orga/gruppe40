@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -28,6 +30,7 @@ public class Bomberman {
     private GameData       data;
     // This is just for milestone 2, will be changed later
     private static boolean singlePlayer;
+    final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen, boolean singlePlayer, String mapName) {
         Bomberman.singlePlayer = singlePlayer;
@@ -42,7 +45,7 @@ public class Bomberman {
         data.bomberman = this;
         
         if (mapName.equals("Zufall")) {
-            data.map = new Map(11, 11, singlePlayer);             
+            data.map = new Map(13, 13, singlePlayer);             
         }else {
             data.map = new Map(mapName); 
         }
@@ -234,24 +237,11 @@ public class Bomberman {
      * aspect ratio.
      */
     public void resizeGamePanel() {
-        int mx = data.map.getWidth();
-        int my = data.map.getHeight();
-        int width = pane.getWidth();
-        int height = pane.getHeight();
-        // Calculate width required to display the image at full height while
-        // preserving aspect ratio
-        int maxWidth = height * mx / my;
-        // If it fits on screen draw it
-        if (maxWidth <= width) {
-            int blackBarWidth = (width - maxWidth) / 2;
-            data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
-        } else {
-            // If it does not fit calculate height which preserves aspect ratio
-            // and use that instead
-            int maxHeight = width * my / mx;
-            int blackBarHeight = (height - maxHeight) / 2;
-            data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
-        }
+        int width = 650;
+        int height = 650;
+    	int positionLeft = (int)(dimScreenSize.getWidth()/2 - width/2);
+    	int positionTop = (int)(dimScreenSize.getHeight()/2 - height/2);
+        data.gamePanel.setBounds(positionLeft, positionTop, width, height);
     }
     
     /**
