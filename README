@@ -14,6 +14,13 @@
 Generell
 ********
 
+Keine Ahnung was du genau meinst. :)
+Achtung: Das Spielfeld ist jetzt fix 650*650 (50 Pixel pro Kachel, Spielfeld jetzt 13*13 - wie im originalen Bomberman)
+Sinn? Sinn ist, dass wir nun die Grafiken genau anpassen können ohne hässliche Skalierungspixel zu bekommen.
+Ist einfach eine kosmetische Sache, um das ganze schöner zu machen (und auch vor allem die Grafiken standardmäßig kleiner -> weniger Speicherplatz -> bessere Performance)
+Aendere gleich Fenstergroessenauswahl in Fenstermodus/Fullscreen um. - Sebastian
+
+
 Muss eventuell Player und Bombe umschreiben, sodass die nicht mehr eventorientiert sind wegen Serialisierung.
 Der entsprechende Code wird dann in eine Klasse kommen wo nen GameLoop die gleiche Aufgabe verwaltet.
 Das ganze ist wahrscheinlich notwendig, weil wir die Sachen ja irgendwie durchs Netzwerk kriegen sollen.
@@ -21,8 +28,6 @@ Deshalb sollten die Drawables dann keine Referenzen mehr auf problematische Obje
 Man kann alternativ auch alle relevanten Daten der Drawables extrahieren und nur die Schicken.
 Allerdings erscheint mir das umstaendlicher.
 Wenn jemand ne bessere Idee hat, nur her damit :) - Tom
-
-Evtl. probiere ich am Wochenende neue Grafiken... wer was dagegen hat, der mag bitte laut rumschreien.
 
 ++++++ to do ++++++
 Laufende Bewegung fließend machen
