@@ -18,7 +18,9 @@ Keine Ahnung was du genau meinst. :)
 Achtung: Das Spielfeld ist jetzt fix 650*650 (50 Pixel pro Kachel, Spielfeld jetzt 13*13 - wie im originalen Bomberman)
 Sinn? Sinn ist, dass wir nun die Grafiken genau anpassen können ohne hässliche Skalierungspixel zu bekommen.
 Ist einfach eine kosmetische Sache, um das ganze schöner zu machen (und auch vor allem die Grafiken standardmäßig kleiner -> weniger Speicherplatz -> bessere Performance)
-Aendere gleich Fenstergroessenauswahl in Fenstermodus/Fullscreen um. - Sebastian
+Bin jetzt noch auf der Suche nach nem Weg, dass der JFrame die Groesse von Panel annimmt,
+aber auch beachtet, dass ja noch die Fensterumrandungen etc dabei sind... im Internet wurde .pack() empfohlen mit nem entsprechenden Layout (bei uns zur Zeit null) - klingt im Prinzip richtig,
+hat bislang aber noch nicht so gefruchtet. - Sebastian
 
 
 Muss eventuell Player und Bombe umschreiben, sodass die nicht mehr eventorientiert sind wegen Serialisierung.
