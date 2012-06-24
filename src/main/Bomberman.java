@@ -32,7 +32,7 @@ public class Bomberman {
     private static boolean singlePlayer;
     final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public Bomberman(JFrame menuFrame, int width, int height, boolean fullscreen, boolean singlePlayer, String mapName) {
+    public Bomberman(JFrame menuFrame, int width, int height, final boolean fullscreen, boolean singlePlayer, String mapName) {
         Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
@@ -66,6 +66,10 @@ public class Bomberman {
             // Make fullscreen window stay on top of other windows
             data.frame.setAlwaysOnTop(true);
         }
+        
+        else {
+        	data.frame.setResizable(false);
+        }
 
         // Remove layout so things can be placed manually
         pane.setLayout(null);
@@ -80,12 +84,12 @@ public class Bomberman {
 
             @Override
             public void componentResized(ComponentEvent e) {
-                resizeGamePanel();
+                resizeGamePanel(fullscreen);
             }
 
             @Override
             public void componentShown(ComponentEvent e) {
-                resizeGamePanel();
+                resizeGamePanel(fullscreen);
             }
 
             @Override
@@ -201,7 +205,7 @@ public class Bomberman {
             }
         };
         data.frame.addKeyListener(keyListener);
-        data.frame.setSize(width, height);
+        data.frame.setSize(width+25, height+25);
         data.frame.setVisible(true);
         
         Thread repaintThread = new Thread() {
@@ -236,12 +240,17 @@ public class Bomberman {
      * Resize the GamePanel so it always has maximum size while still preserving
      * aspect ratio.
      */
-    public void resizeGamePanel() {
+    public void resizeGamePanel(boolean fullscreen) {
         int width = 650;
         int height = 650;
     	int positionLeft = (int)(dimScreenSize.getWidth()/2 - width/2);
     	int positionTop = (int)(dimScreenSize.getHeight()/2 - height/2);
-        data.gamePanel.setBounds(positionLeft, positionTop, width, height);
+        if(fullscreen) {
+        	data.gamePanel.setBounds(positionLeft, positionTop, width, height);
+        }
+        else {
+        	data.gamePanel.setBounds(0, 0, width, height);
+        }
     }
     
     /**

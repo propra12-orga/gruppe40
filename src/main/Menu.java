@@ -12,9 +12,9 @@ import java.awt.Dimension;
 
 public class Menu {
 	
-	static int x = 600, y = 600;
+	static int x = 650, y = 650;
 	// TODO button to (de)select fullscreen
-	static boolean fullscreen = true;
+	static boolean fullscreen = false;
 	static String mapName = "Zufall";
 	
 	public static void main(String[] args) {
@@ -43,9 +43,8 @@ public class Menu {
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
 		
-		JRadioButton rbSmall = new JRadioButton("800 x 600", true);
-		JRadioButton rbMedium = new JRadioButton("1024 x 768");
-		JRadioButton rbLarge = new JRadioButton("1280 x 1024");
+		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
+		JRadioButton rbFull = new JRadioButton("Vollbild");
 		
 		//drop-down menu
 		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
@@ -53,12 +52,10 @@ public class Menu {
 		
 		//screen solution buttons
 		ButtonGroup gameSizes = new ButtonGroup();
-		gameSizes.add(rbSmall);
-		buttonsSize.add(rbSmall);
-		gameSizes.add(rbMedium);
-		buttonsSize.add(rbMedium);
-		gameSizes.add(rbLarge);
-		buttonsSize.add(rbLarge);
+		gameSizes.add(rbWindow);
+		buttonsSize.add(rbWindow);
+		gameSizes.add(rbFull);
+		buttonsSize.add(rbFull);
 		
 		//close window - adding options
 		base.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -144,24 +141,15 @@ public class Menu {
 			}
 		};
 		
-		ActionListener alSmall = new ActionListener() {
+		ActionListener alWindow = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				x = 800;
-				y = 600;
+				fullscreen = false;
 			}
 		};
 		
-		ActionListener alMedium = new ActionListener() {
+		ActionListener alFull = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				x = 1024;
-				y = 768;
-			}
-		};
-		
-		ActionListener alLarge = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				x = 1280;
-				y = 1024;
+				fullscreen = true;
 			}
 		};
 		
@@ -177,9 +165,8 @@ public class Menu {
 		buttonMP.addActionListener(alMP);
 		buttonTutorial.addActionListener(alTut);
 		buttonNetwork.addActionListener(alNetwork);
-		rbSmall.addActionListener(alSmall);
-		rbMedium.addActionListener(alMedium);
-		rbLarge.addActionListener(alLarge);
+		rbWindow.addActionListener(alWindow);
+		rbFull.addActionListener(alFull);
 		cbMapChoice.addActionListener(alMapChoice);
 		
 	}
