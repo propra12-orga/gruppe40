@@ -243,6 +243,26 @@ public class Bomberman {
      * aspect ratio.
      */
     public void resizeGamePanel(boolean fullscreen) {
+    	/**
+    	 * int mx = data.map.getWidth();
+    	 * int my = data.map.getHeight();
+    	 * int width = pane.getWidth();
+    	 * int height = pane.getHeight();
+    	 * // Calculate width required to display the image at full height while
+    	 * // preserving aspect ratio
+    	 * int maxWidth = height * mx / my;
+    	 * // If it fits on screen draw it
+    	 * if (maxWidth <= width) {
+    	 * int blackBarWidth = (width - maxWidth) / 2;
+    	 * data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
+    	 * } else {
+    	 * // If it does not fit calculate height which preserves aspect ratio
+    	 * // and use that instead
+    	 * int maxHeight = width * my / mx;
+    	 * int blackBarHeight = (height - maxHeight) / 2;
+    	 * data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
+    	 * }
+    	 */
         int width = 650;
         int height = 650;
     	int positionLeft = (int)(dimScreenSize.getWidth()/2 - width/2);
