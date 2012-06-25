@@ -14,6 +14,14 @@
 Generell
 ********
 
+@Sebastian:
+Die "haesslichen Skalierungspixel" haette man auf 3 Arten einfacher loswerden koennen:
+1. Bilder vorher skalieren
+2. Bilder im ImageLoader skalieren
+3. Bilder im GamePanel skalieren, allerdings nicht mit java-standard-Filter (nearest pixel) sondern linear oder sowas
+650x650 Pixel halte ich fuer keine gute Idee, da wir nicht mit Roehrenbildschirmen von 1980 arbeiten.
+Z.b. ist mein Netbook Bildschirm nur 600 pixel hoch.
+
 Keine Ahnung was du genau meinst. :)
 Achtung: Das Spielfeld ist jetzt fix 650*650 (50 Pixel pro Kachel, Spielfeld jetzt 13*13 - wie im originalen Bomberman)
 Sinn? Sinn ist, dass wir nun die Grafiken genau anpassen können ohne hässliche Skalierungspixel zu bekommen.
