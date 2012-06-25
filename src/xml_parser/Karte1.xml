@@ -21,9 +21,9 @@
 <Element>IndestructibleWall</Element>
 <Element>EmptyField</Element>
 <Element>EmptyField</Element>
-<Element>NormalWall</Element>
-<Element>NormalWall</Element>
-<Element>NormalWall</Element>
+<Element>MediumWall</Element>
+<Element>MediumWall</Element>
+<Element>MediumWall</Element>
 <Element>NormalWall</Element>
 <Element>NormalWall</Element>
 <Element>EmptyField</Element>

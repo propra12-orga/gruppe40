@@ -41,6 +41,7 @@ public class Menu {
 		final JButton buttonMP = new JButton("Starte Multiplayer");
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
+		final JButton buttonEditor = new JButton("Karteneditor öffnen");
 		
 		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
 		JRadioButton rbFull = new JRadioButton("Vollbild");
@@ -75,6 +76,7 @@ public class Menu {
 		buttonMP.setPreferredSize(dimButtonSize);
 		buttonTutorial.setPreferredSize(dimButtonSize);
 		buttonNetwork.setPreferredSize(dimButtonSize);
+		buttonEditor.setPreferredSize(dimButtonSize);
 		
 		title.setFont(new Font("Arial", Font.PLAIN, 72));
 		
@@ -89,6 +91,7 @@ public class Menu {
 		
 		//adding button to networkpanel
 		network.add(buttonNetwork);
+		network.add(buttonEditor);
 		
 		//adding everything to Frame
 		menu.add(title);
@@ -140,6 +143,14 @@ public class Menu {
 			}
 		};
 		
+		//Mapeditor
+		ActionListener alEditor = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				new MapEditor();
+			}
+		};
+		
+		
 		ActionListener alWindow = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				fullscreen = false;
@@ -164,6 +175,7 @@ public class Menu {
 		buttonMP.addActionListener(alMP);
 		buttonTutorial.addActionListener(alTut);
 		buttonNetwork.addActionListener(alNetwork);
+		buttonEditor.addActionListener(alEditor);
 		rbWindow.addActionListener(alWindow);
 		rbFull.addActionListener(alFull);
 		cbMapChoice.addActionListener(alMapChoice);
