@@ -5,3 +5,5 @@
 *.git
 *.project
 *.html
+*.db
+*.ini
