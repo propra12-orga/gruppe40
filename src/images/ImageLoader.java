@@ -1,8 +1,5 @@
 package images;
 
-import game.Bomb;
-import game.Player;
-
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
