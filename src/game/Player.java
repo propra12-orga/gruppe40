@@ -205,4 +205,9 @@ public class Player extends Drawable implements ActionListener {
         return "Player.gif";
     }
 
+    @Override
+    public boolean shouldScale() {
+        return false;
+    }
+
 }

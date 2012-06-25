@@ -1,5 +1,8 @@
 package images;
 
+import game.Bomb;
+import game.Player;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -19,7 +22,9 @@ public class ImageLoader {
         } else {
             Image image = Toolkit.getDefaultToolkit().createImage(url);
             
-            image = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            if (drawable.shouldScale()) {
+                image = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            }
 
             if (image == null) {
                 System.err.println("failed to create image: " + path);

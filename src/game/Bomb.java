@@ -135,4 +135,9 @@ public class Bomb extends Drawable implements ActionListener {
     public String getPath() {
         return "Bomb.gif";
     }
+    
+    @Override
+    public boolean shouldScale() {
+        return false;
+    }
 }

@@ -30,4 +30,8 @@ public class Explosion extends Drawable {
         return "RedExplosion.png";
     }
 
+    @Override
+    public boolean shouldScale() {
+        return false;
+    }
 }

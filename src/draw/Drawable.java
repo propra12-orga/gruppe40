@@ -95,4 +95,8 @@ public abstract class Drawable {
         return y;
     }
 
+    public boolean shouldScale() {
+        return true;
+    }
+
 }
