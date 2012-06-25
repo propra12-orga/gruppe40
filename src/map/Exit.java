@@ -9,7 +9,7 @@ public class Exit extends Field {
     
     @Override
     public int getFrame() {
-    	double u = (System.currentTimeMillis() - t)%(double)duration;
+    	double u = (System.currentTimeMillis() - t)%duration;
         int nx = getFrameCountX();
         int ny = getFrameCountY();
         return (int)(nx*ny*u);
