@@ -52,7 +52,7 @@ public class Bomberman {
          		
         data.gamePanel = new GamePanel(data);
         data.players.add(new Player("Spieler 1", 1, 1, 200, data));
-        if (!singlePlayer) data.players.add(new Player("Spieler 2", 9, 9, 200, data));
+        if (!singlePlayer) data.players.add(new Player("Spieler 2", 11, 11, 200, data));
 
         pane = data.frame.getContentPane();
 
