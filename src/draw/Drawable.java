@@ -6,7 +6,7 @@ import images.ImageLoader;
 import java.awt.Image;
 
 /**
- * Every tile-sized object which is not the map should extend this to be drawn
+ * Every object which is drawn should extend this
  */
 public abstract class Drawable {
     public int     x          = 0;
@@ -24,16 +24,28 @@ public abstract class Drawable {
         else GameData.drawables.addLast(this);
     }
 
+    /**
+     * @return Image path
+     */
     public abstract String getPath();
 
+    /**
+     * @return Number of images on the x-axis
+     */
     public int getFrameCountX() {
         return 1;
     }
 
+    /**
+     * @return Number of images on the y-axis
+     */
     public int getFrameCountY() {
         return 1;
     }
 
+    /**
+     * @return Frame to be displayed (e.g. 3 if you want to have the blue part of the windows logo)
+     */
     public int getFrame() {
         if (duration <= 0) {
             return 0;
@@ -45,10 +57,9 @@ public abstract class Drawable {
         }
     }
 
-    public String getFrameName() {
-        return getPath();
-    }
-
+    /**
+     * @return Image of this drawable
+     */
     public Image getImage() {
         return ImageLoader.getImage(this);
     }
@@ -86,7 +97,7 @@ public abstract class Drawable {
     }
 
     /**
-     * @return if this object is visible
+     * @return If this object is visible
      */
     public boolean isVisible() {
         return visible;
@@ -100,6 +111,11 @@ public abstract class Drawable {
         return y;
     }
 
+    /**
+     * Animated Gifs should not be scaled because java will break the animation.
+     * Sprite images should not be scaled if they become too small.
+     * @return If the Image of this object should be scaled to 50x50
+     */
     public boolean shouldScale() {
         return true;
     }
