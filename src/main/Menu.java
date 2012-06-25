@@ -12,7 +12,6 @@ import java.awt.Dimension;
 
 public class Menu {
 	
-	static int x = 650, y = 650;
 	// TODO button to (de)select fullscreen
 	static boolean fullscreen = false;
 	static String mapName = "Zufall";
@@ -114,7 +113,7 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
 			    boolean singlePlayer = true;
-			    new Bomberman(base, x, y, fullscreen, singlePlayer, mapName);
+			    new Bomberman(base, fullscreen, singlePlayer, mapName);
 			}
 		};
 		
@@ -123,7 +122,7 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
                 boolean singlePlayer = false;
-                new Bomberman(base, x, y, fullscreen, singlePlayer, mapName);
+                new Bomberman(base, fullscreen, singlePlayer, mapName);
 			}
 		};
 		

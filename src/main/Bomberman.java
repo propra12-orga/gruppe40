@@ -2,8 +2,6 @@ package main;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -30,9 +28,8 @@ public class Bomberman {
     private GameData       data;
     // This is just for milestone 2, will be changed later
     private static boolean singlePlayer;
-    final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public Bomberman(JFrame menuFrame, int width, int height, final boolean fullscreen, boolean singlePlayer, String mapName) {
+    public Bomberman(JFrame menuFrame, boolean fullscreen, boolean singlePlayer, String mapName) {
         Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
@@ -43,13 +40,13 @@ public class Bomberman {
         data.bombs = new LinkedList<Bomb>();
         data.players = new Vector<Player>();
         data.bomberman = this;
-        
+
         if (mapName.equals("Zufall")) {
-            data.map = new Map(13, 13, singlePlayer);             
-        }else {
-            data.map = new Map(mapName); 
+            data.map = new Map(13, 13, singlePlayer);
+        } else {
+            data.map = new Map(mapName);
         }
-         		
+
         data.gamePanel = new GamePanel(data);
         data.players.add(new Player("Spieler 1", 1, 1, 200, data));
         if (!singlePlayer) data.players.add(new Player("Spieler 2", 11, 11, 200, data));
@@ -66,10 +63,10 @@ public class Bomberman {
             // Make fullscreen window stay on top of other windows
             data.frame.setAlwaysOnTop(true);
         }
-        
-//        else {
-//        	data.frame.setResizable(false);
-//        }
+
+        // else {
+        // data.frame.setResizable(false);
+        // }
 
         // Remove layout so things can be placed manually
         pane.setLayout(null);
@@ -84,12 +81,12 @@ public class Bomberman {
 
             @Override
             public void componentResized(ComponentEvent e) {
-                resizeGamePanel(fullscreen);
+                resizeGamePanel();
             }
 
             @Override
             public void componentShown(ComponentEvent e) {
-                resizeGamePanel(fullscreen);
+                resizeGamePanel();
             }
 
             @Override
@@ -204,10 +201,8 @@ public class Bomberman {
                 }
             }
         };
-        //TODO need some stuff to resize jframe so that it matches jpanel (regarding borders etc)
         data.frame.addKeyListener(keyListener);
-        data.frame.setSize(width+25, height+25);
-       // data.frame.pack();
+        data.frame.setSize(650, 650);
         data.frame.setVisible(true);
         
         Thread repaintThread = new Thread() {
@@ -215,7 +210,7 @@ public class Bomberman {
                 while (data.frame.isVisible()) {
                     data.frame.repaint();
                     try {
-                        Thread.sleep(1000/60);
+                        Thread.sleep(1000 / 60);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
@@ -242,36 +237,27 @@ public class Bomberman {
      * Resize the GamePanel so it always has maximum size while still preserving
      * aspect ratio.
      */
-    public void resizeGamePanel(boolean fullscreen) {
-        
-    	if(fullscreen) {
-    		int positionLeft = (int)(dimScreenSize.getWidth()/2 - 650/2);
-    		int positionTop = (int)(dimScreenSize.getHeight()/2 - 650/2);
-        	data.gamePanel.setBounds(positionLeft, positionTop, 650, 650);
+    public void resizeGamePanel() {
+        int mx = data.map.getWidth();
+        int my = data.map.getHeight();
+        int width = pane.getWidth();
+        int height = pane.getHeight();
+        // Calculate width required to display the image at full height while
+        // preserving aspect ratio
+        int maxWidth = height * mx / my;
+        // If it fits on screen draw it
+        if (maxWidth <= width) {
+            int blackBarWidth = (width - maxWidth) / 2;
+            data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
+        } else {
+            // If it does not fit calculate height which preserves aspect ratio
+            // and use that instead
+            int maxHeight = width * my / mx;
+            int blackBarHeight = (height - maxHeight) / 2;
+            data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
         }
-    	
-    	else {
-    	  int mx = data.map.getWidth();
-    	  int my = data.map.getHeight();
-    	  int width = pane.getWidth();
-    	  int height = pane.getHeight();
-    	  // Calculate width required to display the image at full height while
-    	  // preserving aspect ratio
-    	  int maxWidth = height * mx / my;
-    	  // If it fits on screen draw it
-    	  if (maxWidth <= width) {
-    	  int blackBarWidth = (width - maxWidth) / 2;
-    	  data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
-    	  } else {
-    	  // If it does not fit calculate height which preserves aspect ratio
-    	  // and use that instead
-    	  int maxHeight = width * my / mx;
-    	  int blackBarHeight = (height - maxHeight) / 2;
-    	  data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
-    	  }
-    	}
     }
-    
+
     /**
      * Repaints the JFrame and checks if game is over.
      */
@@ -288,7 +274,7 @@ public class Bomberman {
                 // If player stands on exit
                 if (field instanceof Exit) {
                     // If there is an exit it should be single player
-                	player.stopMove();
+                    player.stopMove();
                     exit("Du hast gewonnen!");
                 }
             }

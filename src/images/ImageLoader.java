@@ -18,6 +18,8 @@ public class ImageLoader {
             System.err.println("failed to locate image: " + path);
         } else {
             Image image = Toolkit.getDefaultToolkit().createImage(url);
+            
+            image = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
             if (image == null) {
                 System.err.println("failed to create image: " + path);
