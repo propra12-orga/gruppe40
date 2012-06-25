@@ -67,9 +67,9 @@ public class Bomberman {
             data.frame.setAlwaysOnTop(true);
         }
         
-       // else {
-       // 	data.frame.setResizable(false);
-       // }
+//        else {
+//        	data.frame.setResizable(false);
+//        }
 
         // Remove layout so things can be placed manually
         pane.setLayout(null);
@@ -243,7 +243,14 @@ public class Bomberman {
      * aspect ratio.
      */
     public void resizeGamePanel(boolean fullscreen) {
+        
+    	if(fullscreen) {
+    		int positionLeft = (int)(dimScreenSize.getWidth()/2 - 650/2);
+    		int positionTop = (int)(dimScreenSize.getHeight()/2 - 650/2);
+        	data.gamePanel.setBounds(positionLeft, positionTop, 650, 650);
+        }
     	
+    	else {
     	  int mx = data.map.getWidth();
     	  int my = data.map.getHeight();
     	  int width = pane.getWidth();
@@ -262,17 +269,7 @@ public class Bomberman {
     	  int blackBarHeight = (height - maxHeight) / 2;
     	  data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
     	  }
-    	 
-//        int width = 650;
-//        int height = 650;
-//    	  int positionLeft = (int)(dimScreenSize.getWidth()/2 - width/2);
-//        int positionTop = (int)(dimScreenSize.getHeight()/2 - height/2);
-//        if(fullscreen) {
-//        	data.gamePanel.setBounds(positionLeft, positionTop, width, height);
-//        }
-//        else {
-//        	data.gamePanel.setBounds(0, 0, width, height);
-//        }
+    	}
     }
     
     /**
