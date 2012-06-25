@@ -27,7 +27,7 @@ public class Explosion extends Drawable {
 
     @Override
     public String getPath() {
-        return "EmptyField.jpg";
+        return "RedExplosion.png";
     }
 
 }
