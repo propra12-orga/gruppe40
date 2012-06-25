@@ -16,6 +16,7 @@ public class MapEditor {
 	static final int mapSize_MAX = 25;
 	static final int mapSize_STANDARD = 13;
 	int height, width;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	public MapEditor() {
 		//panels etc...
@@ -106,12 +107,39 @@ public class MapEditor {
 		editorWindow.setResizable(false);
 		
 		//gets dimensions from screen and calculates center
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension center = new Dimension((int)screenSize.getWidth()/2 - editorWindow.getWidth()/2, (int)screenSize.getHeight()/2 - editorWindow.getHeight()/2);
 		
 		editorWindow.setLocation((int)center.getWidth(), (int)center.getHeight());
 		editorWindow.add(base);
 		editorWindow.setVisible(true);
+	}
+	
+	public void showLegend() {
+		
+		JFrame legend = new JFrame("Legende");
+		JPanel base = new JPanel();
+		JTextPane textLegend = new JTextPane();
+		
+		textLegend.setText(
+					"LEGENDE\n"+
+					"LEGENDE\n"+
+					"LEGENDE\n"
+				);
+		
+		base.add(textLegend);
+		
+		legend.add(base);
+		
+		legend.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		legend.setSize(450, 350);
+		legend.setResizable(false);
+		
+		Dimension center = new Dimension((int)screenSize.getWidth()/2 - legend.getWidth()/2, (int)screenSize.getHeight()/2 - legend.getHeight()/2);
+		
+		legend.setLocation((int)center.getWidth(), (int)center.getHeight());
+		legend.add(base);
+		legend.setVisible(true);
+		
 	}
 
 }
