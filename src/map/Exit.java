@@ -2,17 +2,27 @@ package map;
 
 public class Exit extends Field {
 
-    public Exit() {
-        super(0);
+    public Exit(int x, int y) {
+        super(x, y, 0);
         this.duration = 180;
     }
     
     @Override
     public int getFrame() {
-    	double u = (System.currentTimeMillis() - t)%(double)duration;
+        double u = (System.currentTimeMillis() - t)/(double)duration;
         int nx = getFrameCountX();
         int ny = getFrameCountY();
-        return (int)(nx*ny*u);
+        return ((int)(nx*ny*u))%(nx*ny);
+    }
+    
+    @Override
+    public boolean shouldScale() {
+        return false;
+    }
+    
+    @Override
+    public boolean isExpired() {
+        return false;
     }
     
     @Override

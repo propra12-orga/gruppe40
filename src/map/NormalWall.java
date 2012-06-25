@@ -2,8 +2,8 @@ package map;
 
 public class NormalWall extends DestructibleWall {
 
-    public NormalWall() {
-        super(1);
+    public NormalWall(int x, int y) {
+        super(x, y, 1);
     }
 
 }

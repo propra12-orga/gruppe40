@@ -5,9 +5,9 @@ import draw.Drawable;
 public abstract class Field extends Drawable {
 
     private int strength;
-
-    public Field(int strength) {
-        super(-1, -1);
+    
+    public Field(int x, int y, int strength) {
+        super(x, y, true);
         this.strength = strength;
     }
 

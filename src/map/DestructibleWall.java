@@ -20,8 +20,8 @@ public class DestructibleWall extends Field {
         return exit;
     }
     
-    public DestructibleWall(int strength) {
-        super(strength);
+    public DestructibleWall(int x, int y, int strength) {
+        super(x, y, strength);
     }
 
     @Override

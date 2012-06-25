@@ -10,13 +10,13 @@ import map.Map;
 import draw.Drawable;
 import draw.GamePanel;
 
-public class GameData {
-    public JFrame               frame;
-    public LinkedList<Drawable> drawables;
-    public LinkedList<Bomb>     bombs;
-    public GamePanel            gamePanel;
-    public Vector<Player>       players;
-    public Map                  map;
-    public Bomberman            bomberman;
-    public boolean              gameOver;
+public abstract class GameData {
+    public static JFrame               frame;
+    public static LinkedList<Drawable> drawables;
+    public static LinkedList<Bomb>     bombs;
+    public static GamePanel            gamePanel;
+    public static Vector<Player>       players;
+    public static Map                  map;
+    public static Bomberman            bomberman;
+    public static boolean              gameOver;
 }

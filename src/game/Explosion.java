@@ -4,9 +4,8 @@ import draw.Drawable;
 
 public class Explosion extends Drawable {
 
-    public Explosion(int x, int y, GameData data) {
-        super(x, y);
-        data.drawables.add(this);
+    public Explosion(int x, int y) {
+        super(x, y, false);
         this.duration = 500;
     }
 

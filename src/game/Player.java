@@ -19,21 +19,18 @@ public class Player extends Drawable implements ActionListener {
     private int      progress;
     private int      delay;
     private boolean  alive;
-    private GameData data;
     private String name;
 
-    public Player(String name, int x, int y, int speed, GameData data) {
-        super(x, y);
+    public Player(String name, int x, int y, int speed) {
+        super(x, y, false);
         this.name = name;
-        this.map = data.map;
+        this.map = GameData.map;
         this.direction = 0;
         this.speed = speed;
         this.delay = 50;
         this.timer = new Timer(this.delay, this);
         this.progress = 0;
-        this.data = data;
         this.alive = true;
-        data.drawables.add(this);
     }
 
     public int getSpeed() {
@@ -153,11 +150,11 @@ public class Player extends Drawable implements ActionListener {
 
     public void putBomb() {
         if (!alive) return;
-        Bomb bomb = new Bomb(x, y, data);
+        Bomb bomb = new Bomb(x, y);
         bomb.startTimer();
         map.setBlocked(x, y, true);
-        synchronized (data.drawables) {
-            data.drawables.add(bomb);
+        synchronized (GameData.drawables) {
+            GameData.drawables.add(bomb);
         }
     }
 
@@ -184,7 +181,7 @@ public class Player extends Drawable implements ActionListener {
         // Force repaint to make sure everything is drawn
         // If there are no animated gifs visible nothing will be updated
         // automatically
-        data.frame.repaint();
+        GameData.frame.repaint();
     }
 
     public void setAlive(boolean alive) {

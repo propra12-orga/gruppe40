@@ -2,8 +2,8 @@ package map;
 
 public class MediumWall extends DestructibleWall {
 
-    public MediumWall() {
-        super(2);
+    public MediumWall(int x, int y) {
+        super(x, y, 2);
     }
     
     @Override

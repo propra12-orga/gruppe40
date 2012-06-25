@@ -2,8 +2,8 @@ package map;
 
 public class EmptyField extends Field{
     
-    public EmptyField() {
-        super(0);
+    public EmptyField(int x, int y) {
+        super(x, y, 0);
     }
 
     @Override

@@ -25,7 +25,6 @@ public class Bomberman {
 
     private Container      pane;
     private JFrame         menuFrame;
-    private GameData       data;
     // This is just for milestone 2, will be changed later
     private static boolean singlePlayer;
 
@@ -33,35 +32,34 @@ public class Bomberman {
         Bomberman.singlePlayer = singlePlayer;
         this.menuFrame = menuFrame;
 
-        data = new GameData();
-        data.gameOver = false;
-        data.frame = new JFrame();
-        data.drawables = new LinkedList<Drawable>();
-        data.bombs = new LinkedList<Bomb>();
-        data.players = new Vector<Player>();
-        data.bomberman = this;
+        GameData.gameOver = false;
+        GameData.frame = new JFrame();
+        GameData.drawables = new LinkedList<Drawable>();
+        GameData.bombs = new LinkedList<Bomb>();
+        GameData.players = new Vector<Player>();
+        GameData.bomberman = this;
 
         if (mapName.equals("Zufall")) {
-            data.map = new Map(13, 13, singlePlayer);
+            GameData.map = new Map(13, 13, singlePlayer);
         } else {
-            data.map = new Map(mapName);
+            GameData.map = new Map(mapName);
         }
 
-        data.gamePanel = new GamePanel(data);
-        data.players.add(new Player("Spieler 1", 1, 1, 200, data));
-        if (!singlePlayer) data.players.add(new Player("Spieler 2", 11, 11, 200, data));
+        GameData.gamePanel = new GamePanel();
+        GameData.players.add(new Player("Spieler 1", 1, 1, 200));
+        if (!singlePlayer) GameData.players.add(new Player("Spieler 2", 11, 11, 200));
 
-        pane = data.frame.getContentPane();
+        pane = GameData.frame.getContentPane();
 
-        data.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        GameData.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         if (fullscreen) {
             // Remove title bar etc.
-            data.frame.setUndecorated(true);
+            GameData.frame.setUndecorated(true);
             // Set size to fill the whole screen
-            data.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            GameData.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             // Make fullscreen window stay on top of other windows
-            data.frame.setAlwaysOnTop(true);
+            GameData.frame.setAlwaysOnTop(true);
         }
 
         // else {
@@ -71,7 +69,7 @@ public class Bomberman {
         // Remove layout so things can be placed manually
         pane.setLayout(null);
         // Add GamePanel
-        pane.add(data.gamePanel);
+        pane.add(GameData.gamePanel);
         // Set background color to black
         pane.setBackground(Color.BLACK);
         // add Player 1
@@ -116,7 +114,7 @@ public class Bomberman {
                     case 's':
                     case 'D':
                     case 'd':
-                        data.players.get(0).stopMove();
+                        GameData.players.get(0).stopMove();
                     break;
 
                     case 'I':
@@ -127,7 +125,7 @@ public class Bomberman {
                     case 'k':
                     case 'L':
                     case 'l':
-                        if (!Bomberman.singlePlayer) data.players.get(1).stopMove();
+                        if (!Bomberman.singlePlayer) GameData.players.get(1).stopMove();
                     break;
 
                     case KeyEvent.VK_ESCAPE:
@@ -146,54 +144,54 @@ public class Bomberman {
 
                     case 'W':
                     case 'w':
-                        data.players.get(0).startMove(1);
+                        GameData.players.get(0).startMove(1);
                     break;
 
                     case 'A':
                     case 'a':
-                        data.players.get(0).startMove(4);
+                        GameData.players.get(0).startMove(4);
                     break;
 
                     case 'S':
                     case 's':
-                        data.players.get(0).startMove(3);
+                        GameData.players.get(0).startMove(3);
                     break;
 
                     case 'D':
                     case 'd':
-                        data.players.get(0).startMove(2);
+                        GameData.players.get(0).startMove(2);
                     break;
 
                     case 'E':
                     case 'e':
-                        if (data.players.get(0).hasBomb()) data.players.get(0).putBomb();
+                        if (GameData.players.get(0).hasBomb()) GameData.players.get(0).putBomb();
                     break;
 
                     // Horrible code, I know
                     // Will be replaced with network at milestone 3
                     case 'I':
                     case 'i':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(1);
+                        if (!Bomberman.singlePlayer) GameData.players.get(1).startMove(1);
                     break;
 
                     case 'J':
                     case 'j':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(4);
+                        if (!Bomberman.singlePlayer) GameData.players.get(1).startMove(4);
                     break;
 
                     case 'K':
                     case 'k':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(3);
+                        if (!Bomberman.singlePlayer) GameData.players.get(1).startMove(3);
                     break;
 
                     case 'L':
                     case 'l':
-                        if (!Bomberman.singlePlayer) data.players.get(1).startMove(2);
+                        if (!Bomberman.singlePlayer) GameData.players.get(1).startMove(2);
                     break;
 
                     case 'O':
                     case 'o':
-                        if (!Bomberman.singlePlayer) if (data.players.get(1).hasBomb()) data.players.get(1).putBomb();
+                        if (!Bomberman.singlePlayer) if (GameData.players.get(1).hasBomb()) GameData.players.get(1).putBomb();
                     break;
 
                     default:
@@ -201,14 +199,14 @@ public class Bomberman {
                 }
             }
         };
-        data.frame.addKeyListener(keyListener);
-        data.frame.setSize(650, 650);
-        data.frame.setVisible(true);
+        GameData.frame.addKeyListener(keyListener);
+        GameData.frame.setSize(650, 650);
+        GameData.frame.setVisible(true);
         
         Thread repaintThread = new Thread() {
             public void run() {
-                while (data.frame.isVisible()) {
-                    data.frame.repaint();
+                while (GameData.frame.isVisible()) {
+                    GameData.frame.repaint();
                     try {
                         Thread.sleep(1000 / 60);
                     } catch (InterruptedException e1) {
@@ -222,14 +220,14 @@ public class Bomberman {
     }
 
     private void exit(String message) {
-        if (data.gameOver) return;
-        data.gameOver = true;
+        if (GameData.gameOver) return;
+        GameData.gameOver = true;
         // Show win dialog
-        JOptionPane.showMessageDialog(data.frame, message);
-        for (Player player : data.players) {
+        JOptionPane.showMessageDialog(GameData.frame, message);
+        for (Player player : GameData.players) {
             player.stopMove();
         }
-        data.frame.dispose();
+        GameData.frame.dispose();
         menuFrame.setVisible(true);
     }
 
@@ -238,8 +236,8 @@ public class Bomberman {
      * aspect ratio.
      */
     public void resizeGamePanel() {
-        int mx = data.map.getWidth();
-        int my = data.map.getHeight();
+        int mx = GameData.map.getWidth();
+        int my = GameData.map.getHeight();
         int width = pane.getWidth();
         int height = pane.getHeight();
         // Calculate width required to display the image at full height while
@@ -248,13 +246,13 @@ public class Bomberman {
         // If it fits on screen draw it
         if (maxWidth <= width) {
             int blackBarWidth = (width - maxWidth) / 2;
-            data.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
+            GameData.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
         } else {
             // If it does not fit calculate height which preserves aspect ratio
             // and use that instead
             int maxHeight = width * my / mx;
             int blackBarHeight = (height - maxHeight) / 2;
-            data.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
+            GameData.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
         }
     }
 
@@ -262,15 +260,15 @@ public class Bomberman {
      * Repaints the JFrame and checks if game is over.
      */
     private void update() {
-        if (data.gameOver) return;
+        if (GameData.gameOver) return;
         LinkedList<Player> alive = new LinkedList<Player>();
-        for (Player player : data.players) {
+        for (Player player : GameData.players) {
             // Count living players
             if (player.isAlive()) alive.add(player);
 
             if (singlePlayer) {
                 // Get field the player is standing on
-                Field field = data.map.getField(data.players.get(0).getX(), data.players.get(0).getY());
+                Field field = GameData.map.getField(GameData.players.get(0).getX(), GameData.players.get(0).getY());
                 // If player stands on exit
                 if (field instanceof Exit) {
                     // If there is an exit it should be single player

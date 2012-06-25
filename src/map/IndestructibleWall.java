@@ -2,8 +2,8 @@ package map;
 
 public class IndestructibleWall extends Field {
     
-    public IndestructibleWall() {
-        super(-1);
+    public IndestructibleWall(int x, int y) {
+        super(x, y, -1);
     }
 
     @Override

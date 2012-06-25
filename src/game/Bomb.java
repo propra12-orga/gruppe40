@@ -21,19 +21,16 @@ public class Bomb extends Drawable implements ActionListener {
 	private Timer timer;
 	private long startTime;
 	private boolean exploding;
-	private GameData data;
 	
-	public Bomb(int x, int y, GameData data){
-        super(x, y);
+	public Bomb(int x, int y){
+        super(x, y, false);
 		this.radius = 1;
 		this.strength = 1;
 		this.delay = 1000; //1sek
 		this.startTime = -1;
-		this.map = data.map;
+		this.map = GameData.map;
 		this.exploding = false;
-		this.data = data;
-		data.bombs.add(this);
-        data.drawables.add(this);
+		GameData.bombs.add(this);
 	}
 	
 	public void setXY(int x, int y, Map map){
@@ -44,23 +41,23 @@ public class Bomb extends Drawable implements ActionListener {
 	
 	private boolean explodeAt(int x2, int y2) {
         //Chain reaction
-        for (Bomb b : data.bombs) {
+        for (Bomb b : GameData.bombs) {
             if (b != this && b.getX() == x2 && b.getY() == y2) b.explode();
         }
 	    // destroy field
         if (map.destroy(x2, y2, strength)) {
-            synchronized (data.drawables) {
-                data.drawables.add(new Explosion(x2, y2, data));
+            synchronized (GameData.drawables) {
+                GameData.drawables.add(new Explosion(x2, y2));
             }
             return false;
         }
         // Stop if blocked
         if (map.isBlocked(x2, y2)) return false;
-        synchronized (data.drawables) {
-            data.drawables.add(new Explosion(x2, y2, data));
+        synchronized (GameData.drawables) {
+            GameData.drawables.add(new Explosion(x2, y2));
         }
         //Kill players
-        for (Player p : data.players) {
+        for (Player p : GameData.players) {
             if (p.getX() == x2 && p.getY() == y2) p.setAlive(false);
         }
         return true;

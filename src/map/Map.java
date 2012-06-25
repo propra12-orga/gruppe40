@@ -1,5 +1,6 @@
 package map;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import xml_parser.MapParser;
 
@@ -25,18 +26,28 @@ public class Map {
         for (int y = 0, i = 0; y < height; y++) {
             for (int x = 0; x < width; x++, i++) {
                 if (this.MapArray.get(i).equals("Exit")) {
-                    DestructibleWall exit = new DestructibleWall(1);
+                    DestructibleWall exit = new DestructibleWall(x, y, 1);
                     exit.setExit(true);
                     m[x][y] = exit;
                 } else
                     try {
-                        m[x][y] = (Field) Class.forName(
-                                "map." + this.MapArray.get(i)).newInstance();
+                        //Get class for field
+                        Class<?> whichClass = Class.forName("map." + this.MapArray.get(i));
+                        //Create a field using a constructor with parameters x and y
+                        m[x][y] = (Field)whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(x, y);
                     } catch (InstantiationException e) {
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     }
             }
@@ -51,7 +62,7 @@ public class Map {
         /* sets normal Fields everywhere */
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                m[x][y] = new EmptyField();
+                m[x][y] = new EmptyField(x, y);
             }
         }
 
@@ -60,7 +71,7 @@ public class Map {
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
                 if (Math.random() < 0.9)
-                    m[x][y] = new DestructibleWall(1);
+                    m[x][y] = new DestructibleWall(x, y, 1);
             }
         }
 
@@ -70,10 +81,10 @@ public class Map {
                 if (Math.random() < 0.9) {
                     /* If it is a singleplayer-game spawn the exit */
                     if (singleplayer) {
-                        lastWall = new DestructibleWall(1);
+                        lastWall = new DestructibleWall(x, y, 1);
                         m[x][y] = lastWall;
                     } else
-                        m[x][y] = new DestructibleWall(1);
+                        m[x][y] = new DestructibleWall(x, y, 1);
                 }
             }
         }
@@ -83,19 +94,19 @@ public class Map {
         
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
-            m[x][0] = new IndestructibleWall();
-            m[x][height - 1] = new IndestructibleWall();
+            m[x][0] = new IndestructibleWall(x, 0);
+            m[x][height - 1] = new IndestructibleWall(x, height - 1);
         }
 
         for (int y = 0; y < height; y++) {
-            m[0][y] = new IndestructibleWall();
-            m[width - 1][y] = new IndestructibleWall();
+            m[0][y] = new IndestructibleWall(0, y);
+            m[width - 1][y] = new IndestructibleWall(width - 1, y);
         }
 
         /* spawns the 'standard' walls */
         for (int x = 2; x < width - 2; x += 2) {
             for (int y = 2; y < height - 2; y += 2) {
-                m[x][y] = new IndestructibleWall();
+                m[x][y] = new IndestructibleWall(x, y);
             }
         }
     }
@@ -175,10 +186,10 @@ public class Map {
         if (field instanceof DestructibleWall) { /* NormalWall etc. */
             DestructibleWall wall = (DestructibleWall) field;
             if (wall.isExit()) {
-                m[x][y] = new Exit();
+                m[x][y] = new Exit(x, y);
             } else {
                 if (m[x][y].getStrength() - damage <= 0) {
-                    m[x][y] = new EmptyField();
+                    m[x][y] = new EmptyField(x, y);
                 } else {
                     m[x][y].setStrength(m[x][y].getStrength() - damage);
                 }
@@ -195,7 +206,7 @@ public class Map {
      *            - vertical axis
      */
     public void setExit(int x, int y) {
-        DestructibleWall exitWall = new DestructibleWall(1);
+        DestructibleWall exitWall = new DestructibleWall(x, y, 1);
         exitWall.setExit(true);
     }
 }

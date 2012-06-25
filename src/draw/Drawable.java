@@ -1,5 +1,6 @@
 package draw;
 
+import game.GameData;
 import images.ImageLoader;
 
 import java.awt.Image;
@@ -8,12 +9,21 @@ import java.awt.Image;
  * Every tile-sized object which is not the map should extend this to be drawn
  */
 public abstract class Drawable {
-    protected int        x        = 0;
-    protected int        y        = 0;
-    protected boolean    visible  = true;
-    protected long       duration = -1;
-    protected long       t        = System.currentTimeMillis();
-    
+    public int     x          = 0;
+    public int     y          = 0;
+    public boolean visible    = true;
+    public long    duration   = -1;
+    public long    t          = System.currentTimeMillis();
+    public boolean isField;
+
+    public Drawable(int x, int y, boolean isField) {
+        this.x = x;
+        this.y = y;
+        this.isField = isField;
+        if (isField) GameData.drawables.addFirst(this);
+        else GameData.drawables.addLast(this);
+    }
+
     public abstract String getPath();
 
     public int getFrameCountX() {
@@ -23,15 +33,15 @@ public abstract class Drawable {
     public int getFrameCountY() {
         return 1;
     }
-    
+
     public int getFrame() {
         if (duration <= 0) {
             return 0;
-        }else {
-            double u = (System.currentTimeMillis() - t)/(double)duration;
+        } else {
+            double u = (System.currentTimeMillis() - t) / (double) duration;
             int nx = getFrameCountX();
             int ny = getFrameCountY();
-            return (int)(nx*ny*u);
+            return (int) (nx * ny * u);
         }
     }
 
@@ -41,11 +51,6 @@ public abstract class Drawable {
 
     public Image getImage() {
         return ImageLoader.getImage(this);
-    }
-
-    public Drawable(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 
     public void setXY(int x, int y) {

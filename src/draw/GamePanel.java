@@ -2,30 +2,16 @@ package draw;
 
 import draw.Drawable;
 import game.GameData;
-import map.Map;
 
 import javax.swing.JPanel;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.LinkedList;
 import java.util.ListIterator;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
-
-    private Map                  map;
-    private LinkedList<Drawable> drawables;
-
-    public GamePanel(GameData data) {
-        this.map = data.map;
-        this.drawables = data.drawables;
-    }
-
-    private void drawTile(Graphics g, Image img, int x, int y, double width, double height) {
-        // Dirty +1 hack to stop flickering
-        g.drawImage(img, (int) (x * width), (int) (y * height), (int) width + 1, (int) height + 1, this);
-    }
 
     public void paintComponent(Graphics g0) {
         Graphics2D g = (Graphics2D) g0;
@@ -36,19 +22,15 @@ public class GamePanel extends JPanel {
         g.setColor(this.getBackground());
         g.fillRect(0, 0, width, height);
 
-        double tileWidth = width / (double) map.getWidth();
-        double tileHeight = height / (double) map.getHeight();
+        double tileWidth = width / (double) GameData.map.getWidth();
+        double tileHeight = height / (double) GameData.map.getHeight();
 
-        for (int y = 0; y < map.getHeight(); y++) {
-            for (int x = 0; x < map.getWidth(); x++) {
-                drawTile(g, map.getField(x, y).getImage(), x, y, tileWidth, tileHeight);
-            }
-        }
-        synchronized (drawables) {
-            ListIterator<Drawable> it = drawables.listIterator();
+        synchronized (GameData.drawables) {
+            ListIterator<Drawable> it = GameData.drawables.listIterator();
             while (it.hasNext()) {
                 Drawable drawable = it.next();
-                if (drawable.isExpired()) {
+                boolean isUnusedField = drawable.isField && GameData.map.getField(drawable.x, drawable.y) != drawable;
+                if (drawable.isExpired() || isUnusedField) {
                     it.remove();
                 } else {
                     if (drawable.isVisible()) {
@@ -65,15 +47,15 @@ public class GamePanel extends JPanel {
         Image image = drawable.getImage();
         int nw = drawable.getFrameCountX();
         int nh = drawable.getFrameCountY();
-        int dx = image.getWidth(this)/nw;
-        int dy = image.getHeight(this)/nh;
+        int dx = image.getWidth(this) / nw;
+        int dy = image.getHeight(this) / nh;
         int n = drawable.getFrame();
-        int x2 = n%nw;
-        int y2 = n/nw;
-        int destX0 = (int)(x*width);
-        int destY0 = (int)(y*height);
-        int destX1 = (int)(x*width + width + 1);
-        int destY1 = (int)(y*height + height + 1);
-        g.drawImage(image, destX0, destY0, destX1, destY1, x2*dx, y2*dy, x2*dx+dx, y2*dy+dy, this);
+        int x2 = n % nw;
+        int y2 = n / nw;
+        int destX0 = (int) (x * width);
+        int destY0 = (int) (y * height);
+        int destX1 = (int) (x * width + width + 1);
+        int destY1 = (int) (y * height + height + 1);
+        g.drawImage(image, destX0, destY0, destX1, destY1, x2 * dx, y2 * dy, x2 * dx + dx, y2 * dy + dy, this);
     }
 }
