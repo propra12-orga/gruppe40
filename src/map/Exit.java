@@ -8,6 +8,6 @@ public class Exit extends Field {
 
     @Override
     public String getPath() {
-        return "Exit.jpg";
+        return "Exit.gif";
     }
 }
