@@ -8,7 +8,8 @@ public class MediumWall extends DestructibleWall {
     
     @Override
     public String getPath() {
-        return "MediumWall.jpg";
+        if (super.getStrength() == 1) return "MediumWallCracked.jpg";
+        else return "MediumWall.jpg";
     }
 
 }
