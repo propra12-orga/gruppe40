@@ -77,6 +77,7 @@ public class MapEditor {
 			}
 		};
 		
+		//listener for slider (width)
 		ChangeListener widthChange = new ChangeListener() {
 			@Override public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider)e.getSource();
@@ -86,6 +87,7 @@ public class MapEditor {
 			}
 		};
 		
+		//listener for slider (height)
 		ChangeListener heightChange = new ChangeListener() {
 			@Override public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider)e.getSource();
@@ -96,6 +98,7 @@ public class MapEditor {
 			}
 		};
 		
+		//adding actionlisteners
 		buttonEditMap.addActionListener(alChange);
 		slideWidth.addChangeListener(widthChange);
 		slideHeight.addChangeListener(heightChange);
@@ -116,6 +119,7 @@ public class MapEditor {
 		editorWindow.setVisible(true);
 	}
 	
+	//map legend - new window
 	public void showLegend() {
 		
 		JFrame legend = new JFrame("Legende");

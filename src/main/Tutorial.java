@@ -31,9 +31,6 @@ public class Tutorial {
 		catch (IOException e) {
 			tutText.setText("Datei nicht gefunden");
 		}
-		finally {
-		//	bufferRead.close();
-		}
 		
 		//gets dimensions from JTextArea (calculation based on font-size etc.)
 		Dimension windowSize = tutText.getPreferredSize();

@@ -67,6 +67,7 @@ public class StartNetwork {
 			}
 		};
 		
+		//adding actionlisteners
 		buttonEditIP.addActionListener(alChange);
 		buttonStartServer.addActionListener(alServer);
 		buttonConnectGame.addActionListener(alConnect);
