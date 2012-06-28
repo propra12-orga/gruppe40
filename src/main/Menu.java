@@ -141,7 +141,7 @@ public class Menu {
 			        }
 			    }
                 base.setVisible(false);
-			    new Bomberman(base, fullscreen, GameData.server.getPlayerCount(), mapName);
+			    new Bomberman(base, fullscreen, mapName);
 			}
 		};
 		
@@ -149,7 +149,7 @@ public class Menu {
 		ActionListener alMP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
-                new Bomberman(base, fullscreen, GameData.server.getPlayerCount(), mapName);
+                new Bomberman(base, fullscreen, mapName);
 			}
 		};
 		

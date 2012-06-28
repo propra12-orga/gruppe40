@@ -25,24 +25,30 @@ public class Bomberman {
 
     private Container      pane;
 
-    public Bomberman(JFrame menuFrame, boolean fullscreen, int playerCount, String mapName) {
+    public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName) {
+        GameData.playerCount = 1;
         GameData.frame = new JFrame();
         GameData.bomberman = this;
         if (GameData.server != null) {
+            GameData.playerCount = GameData.server.getPlayerCount();
             GameData.gameOver = false;
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
 
             if (mapName.equals("Random")) {
-                GameData.map = new Map(13, 13, playerCount == 1);
+                GameData.map = new Map(13, 13, GameData.playerCount == 1);
             } else {
                 GameData.map = new Map(mapName);
             }
-            
-            GameData.players.add(new Player("Spieler 1", 1, 1, 200));
-            //TODO make more than one player
-            //if (!singlePlayer) GameData.players.add(new Player("Spieler 2", 11, 11, 200));
+            //TODO non-hardcoded spawn locations
+            int x = GameData.map.getWidth() - 2;
+            int y = GameData.map.getHeight() - 2;
+            if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1, 200));
+            if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y, 200));
+            if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y, 200));
+            if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1, 200));
+            //TODO more players?
         }
 
         GameData.gamePanel = new GamePanel();
@@ -115,7 +121,7 @@ public class Bomberman {
             public void run() {
                 while (GameData.frame.isVisible()) {
                     NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
-                    GameData.server.send(networkData);
+                    if (GameData.server != null) GameData.server.send(networkData);
                     GameData.frame.repaint();
                     try {
                         Thread.sleep(1000 / 60);
