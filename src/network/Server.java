@@ -3,18 +3,17 @@ package network;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.SocketAddress;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Server implements Runnable {
     
-    private int port;
     private DatagramSocket socket = null;
-    private LinkedList<InetAddress> clients = new LinkedList<InetAddress>();
+    private LinkedList<SocketAddress> clients = new LinkedList<SocketAddress>();
     
     public Server(String ip, int port) {
-        this.port = port;
         try {
             socket = new DatagramSocket(port);
         } catch (SocketException e) {
@@ -22,12 +21,20 @@ public class Server implements Runnable {
         }
     }
     
+    public int getPlayerCount() {
+        return clients.size();
+    }
+    
     public void send(byte[] data) {
-        for (InetAddress addr : clients) {
-            DatagramPacket packet = new DatagramPacket(data, data.length, addr, port);
+        for (SocketAddress addr : clients) {
             try {
-                socket.send(packet);
-            } catch (IOException e) {
+                DatagramPacket packet = new DatagramPacket(data, data.length, addr);
+                try {
+                    socket.send(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -44,9 +51,19 @@ public class Server implements Runnable {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                InetAddress addr = packet.getAddress();
+                byte data[] = Arrays.copyOf(packet.getData(), packet.getLength());
+                SocketAddress addr = packet.getSocketAddress();
                 //If the same client gets added multiple times the reason for this can be found here
-                if (!clients.contains(addr)) clients.add(addr);
+                if (!clients.contains(addr)) {
+                    clients.add(addr);
+                    System.out.println("Got new client: " + addr);
+                }
+                Object object = ObjectConverter.getFromByteArray(data);
+                if (object instanceof String) {
+                    String s = (String)object;
+                    System.out.println("Server received: " + s);
+                    if (s.equals("AUTHENTICATION_REQUEST")) send("AUTHENTICATION");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

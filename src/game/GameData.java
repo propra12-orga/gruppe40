@@ -25,4 +25,6 @@ public abstract class GameData {
     public static Server               server;
     public static Client               client;
     public static NetworkData          networkData;
+    public static int                  playerCount;
+    public static JFrame               menuFrame;
 }

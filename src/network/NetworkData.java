@@ -1,12 +1,13 @@
 package network;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import map.Map;
 
 import draw.Drawable;
 
-public class NetworkData  {
+public class NetworkData implements Serializable {
 
     public LinkedList<Drawable> drawables;
     public Map map;

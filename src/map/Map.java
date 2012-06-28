@@ -1,10 +1,11 @@
 package map;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import xml_parser.MapParser;
 
-public class Map {
+public class Map implements Serializable {
 
     private int width, height;
 

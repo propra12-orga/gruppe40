@@ -5,15 +5,24 @@ import game.GameData;
 
 import javax.swing.JPanel;
 
+import map.Map;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.LinkedList;
 import java.util.ListIterator;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g0) {
+        if (GameData.networkData == null) {
+            System.out.println("Waiting for server");
+            return;
+        }
+        Map map = GameData.networkData.map;
+        LinkedList<Drawable> drawables = GameData.networkData.drawables;
         Graphics2D g = (Graphics2D) g0;
 
         int width = this.getWidth();
@@ -22,20 +31,18 @@ public class GamePanel extends JPanel {
         g.setColor(this.getBackground());
         g.fillRect(0, 0, width, height);
 
-        double tileWidth = width / (double) GameData.map.getWidth();
-        double tileHeight = height / (double) GameData.map.getHeight();
+        double tileWidth = width / (double) map.getWidth();
+        double tileHeight = height / (double) map.getHeight();
 
-        synchronized (GameData.drawables) {
-            ListIterator<Drawable> it = GameData.drawables.listIterator();
-            while (it.hasNext()) {
-                Drawable drawable = it.next();
-                boolean isUnusedField = drawable.isField && GameData.map.getField(drawable.x, drawable.y) != drawable;
-                if (drawable.isExpired() || isUnusedField) {
-                    it.remove();
-                } else {
-                    if (drawable.isVisible()) {
-                        drawDrawable(g, drawable, tileWidth, tileHeight);
-                    }
+        ListIterator<Drawable> it = drawables.listIterator();
+        while (it.hasNext()) {
+            Drawable drawable = it.next();
+            boolean isUnusedField = drawable.isField && map.getField(drawable.x, drawable.y) != drawable;
+            if (drawable.isExpired() || isUnusedField) {
+                it.remove();
+            } else {
+                if (drawable.isVisible()) {
+                    drawDrawable(g, drawable, tileWidth, tileHeight);
                 }
             }
         }

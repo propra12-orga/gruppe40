@@ -6,11 +6,13 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 public class Client implements Runnable {
     
     private InetAddress addr;
     private int port;
+    private boolean authenticated = false;
     private DatagramSocket socket;
     
     public Client(String ip, int port) {
@@ -45,10 +47,21 @@ public class Client implements Runnable {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
+                byte data[] = Arrays.copyOf(packet.getData(), packet.getLength());
+                Object object = ObjectConverter.getFromByteArray(data);
+                if (object instanceof String) {
+                    String s = (String)object;
+                    System.out.println("Client received: " + s);
+                    if (s.equals("AUTHENTICATION")) authenticated = true;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated;
     }
 
 }

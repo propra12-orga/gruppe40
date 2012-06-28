@@ -1,5 +1,7 @@
 package main;
 
+import game.GameData;
+
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -123,8 +125,8 @@ public class Menu {
 		ActionListener alSP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
-			    boolean singlePlayer = true;
-			    new Bomberman(base, fullscreen, singlePlayer, mapName);
+                //TODO make singleplayer
+			    new Bomberman(base, fullscreen, GameData.server.getPlayerCount(), mapName);
 			}
 		};
 		
@@ -132,8 +134,7 @@ public class Menu {
 		ActionListener alMP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
-                boolean singlePlayer = false;
-                new Bomberman(base, fullscreen, singlePlayer, mapName);
+                new Bomberman(base, fullscreen, GameData.server.getPlayerCount(), mapName);
 			}
 		};
 		
