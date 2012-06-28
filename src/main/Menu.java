@@ -10,6 +10,9 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
 
+import network.Client;
+import network.Server;
+
 import java.awt.Dimension;
 import java.io.File;
 
@@ -124,8 +127,20 @@ public class Menu {
 		//singleplayer
 		ActionListener alSP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-			    base.setVisible(false);
-                //TODO make singleplayer
+			    if (GameData.client == null) {
+			        //If there is no network connection host a local server
+			        int port = 12345;
+			        String ip = "127.0.0.1";
+			        GameData.server = new Server(ip, port);
+			        GameData.client = new Client(ip, port);
+			        new Thread(GameData.server).start();
+			        new Thread(GameData.client).start();
+			        if (!GameData.client.connect(1000)) {
+			            System.err.println("Authentication for localhost failed (no idea how this could happen)");
+			            return;
+			        }
+			    }
+                base.setVisible(false);
 			    new Bomberman(base, fullscreen, GameData.server.getPlayerCount(), mapName);
 			}
 		};

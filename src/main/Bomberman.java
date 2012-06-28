@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+import network.KeyInput;
 import network.NetworkData;
 
 import draw.Drawable;
@@ -95,70 +96,15 @@ public class Bomberman {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                switch (e.getKeyChar()) {
-
-                    case 'W':
-                    case 'w':
-                    case 'A':
-                    case 'a':
-                    case 'S':
-                    case 's':
-                    case 'D':
-                    case 'd':
-                        //GameData.players.get(0).stopMove();
-                    break;
-
-                    case 'I':
-                    case 'i':
-                    case 'J':
-                    case 'j':
-                    case 'K':
-                    case 'k':
-                    case 'L':
-                    case 'l':
-                        //if (!Bomberman.singlePlayer) GameData.players.get(1).stopMove();
-                    break;
-
-                    case KeyEvent.VK_ESCAPE:
-                        //exit("Spiel beendet.");
-                    break;
-
-                    default:
-                    break;
+                if (GameData.client == null) {
+                    System.exit(1);
                 }
+                GameData.client.send(new KeyInput(e, false));
             }
 
             @Override
             public void keyTyped(KeyEvent e) {
-                switch (e.getKeyChar()) {
-
-                    case 'W':
-                    case 'w':
-                        //GameData.players.get(0).startMove(1);
-                    break;
-
-                    case 'A':
-                    case 'a':
-                        //GameData.players.get(0).startMove(4);
-                    break;
-
-                    case 'S':
-                    case 's':
-                        //GameData.players.get(0).startMove(3);
-                    break;
-
-                    case 'D':
-                    case 'd':
-                        //GameData.players.get(0).startMove(2);
-                    break;
-
-                    case 'E':
-                    case 'e':
-                        //if (GameData.players.get(0).hasBomb()) GameData.players.get(0).putBomb();
-                    break;
-                    default:
-                    break;
-                }
+                GameData.client.send(new KeyInput(e, true));
             }
         };
         GameData.frame.addKeyListener(keyListener);

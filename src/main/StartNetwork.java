@@ -75,16 +75,11 @@ public class StartNetwork {
 			    String ip = "127.0.0.1";
 			    GameData.client = new Client(ip, port);
 			    new Thread(GameData.client).start();
-			    GameData.client.send("AUTHENTICATION_REQUEST");
-			    //While not authenticated wait TODO add timeout
-			    while (!GameData.client.isAuthenticated()) {
-			        try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
+			    if (!GameData.client.connect(1000)) {
+			       System.err.println("Authentication failed");
+			    }else {
+	                System.out.println("Successfully connected to server");
 			    }
-			    System.out.println("Successfully connected to server");
 			}
 		};
 		

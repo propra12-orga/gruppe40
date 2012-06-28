@@ -1,5 +1,7 @@
 package network;
 
+import game.GameData;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -54,6 +56,13 @@ public class Client implements Runnable {
                     System.out.println("Client received: " + s);
                     if (s.equals("AUTHENTICATION")) authenticated = true;
                 }
+                if (object instanceof NetworkData) {
+                    GameData.networkData = (NetworkData)object;
+                    if (GameData.frame != null) {
+                        GameData.bomberman.resizeGamePanel();
+                        GameData.frame.repaint();
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,6 +71,20 @@ public class Client implements Runnable {
 
     public boolean isAuthenticated() {
         return authenticated;
+    }
+
+    public boolean connect(long timeout) {
+        long t = System.currentTimeMillis();
+        do {
+            send("AUTHENTICATION_REQUEST");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            if (System.currentTimeMillis() - t > timeout) return false;
+        } while (!isAuthenticated());
+        return true;
     }
 
 }
