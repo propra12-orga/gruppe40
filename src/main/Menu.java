@@ -42,6 +42,7 @@ public class Menu {
 		final JButton buttonTutorial = new JButton("Steuerung ansehen");
 		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
 		final JButton buttonEditor = new JButton("Karteneditor öffnen");
+		final JButton buttonLoadMap = new JButton("Karte laden");
 		
 		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
 		JRadioButton rbFull = new JRadioButton("Vollbild");
@@ -77,6 +78,7 @@ public class Menu {
 		buttonTutorial.setPreferredSize(dimButtonSize);
 		buttonNetwork.setPreferredSize(dimButtonSize);
 		buttonEditor.setPreferredSize(dimButtonSize);
+		buttonLoadMap.setPreferredSize(new Dimension(150,25));
 		
 		title.setFont(new Font("Arial", Font.PLAIN, 72));
 		
@@ -88,6 +90,7 @@ public class Menu {
 		//adding drop-down menu to panel
 		chooseMap.add(mapNames);
 		chooseMap.add(cbMapChoice);
+		chooseMap.add(buttonLoadMap);
 		
 		//adding button to networkpanel
 		network.add(buttonNetwork);
@@ -170,6 +173,12 @@ public class Menu {
 			}
 		};
 		
+		ActionListener alLoadMap = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		};
+		
 		//adding listeners
 		buttonSP.addActionListener(alSP);
 		buttonMP.addActionListener(alMP);
@@ -179,6 +188,7 @@ public class Menu {
 		rbWindow.addActionListener(alWindow);
 		rbFull.addActionListener(alFull);
 		cbMapChoice.addActionListener(alMapChoice);
+		buttonLoadMap.addActionListener(alLoadMap);
 		
 	}
 	
