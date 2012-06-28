@@ -45,7 +45,8 @@ public class Menu {
 		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 		final JButton buttonSP = new JButton("Start Singleplayer");
-		final JButton buttonMP = new JButton("Start Multiplayer");
+		//Redundant
+		//final JButton buttonMP = new JButton("Start Multiplayer");
 		final JButton buttonTutorial = new JButton("Controls");
 		final JButton buttonNetwork = new JButton("Start Network Game");
 		final JButton buttonEditor = new JButton("Open Map-Editor");
@@ -83,7 +84,8 @@ public class Menu {
 		
         //setting up button size
 		buttonSP.setPreferredSize(dimButtonSize);
-		buttonMP.setPreferredSize(dimButtonSize);
+        //Redundant
+		//buttonMP.setPreferredSize(dimButtonSize);
 		buttonTutorial.setPreferredSize(dimButtonSize);
 		buttonNetwork.setPreferredSize(dimButtonSize);
 		buttonEditor.setPreferredSize(dimButtonSize);
@@ -93,7 +95,8 @@ public class Menu {
 		
 		//adding buttons to panel
 		buttons.add(buttonSP);
-		buttons.add(buttonMP);
+        //Redundant
+		//buttons.add(buttonMP);
 		buttons.add(buttonTutorial);
 		
 		//adding drop-down menu to panel
@@ -225,7 +228,8 @@ public class Menu {
 		
 		//adding listeners
 		buttonSP.addActionListener(alSP);
-		buttonMP.addActionListener(alMP);
+        //Redundant
+		//buttonMP.addActionListener(alMP);
 		buttonTutorial.addActionListener(alTut);
 		buttonNetwork.addActionListener(alNetwork);
 		buttonEditor.addActionListener(alEditor);
