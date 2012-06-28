@@ -61,11 +61,13 @@ public class MapEditor {
 		//editing Sliders
 		slideWidth.setMinorTickSpacing(1);
 		slideWidth.setMajorTickSpacing(5);
+		slideWidth.setSnapToTicks(true);
 		slideWidth.setPaintLabels(true);
 		slideWidth.setPaintTicks(true);
 		
 		slideHeight.setMinorTickSpacing(1);
 		slideHeight.setMajorTickSpacing(5);
+		slideHeight.setSnapToTicks(true);
 		slideHeight.setPaintLabels(true);
 		slideHeight.setPaintTicks(true);
 		
@@ -97,6 +99,7 @@ public class MapEditor {
 			@Override public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider)e.getSource();
 				if(!source.getValueIsAdjusting()) {
+
 					width = source.getValue();
 				}
 			}
