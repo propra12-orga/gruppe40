@@ -14,7 +14,17 @@
 Generell
 ********
 
-Keine Ahnung was du genau meinst. :)
+Philipp: Sieht so aus als hätte ich (Dominik auch) beim config von git iw falsch gemacht.
+Wenn man sich die Commits anguckt, kommt man nicht auf unsere Accounts wenn man auf den Namen klickt.
+Um dies zu fixen (hopefully):
+Korr@KORR-PC /e/eclipse/Projects/gruppe40 (master)
+$ git config --global user.name "GIT USERNAME"
+
+Korr@KORR-PC /e/eclipse/Projects/gruppe40 (master)
+$ git config --global user.email whatever...
+
+_____________________________________________________________
+
 Achtung: Das Spielfeld ist jetzt fix 650*650 (50 Pixel pro Kachel, Spielfeld jetzt 13*13 - wie im originalen Bomberman)
 Sinn? Sinn ist, dass wir nun die Grafiken genau anpassen können ohne hässliche Skalierungspixel zu bekommen.
 Ist einfach eine kosmetische Sache, um das ganze schöner zu machen (und auch vor allem die Grafiken standardmäßig kleiner -> weniger Speicherplatz -> bessere Performance)
