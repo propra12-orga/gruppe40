@@ -6,6 +6,8 @@ import java.util.Vector;
 import javax.swing.JFrame;
 
 import main.Bomberman;
+import network.Client;
+import network.Server;
 import map.Map;
 import draw.Drawable;
 import draw.GamePanel;
@@ -19,4 +21,6 @@ public abstract class GameData {
     public static Map                  map;
     public static Bomberman            bomberman;
     public static boolean              gameOver;
+    public static Server               server;
+    public static Client               client;
 }

@@ -1,8 +1,13 @@
 package main;
 
+import game.GameData;
+
 import javax.swing.*;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+
+import network.Client;
+import network.Server;
 
 import java.awt.FlowLayout;
 import java.awt.Dimension;
@@ -56,14 +61,20 @@ public class StartNetwork {
 		//start server
 		ActionListener alServer = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				//TODO
+			    int port = 12345;
+			    String ip = "127.0.0.1";
+			    GameData.server = new Server(ip, port);
+			    new Thread(GameData.server).start();
 			}
 		};
 		
 		//connect to game
 		ActionListener alConnect = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				//TODO
+			    int port = 12345;
+			    String ip = "127.0.0.1";
+			    GameData.client = new Client(ip, port);
+			    new Thread(GameData.client).start();
 			}
 		};
 		
