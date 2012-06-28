@@ -1,28 +1,27 @@
 package ai;
 
-import game.Bomb;
 import game.GameData;
+import game.Bomb;
 import game.Player;
 
 public class AI {
 
-    private GameData data;
     private Player player;
     
-    public AI(GameData data, Player player) {
-        this.data = data;
+    public AI(Player player) {
+        this.player = player;
     }
 
     public void nextStep() {
         //Dumb AI        
-        int w = data.map.getWidth();
-        int h = data.map.getHeight();
+        int w = GameData.map.getWidth();
+        int h = GameData.map.getHeight();
         boolean dangerous[][] = new boolean[w][h];
         // All directions (left, up, right, down)
         int dx[] = {-1, 0, 1,  0};
         int dy[] = { 0, 1, 0, -1};
         // For all bombs set fields as dangerous or not
-        for (Bomb bomb : data.bombs) {
+        for (Bomb bomb : GameData.bombs) {
             int x = bomb.getX();
             int y = bomb.getY();
             dangerous[x][y] = true;
@@ -32,7 +31,7 @@ public class AI {
                 for (int r=1; r<=bomb.getRadius(); r++) {
                     x2 += dx[i];
                     y2 += dy[i];
-                    if (data.map.contains(x2, y2)) dangerous[x2][y2] = true;
+                    if (GameData.map.contains(x2, y2)) dangerous[x2][y2] = true;
                 }
             }
         }
@@ -43,7 +42,7 @@ public class AI {
         for (int i=0; i<4; i++) {
             int x2 = player.getX() + dx[i];
             int y2 = player.getY() + dy[i];
-            if (data.map.contains(x2, y2) && !data.map.isBlocked(x2, y2) && !dangerous[x2][y2]) possibleDirections[c++] = i;
+            if (GameData.map.contains(x2, y2) && !GameData.map.isBlocked(x2, y2) && !dangerous[x2][y2]) possibleDirections[c++] = i;
         }
         // Walk towards random direction
         if (c > 0) {
