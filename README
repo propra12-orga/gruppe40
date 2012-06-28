@@ -14,11 +14,6 @@
 Generell
 ********
 
-Known "bugs":
-Irgendwas zwischen Server und Client scheint unmengen an Rechenleistung zu fressen.
-Deshalb is das Spiel auf Netbooks etc. immoment alles andere als Berauschend.
-Ursachenforschung wird betrieben. - Tom
-
 Philipp: Sieht so aus als hätte ich (Dominik auch) beim config von git iw falsch gemacht.
 Wenn man sich die Commits anguckt, kommt man nicht auf unsere Accounts wenn man auf den Namen klickt.
 Um dies zu fixen (hopefully):
@@ -44,6 +39,13 @@ Items(+Geschwindigkeit, +Bombenradius, +Anzahl)
 Netzwerk
 neue Grafiken
 
+Irgendwas zwischen Server und Client scheint unmengen an Rechenleistung zu fressen.
+Deshalb is das Spiel auf Netbooks etc. immoment alles andere als Berauschend.
+Ursachenforschung wird betrieben.
+Eventuell helfen generated serial version uids ein wenig weiter.
+Weiterhin scheint Linux unbenutzte Ports nicht freizugeben.
+Manchmal werden weisse Bilder statt den richtigen Frames angezeigt.
+Teilweise befinden sich doppelt so viele drawables in der NetworkData Liste wie es sein sollten.
 	  
 
 Philipp
