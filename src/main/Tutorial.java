@@ -18,7 +18,7 @@ public class Tutorial {
 		 * reading textfile *
 		 ********************/
 		try {
-			FileReader fileRead = new FileReader(System.getProperty("user.dir")+"\\bin\\main\\"+filepath);
+			FileReader fileRead = new FileReader(this.getClass().getClassLoader().getResource("main/"+filepath).getPath());
 			BufferedReader bufferRead = new BufferedReader(fileRead);
 			while((line = bufferRead.readLine()) != null) {
 				document = document + line + "\n";
@@ -30,9 +30,6 @@ public class Tutorial {
 		}
 		catch (IOException e) {
 			tutText.setText("Datei nicht gefunden");
-		}
-		finally {
-		//	bufferRead.close();
 		}
 		
 		//gets dimensions from JTextArea (calculation based on font-size etc.)

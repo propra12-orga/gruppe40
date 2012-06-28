@@ -9,12 +9,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import java.awt.Dimension;
+import java.io.File;
 
 public class Menu {
 	
-	// TODO button to (de)select fullscreen
-	static boolean fullscreen = false;
+	static boolean fullscreen = false, mapLoaded = false;
 	static String mapName = "Zufall";
+	static File mapFile;
 	
 	public static void main(String[] args) {
 		
@@ -32,6 +33,7 @@ public class Menu {
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
 		JLabel mapNames = new JLabel("Karte:");
+		JLabel mapOr = new JLabel("  oder  ");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
 		final Dimension dimButtonSize = new Dimension(190,60);
@@ -43,6 +45,8 @@ public class Menu {
 		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
 		final JButton buttonEditor = new JButton("Karteneditor öffnen");
 		final JButton buttonLoadMap = new JButton("Karte laden");
+		
+		final JFileChooser fc = new JFileChooser();
 		
 		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
 		JRadioButton rbFull = new JRadioButton("Vollbild");
@@ -78,7 +82,7 @@ public class Menu {
 		buttonTutorial.setPreferredSize(dimButtonSize);
 		buttonNetwork.setPreferredSize(dimButtonSize);
 		buttonEditor.setPreferredSize(dimButtonSize);
-		buttonLoadMap.setPreferredSize(new Dimension(150,25));
+		buttonLoadMap.setPreferredSize(new Dimension(175,25));
 		
 		title.setFont(new Font("Arial", Font.PLAIN, 72));
 		
@@ -90,6 +94,7 @@ public class Menu {
 		//adding drop-down menu to panel
 		chooseMap.add(mapNames);
 		chooseMap.add(cbMapChoice);
+		chooseMap.add(mapOr);
 		chooseMap.add(buttonLoadMap);
 		
 		//adding button to networkpanel
@@ -106,15 +111,15 @@ public class Menu {
 		
 		base.add(menu, "menue");
 		
-		//menu.pack();
 		base.setVisible(true);
 		cards.show(base.getContentPane(), "menue");
+		
 		
 		/*****************************************************
 		 * Actionlistner - Actions taken when Button clicked *
 		 *****************************************************/
 		
-		//Singleplayer
+		//singleplayer
 		ActionListener alSP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
@@ -123,7 +128,7 @@ public class Menu {
 			}
 		};
 		
-		//Multiplayer
+		//multiplayer
 		ActionListener alMP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
@@ -132,40 +137,42 @@ public class Menu {
 			}
 		};
 		
-		//Tutorial
+		//tutorial
 		ActionListener alTut = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				new Tutorial("tutorialtext.txt");
 			}
 		};
 		
-		//Netzwerk
+		//network
 		ActionListener alNetwork = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				new StartNetwork();
 			}
 		};
 		
-		//Mapeditor
+		//mapeditor
 		ActionListener alEditor = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				new MapEditor();
 			}
 		};
 		
-		
+		//window mode
 		ActionListener alWindow = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				fullscreen = false;
 			}
 		};
 		
+		//fullscreen
 		ActionListener alFull = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				fullscreen = true;
 			}
 		};
 		
+		//choose map
 		ActionListener alMapChoice = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				JComboBox comboBox = (JComboBox)e.getSource();
@@ -173,9 +180,30 @@ public class Menu {
 			}
 		};
 		
+		//load custom map
 		ActionListener alLoadMap = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				//TODO
+			@Override public void actionPerformed(ActionEvent e) {		
+				//map already loaded -> "erase" it
+				if (mapLoaded == true) {
+					mapLoaded = false;
+					buttonLoadMap.setText("verworfen - neu laden?");
+				}
+				//no map loaded yet
+				else {
+					int returnVal = fc.showOpenDialog(base);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						//make sure user read a .xml file
+						if(fc.getSelectedFile().getName().toLowerCase().endsWith(".xml")) {
+							mapFile = fc.getSelectedFile();
+							buttonLoadMap.setText("geladen - verwerfen?");
+							mapLoaded = true;
+						}
+						//file isn't a .xml file
+						else {
+							buttonLoadMap.setText("falsches Dateiformat");
+						}
+					}
+				}
 			}
 		};
 		
