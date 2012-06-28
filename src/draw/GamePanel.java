@@ -49,20 +49,35 @@ public class GamePanel extends JPanel {
     }
 
     private void drawDrawable(Graphics2D g, Drawable drawable, double width, double height) {
+        // x-position of frame
         int x = drawable.getX();
+        // y-position of frame
         int y = drawable.getY();
+        // Image to draw
         Image image = drawable.getImage();
+        // Number of frames in x-direction
         int nw = drawable.getFrameCountX();
+        // Number of frames in y-direction
         int nh = drawable.getFrameCountY();
+        // width of a frame
         int dx = image.getWidth(this) / nw;
+        // Height of a frame
         int dy = image.getHeight(this) / nh;
+        // Frame index
         int n = drawable.getFrame();
+        // Restrict frame indices to valid range
+        if (n < 0) n = 0;
+        int max = dx * dy - 1;
+        if (n > max) n = max;
+        //Calculate frame position in 2D
         int x2 = n % nw;
         int y2 = n / nw;
+        //Frame edges in screen-space
         int destX0 = (int) (x * width);
         int destY0 = (int) (y * height);
         int destX1 = (int) (x * width + width + 1);
         int destY1 = (int) (y * height + height + 1);
+        //Draw frame
         g.drawImage(image, destX0, destY0, destX1, destY1, x2 * dx, y2 * dy, x2 * dx + dx, y2 * dy + dy, this);
     }
 }
