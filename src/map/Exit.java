@@ -4,7 +4,7 @@ public class Exit extends Field {
 
     public Exit(int x, int y) {
         super(x, y, 0);
-        this.duration = 180;
+        this.duration = 1500;
     }
     
     @Override
