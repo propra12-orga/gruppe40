@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import main.Bomberman;
 import network.Client;
+import network.NetworkData;
 import network.Server;
 import map.Map;
 import draw.Drawable;
@@ -23,4 +24,5 @@ public abstract class GameData {
     public static boolean              gameOver;
     public static Server               server;
     public static Client               client;
+    public static NetworkData          networkData;
 }
