@@ -190,6 +190,7 @@ public class Map {
             } else {
                 if (m[x][y].getStrength() - damage <= 0) {
                     m[x][y] = new EmptyField(x, y);
+                    m[x][y].getItem(x, y);
                 } else {
                     m[x][y].setStrength(m[x][y].getStrength() - damage);
                 }
