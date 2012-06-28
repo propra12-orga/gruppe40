@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 
 import java.awt.FlowLayout;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +61,7 @@ public class MapEditor {
 		//editing JTextPane
 		paneMap.setText("Hier Karte eintragen\n z.B.:\n0 0 0\n0 1 0\n0 0 0");
 		paneMap.setEditable(false);
+		paneMap.setMargin(new Insets(10, 10, 10, 10));
 		
 		//changing ip
 		ActionListener alChange = new ActionListener() {

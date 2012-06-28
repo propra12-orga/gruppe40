@@ -9,6 +9,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import java.awt.Dimension;
+import java.io.File;
 
 public class Menu {
 	
@@ -43,6 +44,8 @@ public class Menu {
 		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
 		final JButton buttonEditor = new JButton("Karteneditor öffnen");
 		final JButton buttonLoadMap = new JButton("Karte laden");
+		
+		final JFileChooser fc = new JFileChooser();
 		
 		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
 		JRadioButton rbFull = new JRadioButton("Vollbild");
@@ -175,7 +178,11 @@ public class Menu {
 		
 		ActionListener alLoadMap = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				//TODO
+				int returnVal = fc.showOpenDialog(base);
+				
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+				}
 			}
 		};
 		
