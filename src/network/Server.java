@@ -117,7 +117,7 @@ public class Server implements Runnable {
                 if (running) {
                     e.printStackTrace();
                 }else {
-                    System.out.println("Server closed successfully");
+                    System.out.println("Server socket closed successfully");
                     return;
                 }
             }

@@ -99,7 +99,12 @@ public class Bomberman {
             // This is just for milestone 2, will be changed later
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    //TODO ask if user really wanted to press escape
+                    stop();
+                }
+            }
 
             @Override
             public void keyReleased(KeyEvent e) {
@@ -190,5 +195,12 @@ public class Bomberman {
                 }
             }
         }
+    }
+    
+    public void stop() {
+        if (GameData.server != null) GameData.server.stop();
+        if (GameData.client != null) GameData.client.stop();
+        if (GameData.frame  != null) GameData.frame.dispose();
+        GameData.menuFrame.setVisible(true);
     }
 }

@@ -1,7 +1,6 @@
 package network;
 
 import game.GameData;
-import game.Player;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -18,6 +17,7 @@ public class Client implements Runnable {
     private InetAddress addr;
     private int port;
     private boolean authenticated = false;
+    private boolean running = true;
     private DatagramSocket socket;
     
     public Client(String ip, int port) {
@@ -85,7 +85,12 @@ public class Client implements Runnable {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                if (running) {
+                    e.printStackTrace();
+                }else {
+                    System.out.println("Client socket closed successfully");
+                    return;
+                }
             }
         }
     }
@@ -106,6 +111,11 @@ public class Client implements Runnable {
             if (System.currentTimeMillis() - t > timeout) return false;
         } while (!isAuthenticated());
         return true;
+    }
+
+    public void stop() {
+        running = false;
+        socket.close();
     }
 
 }
