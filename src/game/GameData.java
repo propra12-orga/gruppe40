@@ -21,10 +21,10 @@ public abstract class GameData {
     public static Vector<Player>       players;
     public static Map                  map;
     public static Bomberman            bomberman;
-    public static boolean              gameOver;
     public static Server               server;
     public static Client               client;
     public static NetworkData          networkData;
     public static int                  playerCount;
     public static JFrame               menuFrame;
+    public static boolean              running;
 }

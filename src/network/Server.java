@@ -13,8 +13,14 @@ import java.util.LinkedList;
 
 public class Server implements Runnable {
 
+    private boolean                   running = true;
     private DatagramSocket            socket  = null;
     private LinkedList<SocketAddress> clients = new LinkedList<SocketAddress>();
+    
+    public void stop() {
+        running = false;
+        socket.close();
+    }
 
     public Server(String ip, int port) {
         try {
@@ -77,7 +83,7 @@ public class Server implements Runnable {
                     if (player.hasBomb()) player.putBomb();
                 break;
             }
-        }else {
+        } else {
             if (key != 'e' && key != 'E') player.stopMove();
         }
     }
@@ -85,7 +91,7 @@ public class Server implements Runnable {
     public void run() {
         final int BUFFER_SIZE = 1024 * 64;
         byte[] buffer = new byte[BUFFER_SIZE];
-        while (true) {
+        while (running) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
@@ -108,7 +114,12 @@ public class Server implements Runnable {
                     handleKeyInput((KeyInput) object, playerNumber);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                if (running) {
+                    e.printStackTrace();
+                }else {
+                    System.out.println("Server closed successfully");
+                    return;
+                }
             }
         }
     }

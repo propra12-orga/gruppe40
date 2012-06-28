@@ -16,6 +16,7 @@ import network.NetworkData;
 
 import draw.Drawable;
 import draw.GamePanel;
+import map.Exit;
 import map.Map;
 import game.Bomb;
 import game.GameData;
@@ -28,10 +29,10 @@ public class Bomberman {
     public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName) {
         GameData.playerCount = 1;
         GameData.frame = new JFrame();
+        GameData.menuFrame = menuFrame;
         GameData.bomberman = this;
         if (GameData.server != null) {
             GameData.playerCount = GameData.server.getPlayerCount();
-            GameData.gameOver = false;
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
@@ -123,6 +124,7 @@ public class Bomberman {
                     NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
                     if (GameData.server != null) GameData.server.send(networkData);
                     GameData.frame.repaint();
+                    checkEndConditions();
                     try {
                         Thread.sleep(1000 / 60);
                     } catch (InterruptedException e1) {
@@ -164,4 +166,29 @@ public class Bomberman {
         }
     }
 
+    private void checkEndConditions() {
+        int playerCount = GameData.playerCount;
+        if (playerCount == 1) {
+            //Single player
+            Player player = GameData.players.firstElement();
+            if (!player.isAlive()) {
+                GameData.server.send("END You died.");
+            }else {
+                if (GameData.map.getField(player.x, player.y) instanceof Exit) {
+                    GameData.server.send("END You won the game!");
+                }
+            }
+        }else {
+            LinkedList<Player> livingPlayers = new LinkedList<Player>();
+            for (Player player : GameData.players) if (player.isAlive()) livingPlayers.add(player);
+            if (livingPlayers.size() == 1) {
+                Player player = livingPlayers.getFirst();
+                GameData.server.send("END " + player.getName() + " won!");
+            }else {
+                if (livingPlayers.size() == 0) {
+                    GameData.server.send("END Tie!");
+                }
+            }
+        }
+    }
 }

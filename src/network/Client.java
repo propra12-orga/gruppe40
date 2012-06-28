@@ -1,6 +1,7 @@
 package network;
 
 import game.GameData;
+import game.Player;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -9,6 +10,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+
+import javax.swing.JOptionPane;
 
 public class Client implements Runnable {
     
@@ -54,7 +57,25 @@ public class Client implements Runnable {
                 if (object instanceof String) {
                     String s = (String)object;
                     System.out.println("Client received: " + s);
-                    if (s.equals("AUTHENTICATION")) authenticated = true;
+                    if (s.equals("AUTHENTICATION")) {
+                        authenticated = true;
+                    }else {
+                        int spacePos = s.indexOf(' ');
+                        String pre = s.substring(0, spacePos);
+                        String post = s.substring(spacePos+1, s.length());
+                        if (pre.equals("END")) {
+                            GameData.running = false;
+                            JOptionPane.showMessageDialog(GameData.frame, post);
+                            GameData.frame.dispose();
+                            GameData.menuFrame.setVisible(true);
+                            GameData.client = null;
+                            if (GameData.server != null) {
+                                GameData.server.stop();
+                                GameData.server = null;
+                            }
+                            return;
+                        }
+                    }
                 }
                 if (object instanceof NetworkData) {
                     GameData.networkData = (NetworkData)object;
