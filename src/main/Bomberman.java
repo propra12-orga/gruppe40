@@ -39,7 +39,7 @@ public class Bomberman {
         GameData.players = new Vector<Player>();
         GameData.bomberman = this;
 
-        if (mapName.equals("Zufall")) {
+        if (mapName.equals("Random")) {
             GameData.map = new Map(13, 13, singlePlayer);
         } else {
             GameData.map = new Map(mapName);
