@@ -14,7 +14,7 @@ import java.io.File;
 public class Menu {
 	
 	static boolean fullscreen = false, mapLoaded = false;
-	static String mapName = "Zufall";
+	static String mapName = "Random";
 	static File mapFile;
 	
 	public static void main(String[] args) {
@@ -25,34 +25,34 @@ public class Menu {
 		
 		final CardLayout cards = new CardLayout();
 		
-		final JFrame base = new JFrame("Willkommen in der Bomberman-Beta");
+		final JFrame base = new JFrame("Welcome to the Bomberman-Beta");
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
 		JPanel network = new JPanel();
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
-		JLabel mapNames = new JLabel("Karte:");
-		JLabel mapOr = new JLabel("  oder  ");
+		JLabel mapNames = new JLabel("Map:");
+		JLabel mapOr = new JLabel("  or  ");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
 		final Dimension dimButtonSize = new Dimension(190,60);
 		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-		final JButton buttonSP = new JButton("Starte Singleplayer");
-		final JButton buttonMP = new JButton("Starte Multiplayer");
-		final JButton buttonTutorial = new JButton("Steuerung ansehen");
-		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
-		final JButton buttonEditor = new JButton("Karteneditor öffnen");
-		final JButton buttonLoadMap = new JButton("Karte laden");
+		final JButton buttonSP = new JButton("Start Singleplayer");
+		final JButton buttonMP = new JButton("Start Multiplayer");
+		final JButton buttonTutorial = new JButton("Controls");
+		final JButton buttonNetwork = new JButton("Start Network Game");
+		final JButton buttonEditor = new JButton("Open Map-Editor");
+		final JButton buttonLoadMap = new JButton("Load Map");
 		
 		final JFileChooser fc = new JFileChooser();
 		
-		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
-		JRadioButton rbFull = new JRadioButton("Vollbild");
+		JRadioButton rbWindow = new JRadioButton("Windowed", true);
+		JRadioButton rbFull = new JRadioButton("Fullscreen");
 		
 		//drop-down menu
-		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
+		String[] mapList = {"Random", "Map1", "Map2", "Map3", "Map4"};
 		JComboBox cbMapChoice = new JComboBox(mapList);
 		
 		//screen solution buttons
@@ -109,10 +109,10 @@ public class Menu {
 		menu.add(network);
 		menu.add(creators);
 		
-		base.add(menu, "menue");
+		base.add(menu, "menu");
 		
 		base.setVisible(true);
-		cards.show(base.getContentPane(), "menue");
+		cards.show(base.getContentPane(), "menu");
 		
 		
 		/*****************************************************
@@ -200,7 +200,7 @@ public class Menu {
 						}
 						//file isn't a .xml file
 						else {
-							buttonLoadMap.setText("falsches Dateiformat");
+							buttonLoadMap.setText("Wrong File Format");
 						}
 					}
 				}

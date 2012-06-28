@@ -24,18 +24,18 @@ public class MapEditor {
 	
 	public MapEditor() {
 		//panels etc...
-		final JFrame editorWindow = new JFrame("Karteneditor");
+		final JFrame editorWindow = new JFrame("Map-Editor");
 		JPanel base = new JPanel();
 		JPanel slideLabels = new JPanel();
 		JPanel sliders = new JPanel();
 		JPanel loadsave = new JPanel();
-		JLabel labelWidth = new JLabel("Kartenbreite               ");
-		JLabel labelHeight = new JLabel("               Kartenhoehe");
+		JLabel labelWidth = new JLabel("Map-width               ");
+		JLabel labelHeight = new JLabel("               Map-height");
 		JSlider slideWidth = new JSlider(JSlider.HORIZONTAL, mapSize_MIN, mapSize_MAX, mapSize_STANDARD);
 		JSlider slideHeight = new JSlider(JSlider.HORIZONTAL, mapSize_MIN, mapSize_MAX, mapSize_STANDARD);
-		final JButton buttonEditMap = new JButton("Karte bearbeiten");
-		final JButton buttonSaveMap = new JButton("Karte speichern");
-		final JButton buttonLoadMap = new JButton("Karte laden");
+		final JButton buttonEditMap = new JButton("Edit Map");
+		final JButton buttonSaveMap = new JButton("Save Map");
+		final JButton buttonLoadMap = new JButton("Load Map");
 		final JTextPane paneMap = new JTextPane();
 		final JFileChooser fc = new JFileChooser();
 		JScrollPane scrollMap = new JScrollPane(paneMap);
@@ -74,7 +74,7 @@ public class MapEditor {
 		buttonSaveMap.setEnabled(false);
 
 		//editing JTextPane
-		paneMap.setText("Hier Karte eintragen\n z.B.:\n0 0 0\n0 1 0\n0 0 0");
+		paneMap.setText("No Map-Style until my code is done\n//Korred");
 		paneMap.setEditable(false);
 		paneMap.setMargin(new Insets(10, 10, 10, 10));
 		
@@ -89,7 +89,7 @@ public class MapEditor {
 					paneMap.setText("");
 					paneMap.setEditable(true);
 					showLegend();
-					buttonEditMap.setText("Karte bestaetigen");
+					buttonEditMap.setText("Create");
 				}
 			}
 		};
@@ -120,14 +120,14 @@ public class MapEditor {
 			@Override public void actionPerformed(ActionEvent e) {		
 				int returnVal = fc.showOpenDialog(editorWindow);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					//make sure user read a .xml file
+					//make sure user reads a .xml file
 					if(fc.getSelectedFile().getName().toLowerCase().endsWith(".xml")) {
 						mapFile = fc.getSelectedFile();
-						buttonLoadMap.setText("Karte laden");
+						buttonLoadMap.setText("Load");
 					}
 					//file isn't a .xml file
 					else {
-						buttonLoadMap.setText("falsches Dateiformat");
+						buttonLoadMap.setText("Wrong File Format");
 					}
 				}
 			}
@@ -160,15 +160,12 @@ public class MapEditor {
 	//map legend - new window
 	public void showLegend() {
 		
-		JFrame legend = new JFrame("Legende");
+		JFrame legend = new JFrame("Information");
 		JPanel base = new JPanel();
 		JTextPane textLegend = new JTextPane();
 		
 		textLegend.setText(
-				"BEISPIELTEXT!!\n"+	
-				"0 = Unzerstoerbare Mauer\n"+
-				"1 = Spieler\n"+
-				"2 = Wuff\n"
+				"absolutely nothing"
 			);
 		
 		textLegend.setEditable(false);
