@@ -1,8 +1,8 @@
-	Spieler 1	Spieler 2	
+	Player 1	Player 2	
 
-   nach links	  - a -	  - j -	
-   nach rechts	  - d -	  - l -	
-   nach oben	  - w -	  - i -	
-   nach unten	  - s -	  - k -	
+   left	  - a -	  - j -	
+   right	  - d -	  - l -	
+   up	  - w -	  - i -	
+   down	  - s -	  - k -	
 
-   Bombe	  - e -	  - o -	
+   bomb	  - e -	  - o -	

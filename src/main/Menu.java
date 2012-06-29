@@ -212,7 +212,7 @@ public class Menu {
 				//map already loaded -> "erase" it
 				if (mapLoaded == true) {
 					mapLoaded = false;
-					buttonLoadMap.setText("verworfen - neu laden?");
+					buttonLoadMap.setText("rejected - load new map?");
 				}
 				//no map loaded yet
 				else {
@@ -221,7 +221,7 @@ public class Menu {
 						//make sure user read a .xml file
 						if(fc.getSelectedFile().getName().toLowerCase().endsWith(".xml")) {
 							mapFile = fc.getSelectedFile();
-							buttonLoadMap.setText("geladen - verwerfen?");
+							buttonLoadMap.setText("success - reject?");
 							mapLoaded = true;
 						}
 						//file isn't a .xml file
