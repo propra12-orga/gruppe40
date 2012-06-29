@@ -17,14 +17,15 @@ import java.awt.event.ActionListener;
 
 public class StartNetwork {
 	
+	public final JFrame networkWindow = new JFrame("Network settings");
+	
 	public StartNetwork() {
 		//panels etc...
-		JFrame networkWindow = new JFrame("Netzwerkeinstellungen");
 		JPanel base = new JPanel();
 		JPanel buttonsStart = new JPanel();
-		final JButton buttonConnectGame = new JButton("Verbinde zum Spiel");
-		final JButton buttonStartServer = new JButton("Server starten");
-		final JButton buttonEditIP = new JButton("IP aendern");
+		final JButton buttonConnectGame = new JButton("Connect to server");
+		final JButton buttonStartServer = new JButton("Start server");
+		final JButton buttonEditIP = new JButton("Change ip");
 		final JTextPane paneIP = new JTextPane();
 		
 		base.setLayout(new FlowLayout());
@@ -49,11 +50,11 @@ public class StartNetwork {
 			@Override public void actionPerformed(ActionEvent e) {
 				if(paneIP.isEditable()) {
 					paneIP.setEditable(false);
-					buttonEditIP.setText("IP aendern");
+					buttonEditIP.setText("Change ip");
 				}
 				else {
 					paneIP.setEditable(true);
-					buttonEditIP.setText("IP bestaetigen");
+					buttonEditIP.setText("Confirm");
 				}
 			}
 		};

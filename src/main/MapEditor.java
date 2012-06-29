@@ -21,10 +21,10 @@ public class MapEditor {
 	File mapFile;
 	int height, width;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public final JFrame editorWindow = new JFrame("Map-Editor");
 	
 	public MapEditor() {
 		//panels etc...
-		final JFrame editorWindow = new JFrame("Map-Editor");
 		JPanel base = new JPanel();
 		JPanel slideLabels = new JPanel();
 		JPanel sliders = new JPanel();
