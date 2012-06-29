@@ -20,6 +20,7 @@ public class Player extends Drawable implements ActionListener {
     private int      delay;
     private boolean  alive;
     private String name;
+	private int bombCounter;
 
     public Player(String name, int x, int y, int speed) {
         super(x, y, false);
@@ -31,6 +32,7 @@ public class Player extends Drawable implements ActionListener {
         this.timer = new Timer(this.delay, this);
         this.progress = 0;
         this.alive = true;
+		this.bombCounter = 2;
     }
 
     public int getSpeed() {
@@ -144,19 +146,24 @@ public class Player extends Drawable implements ActionListener {
     }
 
     public boolean hasBomb() {
-        return true; // TODO has to be changed, when bomb explodes, array, when
-                     // more bombs are available
+        return (this.bombCounter>0); 
     }
 
     public void putBomb() {
         if (!alive) return;
-        Bomb bomb = new Bomb(x, y);
+		if (!hasBomb()) return;
+        Bomb bomb = new Bomb(x, y, this);
+		this.bombCounter--;
         bomb.startTimer();
         map.setBlocked(x, y, true);
         synchronized (GameData.drawables) {
             GameData.drawables.add(bomb);
         }
     }
+	
+	public void increaseBombCounter(){
+		this.bombCounter++;
+	}
 
     @Override
     public void actionPerformed(ActionEvent e) {
