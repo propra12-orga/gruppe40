@@ -4,11 +4,12 @@ import game.GameData;
 import images.ImageLoader;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
  * Every object which is drawn should extend this
  */
-public abstract class Drawable {
+public abstract class Drawable implements Serializable {
     public int     x          = 0;
     public int     y          = 0;
     public boolean visible    = true;

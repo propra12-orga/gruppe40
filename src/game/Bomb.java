@@ -21,8 +21,9 @@ public class Bomb extends Drawable implements ActionListener {
 	private Timer timer;
 	private long startTime;
 	private boolean exploding;
+	private Player owner; 
 	
-	public Bomb(int x, int y){
+	public Bomb(int x, int y, Player owner){
         super(x, y, false);
 		this.radius = 1;
 		this.strength = 1;
@@ -30,6 +31,7 @@ public class Bomb extends Drawable implements ActionListener {
 		this.startTime = -1;
 		this.map = GameData.map;
 		this.exploding = false;
+		this.owner = owner;
 		GameData.bombs.add(this);
 	}
 	
@@ -69,6 +71,7 @@ public class Bomb extends Drawable implements ActionListener {
 	public void explode(){
 	    //Prevent infinite loop from two bombs triggering each other
 	    if (exploding) return;
+		this.owner.increaseBombCounter();
 	    exploding = true;
         map.setBlocked(this.x, this.y, false);
 		map.destroy(x, y, strength);

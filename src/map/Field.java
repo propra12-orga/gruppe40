@@ -1,6 +1,5 @@
 package map;
 
-import game.Item;
 import draw.Drawable;
 
 public abstract class Field extends Drawable {

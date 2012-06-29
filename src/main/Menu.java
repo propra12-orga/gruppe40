@@ -1,5 +1,7 @@
 package main;
 
+import game.GameData;
+
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -8,13 +10,16 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
 
+import network.Client;
+import network.Server;
+
 import java.awt.Dimension;
 import java.io.File;
 
 public class Menu {
 	
 	static boolean fullscreen = false, mapLoaded = false;
-	static String mapName = "Zufall";
+	static String mapName = "Random";
 	static File mapFile;
 	
 	public static void main(String[] args) {
@@ -25,34 +30,35 @@ public class Menu {
 		
 		final CardLayout cards = new CardLayout();
 		
-		final JFrame base = new JFrame("Willkommen in der Bomberman-Beta");
+		final JFrame base = new JFrame("Welcome to the Bomberman-Beta");
 		JPanel menu = new JPanel();
 		JPanel buttons = new JPanel();
 		JPanel buttonsSize = new JPanel();
 		JPanel network = new JPanel();
 		JPanel chooseMap = new JPanel();
 		JLabel title = new JLabel("Bomberman");
-		JLabel mapNames = new JLabel("Karte:");
-		JLabel mapOr = new JLabel("  oder  ");
+		JLabel mapNames = new JLabel("Map:");
+		JLabel mapOr = new JLabel("  or  ");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
 		final Dimension dimButtonSize = new Dimension(190,60);
 		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-		final JButton buttonSP = new JButton("Starte Singleplayer");
-		final JButton buttonMP = new JButton("Starte Multiplayer");
-		final JButton buttonTutorial = new JButton("Steuerung ansehen");
-		final JButton buttonNetwork = new JButton("Netzwerkspiel starten");
-		final JButton buttonEditor = new JButton("Karteneditor öffnen");
-		final JButton buttonLoadMap = new JButton("Karte laden");
+		final JButton buttonSP = new JButton("Start Singleplayer");
+		//Redundant
+		//final JButton buttonMP = new JButton("Start Multiplayer");
+		final JButton buttonTutorial = new JButton("Controls");
+		final JButton buttonNetwork = new JButton("Start Network Game");
+		final JButton buttonEditor = new JButton("Open Map-Editor");
+		final JButton buttonLoadMap = new JButton("Load Map");
 		
 		final JFileChooser fc = new JFileChooser();
 		
-		JRadioButton rbWindow = new JRadioButton("Fenstermodus", true);
-		JRadioButton rbFull = new JRadioButton("Vollbild");
+		JRadioButton rbWindow = new JRadioButton("Windowed", true);
+		JRadioButton rbFull = new JRadioButton("Fullscreen");
 		
 		//drop-down menu
-		String[] mapList = {"Zufall", "Karte1", "Karte2", "Karte3", "Karte4"};
+		String[] mapList = {"Random", "Map1", "Map2", "Map3", "Map4"};
 		JComboBox cbMapChoice = new JComboBox(mapList);
 		
 		//screen solution buttons
@@ -78,7 +84,8 @@ public class Menu {
 		
         //setting up button size
 		buttonSP.setPreferredSize(dimButtonSize);
-		buttonMP.setPreferredSize(dimButtonSize);
+        //Redundant
+		//buttonMP.setPreferredSize(dimButtonSize);
 		buttonTutorial.setPreferredSize(dimButtonSize);
 		buttonNetwork.setPreferredSize(dimButtonSize);
 		buttonEditor.setPreferredSize(dimButtonSize);
@@ -88,7 +95,8 @@ public class Menu {
 		
 		//adding buttons to panel
 		buttons.add(buttonSP);
-		buttons.add(buttonMP);
+        //Redundant
+		//buttons.add(buttonMP);
 		buttons.add(buttonTutorial);
 		
 		//adding drop-down menu to panel
@@ -109,10 +117,10 @@ public class Menu {
 		menu.add(network);
 		menu.add(creators);
 		
-		base.add(menu, "menue");
+		base.add(menu, "menu");
 		
 		base.setVisible(true);
-		cards.show(base.getContentPane(), "menue");
+		cards.show(base.getContentPane(), "menu");
 		
 		
 		/*****************************************************
@@ -122,9 +130,21 @@ public class Menu {
 		//singleplayer
 		ActionListener alSP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-			    base.setVisible(false);
-			    boolean singlePlayer = true;
-			    new Bomberman(base, fullscreen, singlePlayer, mapName);
+			    if (GameData.client == null) {
+			        //If there is no network connection host a local server
+			        int port = 12345;
+			        String ip = "127.0.0.1";
+			        GameData.server = new Server(ip, port);
+			        GameData.client = new Client(ip, port);
+			        new Thread(GameData.server).start();
+			        new Thread(GameData.client).start();
+			        if (!GameData.client.connect(1000)) {
+			            System.err.println("Authentication for localhost failed (no idea how this could happen)");
+			            return;
+			        }
+			    }
+                base.setVisible(false);
+			    new Bomberman(base, fullscreen, mapName);
 			}
 		};
 		
@@ -132,8 +152,7 @@ public class Menu {
 		ActionListener alMP = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    base.setVisible(false);
-                boolean singlePlayer = false;
-                new Bomberman(base, fullscreen, singlePlayer, mapName);
+                new Bomberman(base, fullscreen, mapName);
 			}
 		};
 		
@@ -200,7 +219,7 @@ public class Menu {
 						}
 						//file isn't a .xml file
 						else {
-							buttonLoadMap.setText("falsches Dateiformat");
+							buttonLoadMap.setText("Wrong File Format");
 						}
 					}
 				}
@@ -209,7 +228,8 @@ public class Menu {
 		
 		//adding listeners
 		buttonSP.addActionListener(alSP);
-		buttonMP.addActionListener(alMP);
+        //Redundant
+		//buttonMP.addActionListener(alMP);
 		buttonTutorial.addActionListener(alTut);
 		buttonNetwork.addActionListener(alNetwork);
 		buttonEditor.addActionListener(alEditor);
