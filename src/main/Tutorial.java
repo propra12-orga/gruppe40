@@ -7,9 +7,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class Tutorial {
+	public final JFrame tutWindow = new JFrame("Controls");
 	
 	public Tutorial(String filepath) {
-		final JFrame tutWindow = new JFrame("Controls");	
 		JPanel base = new JPanel();
 		JTextArea tutText = new JTextArea();
 		
@@ -43,7 +43,7 @@ public class Tutorial {
 		tutWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		tutWindow.setSize(windowSize.width+20, windowSize.height+40);
 		tutWindow.add(base);
-		tutWindow.setVisible(true);
+//		tutWindow.setVisible(true);
 		tutWindow.setResizable(false);
 		
 		Dimension center = new Dimension((int)screenSize.getWidth()/2 - tutWindow.getWidth()/2, (int)screenSize.getHeight()/2 - tutWindow.getHeight()/2);

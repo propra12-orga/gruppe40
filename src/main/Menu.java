@@ -21,6 +21,7 @@ public class Menu {
 	static boolean fullscreen = false, mapLoaded = false;
 	static String mapName = "Random";
 	static File mapFile;
+	static Tutorial tut = null;
 	
 	public static void main(String[] args) {
 		
@@ -159,7 +160,13 @@ public class Menu {
 		//tutorial
 		ActionListener alTut = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new Tutorial("tutorialtext.txt");
+				if(tut == null) {
+					tut = new Tutorial("tutorialtext.txt");
+					tut.tutWindow.setVisible(true);
+				}
+				else if(!tut.tutWindow.isVisible()) {
+					tut.tutWindow.setVisible(true);
+				}
 			}
 		};
 		
