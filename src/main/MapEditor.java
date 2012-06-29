@@ -130,11 +130,18 @@ public class MapEditor {
 			}
 		};
 		
+		ActionListener alSaveMap = new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {		
+				//TODO
+			}
+		};
+		
 		//adding actionlisteners
 		buttonEditMap.addActionListener(alChange);
 		slideWidth.addChangeListener(widthChange);
 		slideHeight.addChangeListener(heightChange);
 		buttonLoadMap.addActionListener(alLoadMap);
+		buttonSaveMap.addActionListener(alSaveMap);
 		
 		
 		//setting up sizes to match everything
