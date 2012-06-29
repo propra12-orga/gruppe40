@@ -11,6 +11,8 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+import ai.AI;
+
 import network.KeyInput;
 import network.NetworkData;
 
@@ -26,6 +28,8 @@ public class Bomberman {
 
     private Container pane;
 
+    public static AI ai;
+    
     public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName) {
         GameData.playerCount = 1;
         GameData.frame = new JFrame();
@@ -37,6 +41,9 @@ public class Bomberman {
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
 
+            boolean testingAI = false;
+            if (testingAI) GameData.playerCount = 2;
+
             if (mapName.equals("Random")) {
                 GameData.map = new Map(13, 13, GameData.playerCount == 1);
             } else {
@@ -47,6 +54,7 @@ public class Bomberman {
             int y = GameData.map.getHeight() - 2;
             if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1, 200));
             if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y, 200));
+            if (testingAI) Bomberman.ai = new AI(GameData.players.lastElement());
             if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y, 200));
             if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1, 200));
             // TODO more players?
@@ -123,6 +131,7 @@ public class Bomberman {
         Thread gameLoop = new Thread() {
             public void run() {
                 while (GameData.frame.isVisible()) {
+                    if (ai != null) ai.nextStep();
                     NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
                     if (GameData.server != null) GameData.server.send(networkData);
                     GameData.frame.repaint();
