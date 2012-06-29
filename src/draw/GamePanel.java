@@ -77,6 +77,8 @@ public class GamePanel extends JPanel {
         int destY0 = (int) (y * height);
         int destX1 = (int) (x * width + width + 1);
         int destY1 = (int) (y * height + height + 1);
+        if (dx == 48)
+        System.out.println(n+ " "  + nw + " " + nh + " " + dx + " " + dy);
         //Draw frame
         g.drawImage(image, destX0, destY0, destX1, destY1, x2 * dx, y2 * dy, x2 * dx + dx, y2 * dy + dy, this);
     }

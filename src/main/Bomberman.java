@@ -108,9 +108,6 @@ public class Bomberman {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (GameData.client == null) {
-                    System.exit(1);
-                }
                 GameData.client.send(new KeyInput(e, false));
             }
 
@@ -210,6 +207,8 @@ public class Bomberman {
         if (GameData.server != null) GameData.server.stop();
         if (GameData.client != null) GameData.client.stop();
         if (GameData.frame != null) GameData.frame.dispose();
+        GameData.server = null;
+        GameData.client = null;
         GameData.menuFrame.setVisible(true);
     }
 }

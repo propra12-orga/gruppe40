@@ -35,6 +35,7 @@ public class Server implements Runnable {
     }
 
     public void send(byte[] data) {
+        if (!running) return;
         for (SocketAddress addr : clients) {
             try {
                 DatagramPacket packet = new DatagramPacket(data, data.length, addr);
