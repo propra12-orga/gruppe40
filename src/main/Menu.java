@@ -149,12 +149,12 @@ public class Menu {
 		};
 		
 		//multiplayer
-		ActionListener alMP = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-			    base.setVisible(false);
-                new Bomberman(base, fullscreen, mapName);
-			}
-		};
+//		ActionListener alMP = new ActionListener() {
+//			@Override public void actionPerformed(ActionEvent e) {
+//			    base.setVisible(false);
+//                new Bomberman(base, fullscreen, mapName);
+//			}
+//		};
 		
 		//tutorial
 		ActionListener alTut = new ActionListener() {

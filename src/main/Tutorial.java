@@ -9,7 +9,8 @@ import java.awt.Toolkit;
 public class Tutorial {
 	
 	public Tutorial(String filepath) {
-		JFrame tutWindow = new JFrame("Steuerung");		
+		final JFrame tutWindow = new JFrame("Controls");	
+		JPanel base = new JPanel();
 		JTextArea tutText = new JTextArea();
 		
 		String line = null, document = "";
@@ -36,10 +37,12 @@ public class Tutorial {
 		Dimension windowSize = tutText.getPreferredSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
+		base.add(tutText);
+		
 		//setting up popup size to match JTextArea
 		tutWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		tutWindow.setSize(windowSize.width+20, windowSize.height+40);
-		tutWindow.add(tutText);
+		tutWindow.add(base);
 		tutWindow.setVisible(true);
 		tutWindow.setResizable(false);
 		
