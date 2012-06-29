@@ -22,6 +22,8 @@ public class Menu {
 	static String mapName = "Random";
 	static File mapFile;
 	static Tutorial tut = null;
+	static StartNetwork startNet = null;
+	static MapEditor mapEdit = null;
 	
 	public static void main(String[] args) {
 		
@@ -173,14 +175,26 @@ public class Menu {
 		//network
 		ActionListener alNetwork = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new StartNetwork();
+				if(startNet == null) {
+					startNet = new StartNetwork();
+					startNet.networkWindow.setVisible(true);
+				}
+				else if(!startNet.networkWindow.isVisible()) {
+					startNet.networkWindow.setVisible(true);
+				}
 			}
 		};
 		
 		//mapeditor
 		ActionListener alEditor = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				new MapEditor();
+				if(mapEdit == null) {
+					mapEdit = new MapEditor();
+					mapEdit.editorWindow.setVisible(true);
+				}
+				else if(!mapEdit.editorWindow.isVisible()) {
+					mapEdit.editorWindow.setVisible(true);
+				}
 			}
 		};
 		
