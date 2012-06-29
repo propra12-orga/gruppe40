@@ -24,7 +24,7 @@ import game.Player;
 
 public class Bomberman {
 
-    private Container      pane;
+    private Container pane;
 
     public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName) {
         GameData.playerCount = 1;
@@ -42,14 +42,14 @@ public class Bomberman {
             } else {
                 GameData.map = new Map(mapName);
             }
-            //TODO non-hardcoded spawn locations
+            // TODO non-hardcoded spawn locations
             int x = GameData.map.getWidth() - 2;
             int y = GameData.map.getHeight() - 2;
             if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1, 200));
             if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y, 200));
             if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y, 200));
             if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1, 200));
-            //TODO more players?
+            // TODO more players?
         }
 
         GameData.gamePanel = new GamePanel();
@@ -64,7 +64,7 @@ public class Bomberman {
             // Make fullscreen window stay on top of other windows
             GameData.frame.setAlwaysOnTop(true);
         }
-        
+
         // Remove layout so things can be placed manually
         pane.setLayout(null);
         // Add GamePanel
@@ -101,7 +101,7 @@ public class Bomberman {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    //TODO ask if user really wanted to press escape
+                    // TODO ask if user really wanted to press escape
                     stop();
                 }
             }
@@ -122,7 +122,7 @@ public class Bomberman {
         GameData.frame.addKeyListener(keyListener);
         GameData.frame.setSize(600, 600);
         GameData.frame.setVisible(true);
-        
+
         Thread gameLoop = new Thread() {
             public void run() {
                 while (GameData.frame.isVisible()) {
@@ -140,7 +140,9 @@ public class Bomberman {
         };
         gameLoop.start();
     }
-    
+
+    private int hash = 0;
+
     /**
      * Resize the GamePanel so it always has maximum size while still preserving
      * aspect ratio.
@@ -155,6 +157,12 @@ public class Bomberman {
         int my = map.getHeight();
         int width = pane.getWidth();
         int height = pane.getHeight();
+
+        //Do not resize if nothing has changed
+        int newHash = (mx << 25) | (my << 20) | (width << 10) | height;
+        if (hash != newHash) hash = newHash;
+        else return;
+
         // Calculate width required to display the image at full height while
         // preserving aspect ratio
         int maxWidth = height * mx / my;
@@ -174,33 +182,34 @@ public class Bomberman {
     private void checkEndConditions() {
         int playerCount = GameData.playerCount;
         if (playerCount == 1) {
-            //Single player
+            // Single player
             Player player = GameData.players.firstElement();
             if (!player.isAlive()) {
                 GameData.server.send("END You died.");
-            }else {
+            } else {
                 if (GameData.map.getField(player.x, player.y) instanceof Exit) {
                     GameData.server.send("END You won the game!");
                 }
             }
-        }else {
+        } else {
             LinkedList<Player> livingPlayers = new LinkedList<Player>();
-            for (Player player : GameData.players) if (player.isAlive()) livingPlayers.add(player);
+            for (Player player : GameData.players)
+                if (player.isAlive()) livingPlayers.add(player);
             if (livingPlayers.size() == 1) {
                 Player player = livingPlayers.getFirst();
                 GameData.server.send("END " + player.getName() + " won!");
-            }else {
+            } else {
                 if (livingPlayers.size() == 0) {
                     GameData.server.send("END Tie!");
                 }
             }
         }
     }
-    
+
     public void stop() {
         if (GameData.server != null) GameData.server.stop();
         if (GameData.client != null) GameData.client.stop();
-        if (GameData.frame  != null) GameData.frame.dispose();
+        if (GameData.frame != null) GameData.frame.dispose();
         GameData.menuFrame.setVisible(true);
     }
 }
