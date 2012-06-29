@@ -3,6 +3,7 @@ package game;
 import draw.Drawable;
 
 public class Explosion extends Drawable {
+    private static final long serialVersionUID = GameData.version;
 
     public Explosion(int x, int y) {
         super(x, y, false);

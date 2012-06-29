@@ -10,6 +10,7 @@ import draw.Drawable;
 import map.Map;
 
 public class Player extends Drawable implements ActionListener {
+    private static final long serialVersionUID = GameData.version;
 
     private Map      map;      // player knows which field he is playing on
     private int      direction; // players moving direction 0:no movement, 1:up,

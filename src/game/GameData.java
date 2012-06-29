@@ -27,4 +27,5 @@ public abstract class GameData {
     public static int                  playerCount;
     public static JFrame               menuFrame;
     public static boolean              running;
+    public static final long           version = 1;
 }

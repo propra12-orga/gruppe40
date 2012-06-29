@@ -1,11 +1,14 @@
 package map;
 
+import game.GameData;
+
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import xml_parser.MapParser;
 
 public class Map implements Serializable {
+    private static final long serialVersionUID = GameData.version;
 
     private int width, height;
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
  * Every object which is drawn should extend this
  */
 public abstract class Drawable implements Serializable {
+    private static final long serialVersionUID = GameData.version;
     public int     x          = 0;
     public int     y          = 0;
     public boolean visible    = true;

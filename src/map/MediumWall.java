@@ -1,6 +1,9 @@
 package map;
 
+import game.GameData;
+
 public class MediumWall extends DestructibleWall {
+    private static final long serialVersionUID = GameData.version;
 
     public MediumWall(int x, int y) {
         super(x, y, 2);

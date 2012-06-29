@@ -1,6 +1,9 @@
 package map;
 
+import game.GameData;
+
 public class DestructibleWall extends Field {
+    private static final long serialVersionUID = GameData.version;
     
     private boolean exit = false;
     

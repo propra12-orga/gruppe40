@@ -10,6 +10,7 @@ import draw.Drawable;
 import map.Map;
 
 public class Bomb extends Drawable implements ActionListener {
+    private static final long serialVersionUID = GameData.version;
 	
 	private int radius;
     // inherits x/y from drawable

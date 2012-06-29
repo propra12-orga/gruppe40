@@ -1,8 +1,10 @@
 package map;
 
+import game.GameData;
 import draw.Drawable;
 
 public abstract class Field extends Drawable {
+    private static final long serialVersionUID = GameData.version;
 
     private int strength;
 

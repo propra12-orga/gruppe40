@@ -1,9 +1,12 @@
 package network;
 
+import game.GameData;
+
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 public class KeyInput implements Serializable {
+    private static final long serialVersionUID = GameData.version;
     
     public KeyEvent e;
     public boolean keyDown;
