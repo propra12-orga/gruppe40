@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import map.EmptyField;
 import map.Field;
 import map.Map;
 
