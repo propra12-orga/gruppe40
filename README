@@ -27,28 +27,10 @@ $ git config --global user.email whatever...
 
 _____________________________________________________________
 
-Achtung: Das Spielfeld ist jetzt fix 650*650 (50 Pixel pro Kachel, Spielfeld jetzt 13*13 - wie im originalen Bomberman)
-Sinn? Sinn ist, dass wir nun die Grafiken genau anpassen können ohne hässliche Skalierungspixel zu bekommen.
-Ist einfach eine kosmetische Sache, um das ganze schöner zu machen (und auch vor allem die Grafiken standardmäßig kleiner -> weniger Speicherplatz -> bessere Performance)
-Bin jetzt noch auf der Suche nach nem Weg, dass der JFrame die Groesse von Panel annimmt,
-aber auch beachtet, dass ja noch die Fensterumrandungen etc dabei sind... im Internet wurde .pack() empfohlen mit nem entsprechenden Layout (bei uns zur Zeit null) - klingt im Prinzip richtig,
-hat bislang aber noch nicht so gefruchtet. - Sebastian
-
 ++++++ to do ++++++
-Laufende Bewegung fließend machen
-Anzahl der Bomben limitieren!
 Items(+Geschwindigkeit, +Bombenradius, +Anzahl)
-Netzwerk
-neue Grafiken
-
-Irgendwas zwischen Server und Client scheint unmengen an Rechenleistung zu fressen.
-Deshalb is das Spiel auf Netbooks etc. immoment alles andere als Berauschend.
-Ursachenforschung wird betrieben.
-Eventuell helfen generated serial version uids ein wenig weiter.
-Weiterhin scheint Linux unbenutzte Ports nicht freizugeben.
-Manchmal werden weisse Bilder statt den richtigen Frames angezeigt.
-Teilweise befinden sich doppelt so viele drawables in der NetworkData Liste wie es sein sollten.
-	  
+Grafiken fuer Bombe und Bomberman
+Serialisierung beschleunigen oder Anzahl der zu serialisierenden Objekte verringern
 
 Philipp
 ----------
@@ -62,7 +44,7 @@ Spielfeld (Maps)
 
 Thomas
 ----------
-Maedchen für alles
+Maedchen fuer alles
 
 
 Lisa

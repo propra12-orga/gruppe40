@@ -36,11 +36,12 @@ public class Bomberman {
         GameData.frame = new JFrame();
         GameData.menuFrame = menuFrame;
         GameData.bomberman = this;
-        if (GameData.server != null) {
+        if (GameData.server != null) {            
+            GameData.playerCount = GameData.server.getPlayerCount();
+
             boolean testingAI = false;
             if (testingAI) GameData.playerCount = 2;
             
-            GameData.playerCount = GameData.server.getPlayerCount();
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
