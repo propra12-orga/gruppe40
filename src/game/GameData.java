@@ -1,6 +1,7 @@
 package game;
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -33,4 +34,15 @@ public abstract class GameData {
     public static Vector<LinkedList<Character>> keys;
     public static int                           fps     = 60;
     public static LinkedList<AI>                ais;
+    
+    public static void removeDeadDrawables() {
+        ListIterator<Drawable> it = drawables.listIterator();
+        while (it.hasNext()) {
+            Drawable drawable = it.next();
+            boolean isUnusedField = drawable.isField && map.getField(drawable.x, drawable.y) != drawable;
+            if (drawable.isExpired() || isUnusedField) {
+                it.remove();
+            }
+        }
+    }
 }

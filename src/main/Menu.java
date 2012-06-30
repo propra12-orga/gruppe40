@@ -191,10 +191,10 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 				if(mapEdit == null) {
 					mapEdit = new MapEditor();
-					mapEdit.editorWindow.setVisible(true);
+					mapEdit.frame.setVisible(true);
 				}
-				else if(!mapEdit.editorWindow.isVisible()) {
-					mapEdit.editorWindow.setVisible(true);
+				else if(!mapEdit.frame.isVisible()) {
+					mapEdit.frame.setVisible(true);
 				}
 			}
 		};

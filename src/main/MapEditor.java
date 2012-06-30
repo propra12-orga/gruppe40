@@ -1,191 +1,91 @@
 package main;
 
+import game.GameData;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import java.awt.FlowLayout;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import map.Map;
+
+import draw.Drawable;
+import draw.MapPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Rectangle;
+import java.util.LinkedList;
 
 public class MapEditor {
+    
+	public final JFrame frame = new JFrame("Map-Editor");
 	
-	static final int mapSize_MIN = 5;
-	static final int mapSize_MAX = 25;
-	static final int mapSize_STANDARD = 13;
-	boolean mapModified;
-	File mapFile;
-	int height, width;
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	public final JFrame editorWindow = new JFrame("Map-Editor");
+	private int w = Map.SIZE_DEFAULT_X;
+	private int h = Map.SIZE_DEFAULT_Y;
+	private JPanel mapWrapper;
+	private MapPanel mapPanel;
+	
+	private void initMap() {
+        GameData.drawables = new LinkedList<Drawable>();
+        GameData.map = new Map(w, h, false);
+	    GameData.removeDeadDrawables();
+        mapPanel.map = GameData.map;
+        mapPanel.drawables = GameData.drawables;
+        int width = mapWrapper.getWidth();
+        int height = mapWrapper.getHeight();
+        Rectangle rect = mapPanel.getOptimalSize(width, height);
+        if (rect != null) {
+            mapPanel.setBounds(rect);
+        }
+        frame.repaint();
+	}
 	
 	public MapEditor() {
-		//panels etc...
-		JPanel base = new JPanel();
-		JPanel slideLabels = new JPanel();
-		JPanel sliders = new JPanel();
-		JPanel loadsave = new JPanel();
-		JLabel labelWidth = new JLabel("Map-width               ");
-		JLabel labelHeight = new JLabel("               Map-height");
-		JSlider slideWidth = new JSlider(JSlider.HORIZONTAL, mapSize_MIN, mapSize_MAX, mapSize_STANDARD);
-		JSlider slideHeight = new JSlider(JSlider.HORIZONTAL, mapSize_MIN, mapSize_MAX, mapSize_STANDARD);
-		final JButton buttonEditMap = new JButton("Edit Map");
-		final JButton buttonSaveMap = new JButton("Save Map");
-		final JButton buttonLoadMap = new JButton("Load Map");
-		final JTextPane paneMap = new JTextPane();
-		final JFileChooser fc = new JFileChooser();
-		JScrollPane scrollMap = new JScrollPane(paneMap);
-		
-		base.setLayout(new FlowLayout());
-		sliders.setLayout(new FlowLayout());
-		
-		slideLabels.add(labelWidth);
-		slideLabels.add(labelHeight);
-		
-		sliders.add(slideWidth);
-		sliders.add(slideHeight);
-		
-		loadsave.add(buttonLoadMap);
-		loadsave.add(buttonSaveMap);
-		
-		base.add(scrollMap);
-		base.add(buttonEditMap);
-		base.add(slideLabels);
-		base.add(sliders);
-		base.add(loadsave);
-		
-		//editing Sliders
-		slideWidth.setMinorTickSpacing(1);
-		slideWidth.setMajorTickSpacing(5);
-		slideWidth.setSnapToTicks(true);
-		slideWidth.setPaintLabels(true);
-		slideWidth.setPaintTicks(true);
-		
-		slideHeight.setMinorTickSpacing(1);
-		slideHeight.setMajorTickSpacing(5);
-		slideHeight.setSnapToTicks(true);
-		slideHeight.setPaintLabels(true);
-		slideHeight.setPaintTicks(true);
-		
-		buttonSaveMap.setEnabled(false);
+        GameData.drawables = new LinkedList<Drawable>();
+	    GameData.map = new Map(w, h, false);
+	    Container pane = frame.getContentPane();
+	    frame.setSize(600, 600);
+	    pane.setLayout(new BorderLayout());
+	    
+	    final JSlider widthSlider = new JSlider(JSlider.HORIZONTAL, Map.SIZE_MIN_X, Map.SIZE_MAX_X, Map.SIZE_DEFAULT_X);
+        widthSlider.setMinorTickSpacing(1);
+        widthSlider.setMajorTickSpacing(5);
+        widthSlider.setSnapToTicks(true);
+        widthSlider.setPaintLabels(true);
+        widthSlider.setPaintTicks(true);
+        pane.add(widthSlider, BorderLayout.SOUTH);
+        
+        final JSlider heightSlider = new JSlider(JSlider.VERTICAL, Map.SIZE_MIN_Y, Map.SIZE_MAX_Y, Map.SIZE_DEFAULT_Y);
+        heightSlider.setMinorTickSpacing(1);
+        heightSlider.setMajorTickSpacing(5);
+        heightSlider.setSnapToTicks(true);
+        heightSlider.setPaintLabels(true);
+        heightSlider.setPaintTicks(true);
+        pane.add(heightSlider, BorderLayout.EAST);
 
-		//editing JTextPane
-		paneMap.setText("No Map-Style until my code is done\n//Korred");
-		paneMap.setEditable(false);
-		paneMap.setMargin(new Insets(10, 10, 10, 10));
-		
-		//edit map
-		ActionListener alChange = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				if(paneMap.isEditable()) {
-					mapModified = true;
-					buttonSaveMap.setEnabled(true);
-				}
-				else {
-					paneMap.setText("");
-					paneMap.setEditable(true);
-					showLegend();
-					buttonEditMap.setText("Create");
-				}
-			}
-		};
-		
-		//listener for slider (width)
-		ChangeListener widthChange = new ChangeListener() {
-			@Override public void stateChanged(ChangeEvent e) {
-				JSlider source = (JSlider)e.getSource();
-				if(!source.getValueIsAdjusting()) {
+        mapPanel = new MapPanel();
+        mapWrapper = new JPanel();
+        mapWrapper.setLayout(null);
+        mapWrapper.add(mapPanel);
+	    pane.add(mapWrapper, BorderLayout.CENTER);
 
-					width = source.getValue();
-				}
-			}
-		};
-		
-		//listener for slider (height)
-		ChangeListener heightChange = new ChangeListener() {
-			@Override public void stateChanged(ChangeEvent e) {
-				JSlider source = (JSlider)e.getSource();
-				if(!source.getValueIsAdjusting()) {
-					height = source.getValue();
-				}
-				
-			}
-		};
-		
-		ActionListener alLoadMap = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {		
-				int returnVal = fc.showOpenDialog(editorWindow);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					//make sure user reads a .xml file
-					if(fc.getSelectedFile().getName().toLowerCase().endsWith(".xml")) {
-						mapFile = fc.getSelectedFile();
-						buttonLoadMap.setText("Load");
-					}
-					//file isn't a .xml file
-					else {
-						buttonLoadMap.setText("Wrong File Format");
-					}
-				}
-			}
-		};
-		
-		ActionListener alSaveMap = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {		
-				//TODO
-			}
-		};
-		
-		//adding actionlisteners
-		buttonEditMap.addActionListener(alChange);
-		slideWidth.addChangeListener(widthChange);
-		slideHeight.addChangeListener(heightChange);
-		buttonLoadMap.addActionListener(alLoadMap);
-		buttonSaveMap.addActionListener(alSaveMap);
-		
-		
-		//setting up sizes to match everything
-		paneMap.setPreferredSize(new Dimension(350, 150));
-		buttonEditMap.setPreferredSize(new Dimension(350, 35));
-		buttonLoadMap.setPreferredSize(new Dimension(175, 25));
-		buttonSaveMap.setPreferredSize(new Dimension(175, 25));
-		editorWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		editorWindow.setSize(450, 355);
-		editorWindow.setResizable(false);
-		
-		//gets dimensions from screen and calculates center
-		Dimension center = new Dimension((int)screenSize.getWidth()/2 - editorWindow.getWidth()/2, (int)screenSize.getHeight()/2 - editorWindow.getHeight()/2);
-		
-		editorWindow.setLocation((int)center.getWidth(), (int)center.getHeight());
-		editorWindow.add(base);
-		editorWindow.setVisible(true);
+        ChangeListener widthListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                w = widthSlider.getValue();
+                initMap();
+            }
+        };
+	    widthSlider.addChangeListener(widthListener);
+	    
+        ChangeListener heightListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                h = heightSlider.getValue();
+                initMap();
+            }
+        };
+        heightSlider.addChangeListener(heightListener);
+        initMap();
 	}
-	
-	//map legend - new window
-	public void showLegend() {
-		
-		JFrame legend = new JFrame("Information");
-		JPanel base = new JPanel();
-		JTextPane textLegend = new JTextPane();
-		
-		textLegend.setText(
-				"absolutely nothing"
-			);
-		
-		textLegend.setEditable(false);
-		
-		base.add(textLegend);
-		
-		legend.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		legend.setSize(300, 250);
-		legend.setResizable(false);
-		legend.add(base);
-		legend.setLocation(10, 10);
-		legend.setVisible(true);
-		
-	}
-
 }

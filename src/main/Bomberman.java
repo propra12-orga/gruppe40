@@ -195,15 +195,7 @@ public class Bomberman {
                     
                     //Update drawables
                     synchronized (GameData.drawables) {
-                        //Remove unused tiles
-                        ListIterator<Drawable> it = GameData.drawables.listIterator();
-                        while (it.hasNext()) {
-                            Drawable drawable = it.next();
-                            boolean isUnusedField = drawable.isField && GameData.map.getField(drawable.x, drawable.y) != drawable;
-                            if (drawable.isExpired() || isUnusedField) {
-                                it.remove();
-                            }
-                        }
+                        GameData.removeDeadDrawables();
                         //Send everything to clients
                         NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
                         if (GameData.server != null) GameData.server.send(networkData);
