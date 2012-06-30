@@ -150,19 +150,21 @@ public class Player extends Drawable {
     }
 
     public boolean hasBomb() {
-        return (this.bombCounter > 0);
+        return alive && bombCounter > 0;
     }
 
     /**
      * If there are bombs left, one is placed at the player's position.
+     * @return If the bomb could be planted successfully.
      */
-    public void putBomb() {
-        if (!alive) return;
-        if (!hasBomb()) return;
-        Bomb bomb = new Bomb(x, y, this);
+    public boolean putBomb() {
+        //Do not place bombs while moving between tiles and do not place bombs on bombs
+        if (!hasBomb() || map.isBlocked(x, y) || isMoving()) return false;
         this.bombCounter--;
+        Bomb bomb = new Bomb(x, y, this);
         bomb.startTimer();
         map.setBlocked(x, y, true);
+        return true;
     }
 
     public void increaseBombCounter() {
