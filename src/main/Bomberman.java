@@ -7,6 +7,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -132,8 +133,22 @@ public class Bomberman {
             public void run() {
                 while (GameData.frame.isVisible()) {
                     if (ai != null) ai.nextStep();
-                    NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
-                    if (GameData.server != null) GameData.server.send(networkData);
+                    
+                    synchronized (GameData.drawables) {
+                        //Remove unused tiles
+                        ListIterator<Drawable> it = GameData.drawables.listIterator();
+                        while (it.hasNext()) {
+                            Drawable drawable = it.next();
+                            boolean isUnusedField = drawable.isField && GameData.map.getField(drawable.x, drawable.y) != drawable;
+                            if (drawable.isExpired() || isUnusedField) {
+                                it.remove();
+                            }
+                        }
+                        //Send everything to clients
+                        NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
+                        if (GameData.server != null) GameData.server.send(networkData);
+                    }
+                    
                     GameData.frame.repaint();
                     checkEndConditions();
                     try {
