@@ -52,12 +52,13 @@ public class MapEditor {
 	}
 	
 	private void placeTile(int x, int y) {
+	    //Screen space to map space coordinates
 	    x -= mapPanel.getX() + mapWrapper.getX();
 	    y -= mapPanel.getY() + mapWrapper.getY();
         int width = mapPanel.getWidth();
         int height = mapPanel.getHeight();
         int tx = x*w/width;
-        int ty = y*h/height;
+        int ty = (int)(y*h/(double)height - 0.5);
         GameData.map.setField(new EmptyField(tx, ty));
         redrawMap();
 	}
