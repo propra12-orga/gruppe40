@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import map.EmptyField;
 import map.Map;
 
 import draw.Drawable;
@@ -51,13 +52,14 @@ public class MapEditor {
 	}
 	
 	private void placeTile(int x, int y) {
-	    x -= mapPanel.getX();
-	    y -= mapPanel.getY();
+	    x -= mapPanel.getX() + mapWrapper.getX();
+	    y -= mapPanel.getY() + mapWrapper.getY();
         int width = mapPanel.getWidth();
         int height = mapPanel.getHeight();
         int tx = x*w/width;
         int ty = y*h/height;
-        System.out.println(tx + " " + ty);
+        GameData.map.setField(new EmptyField(tx, ty));
+        redrawMap();
 	}
 	
 	public MapEditor() {
