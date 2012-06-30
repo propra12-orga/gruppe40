@@ -12,8 +12,8 @@ public class Map implements Serializable {
     public static final int SIZE_MIN_Y = 5;
     public static final int SIZE_MAX_X = 50;
     public static final int SIZE_MAX_Y = 50;
-    public static final int SIZE_DEFAULT_X = 11;
-    public static final int SIZE_DEFAULT_Y = 11;
+    public static final int SIZE_DEFAULT_X = 13;
+    public static final int SIZE_DEFAULT_Y = 13;
     
     private static final long serialVersionUID = GameData.version;
 
@@ -220,5 +220,9 @@ public class Map implements Serializable {
     public void setExit(int x, int y) {
         DestructibleWall exitWall = new DestructibleWall(x, y, 1);
         exitWall.setExit(true);
+    }
+    
+    public void setField(Field field) {
+        m[field.x][field.y] = field;
     }
 }

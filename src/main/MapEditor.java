@@ -14,6 +14,12 @@ import draw.MapPanel;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
 public class MapEditor {
@@ -25,19 +31,33 @@ public class MapEditor {
 	private JPanel mapWrapper;
 	private MapPanel mapPanel;
 	
-	private void initMap() {
-        GameData.drawables = new LinkedList<Drawable>();
-        GameData.map = new Map(w, h, false);
-	    GameData.removeDeadDrawables();
-        mapPanel.map = GameData.map;
-        mapPanel.drawables = GameData.drawables;
-        int width = mapWrapper.getWidth();
+	private void redrawMap() {
+        GameData.removeDeadDrawables();
+	    int width = mapWrapper.getWidth();
         int height = mapWrapper.getHeight();
         Rectangle rect = mapPanel.getOptimalSize(width, height);
         if (rect != null) {
             mapPanel.setBounds(rect);
         }
         frame.repaint();
+	}
+	
+	private void initMap() {
+        GameData.drawables = new LinkedList<Drawable>();
+        GameData.map = new Map(w, h, false);
+        mapPanel.map = GameData.map;
+        mapPanel.drawables = GameData.drawables;
+        redrawMap();
+	}
+	
+	private void placeTile(int x, int y) {
+	    x -= mapPanel.getX();
+	    y -= mapPanel.getY();
+        int width = mapPanel.getWidth();
+        int height = mapPanel.getHeight();
+        int tx = x*w/width;
+        int ty = y*h/height;
+        System.out.println(tx + " " + ty);
 	}
 	
 	public MapEditor() {
@@ -62,6 +82,9 @@ public class MapEditor {
         heightSlider.setPaintLabels(true);
         heightSlider.setPaintTicks(true);
         pane.add(heightSlider, BorderLayout.EAST);
+        
+        JButton saveButton = new JButton("Save");
+        pane.add(saveButton, BorderLayout.NORTH);
 
         mapPanel = new MapPanel();
         mapWrapper = new JPanel();
@@ -86,6 +109,49 @@ public class MapEditor {
             }
         };
         heightSlider.addChangeListener(heightListener);
+        
+        ComponentListener componentListener = new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                redrawMap();
+            }
+            @Override
+            public void componentShown(ComponentEvent e) {
+                redrawMap();
+            }
+            @Override
+            public void componentHidden(ComponentEvent e) {}
+            @Override
+            public void componentMoved(ComponentEvent e) {}
+        };
+        pane.addComponentListener(componentListener);
+        
+        MouseListener mouseListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                placeTile(e.getX(), e.getY());
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {
+                placeTile(e.getX(), e.getY());
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+        };
+        frame.addMouseListener(mouseListener);
+        
+        ActionListener saveListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Save");
+            }
+        };
+        saveButton.addActionListener(saveListener);
+        
         initMap();
 	}
 }

@@ -50,7 +50,7 @@ public class Bomberman {
             for (int i=0; i<GameData.playerCount; i++) GameData.keys.add(new LinkedList<Character>());
 
             if (mapName.equals("Random")) {
-                GameData.map = new Map(13, 13, GameData.playerCount == 1);
+                GameData.map = new Map(Map.SIZE_DEFAULT_X, Map.SIZE_DEFAULT_Y, GameData.playerCount == 1);
             } else {
                 GameData.map = new Map(mapName);
             }
