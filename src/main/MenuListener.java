@@ -6,7 +6,7 @@ import java.awt.event.*;
 public class MenuListener implements WindowListener {
 
 	@Override public void windowClosing (WindowEvent e) {
-		int option = JOptionPane.showConfirmDialog(e.getWindow(), "Soll das Fenster wirklich geschlossen werden?");
+		int option = JOptionPane.showConfirmDialog(e.getWindow(), "Close window?");
 		if(option == JOptionPane.OK_OPTION) System.exit(0);
 	}
 	
