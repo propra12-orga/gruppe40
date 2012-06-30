@@ -9,15 +9,13 @@ public class Player extends Drawable {
 
     private Map               map;
     private int               direction;
-    public static final int   RIGHT            = 0, UP = 1, LEFT = 2, DOWN = 3;
-    public static int         directionX[]     = { 1, 0, -1, 0 };
-    public static int         directionY[]     = { 0, -1, 0, 1 };
 
     private boolean           alive;
     private String            name;
     private int               bombCounter;
     private long              walkStart;
     private int               walkDistance;
+    public int                radius;
 
     public Player(String name, int x, int y, int speed) {
         super(x, y, false);
@@ -27,6 +25,7 @@ public class Player extends Drawable {
         this.walkDistance = speed;
         this.alive = true;
         this.bombCounter = 2;
+        this.radius = 1;
     }
 
     public int getSpeed() {
@@ -56,14 +55,14 @@ public class Player extends Drawable {
      * @return Movement interpolation value in range (-1, 1).
      */
     public double getFlowX() {
-        return directionX[direction] * getFlow();
+        return Direction.x[direction] * getFlow();
     }
 
     /**
      * @return Movement interpolation value in range (-1, 1).
      */
     public double getFlowY() {
-        return directionY[direction] * getFlow();
+        return Direction.y[direction] * getFlow();
     }
 
     public int getY() {
@@ -98,7 +97,7 @@ public class Player extends Drawable {
      * @return If the move was successful.
      */
     public boolean move(int direction) {
-        return move(directionX[direction], directionY[direction]);
+        return move(Direction.x[direction], Direction.y[direction]);
     }
 
     /**
@@ -111,7 +110,7 @@ public class Player extends Drawable {
      */
     public int getDirection(int dx, int dy) {
         for (int i = 0; i < 4; i++)
-            if (dx == directionX[i] && dy == directionY[i]) return i;
+            if (dx == Direction.x[i] && dy == Direction.y[i]) return i;
         return 0;
     }
 
@@ -155,10 +154,12 @@ public class Player extends Drawable {
 
     /**
      * If there are bombs left, one is placed at the player's position.
+     * 
      * @return If the bomb could be planted successfully.
      */
     public boolean putBomb() {
-        //Do not place bombs while moving between tiles and do not place bombs on bombs
+        // Do not place bombs while moving between tiles and do not place bombs
+        // on bombs
         if (!hasBomb() || map.isBlocked(x, y) || isMoving()) return false;
         this.bombCounter--;
         new Bomb(x, y, this);

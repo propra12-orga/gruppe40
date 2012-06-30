@@ -2,6 +2,7 @@ package ai;
 
 import java.awt.Point;
 
+import game.Direction;
 import game.GameData;
 import game.Player;
 
@@ -55,8 +56,7 @@ public class AI {
             //Run towards player if in reach
             Player closest = pathfinding.getClosestReachablePlayer(player);
             if (closest != null) {
-                // TODO replace fixed bomb radius with actual bomb radius
-                if (pathfinding.distance[closest.x][closest.y] < 2) {
+                if (pathfinding.distance[closest.x][closest.y] <= player.radius) {
                     player.putBomb();
                 } else {
                     Point p = new Point(closest.x, closest.y);
@@ -67,13 +67,12 @@ public class AI {
             }else {
                 //Search for boxes
                 for (int i=0; i<4; i++) {
-                    int x2 = px + pathfinding.dx[i];
-                    int y2 = py + pathfinding.dy[i];
+                    int x2 = px + Direction.x[i];
+                    int y2 = py + Direction.y[i];
                     if (pathfinding.contains(x2, y2) && GameData.map.getField(x2, y2).getStrength() > 0) {
                         //Check if we can get away with bombing it
-                        // TODO replace fixed bomb radius with actual bomb radius
                         pathfinding = new Pathfinding();
-                        pathfinding.markDangerous(x2, y2, 3);
+                        pathfinding.markDangerous(x2, y2, player.radius);
                         pathfinding.start(px, py);
                         for (int y=0; y<pathfinding.h; y++) {
                             for (int x=0; x<pathfinding.w; x++) {

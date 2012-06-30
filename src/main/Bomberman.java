@@ -23,6 +23,7 @@ import draw.MapPanel;
 import map.Exit;
 import map.Map;
 import game.Bomb;
+import game.Direction;
 import game.GameData;
 import game.Player;
 
@@ -166,22 +167,22 @@ public class Bomberman {
                                 switch (key) {
                                     case 'W':
                                     case 'w':
-                                        if (player.move(Player.UP)) continue players;
+                                        if (player.move(Direction.UP)) continue players;
                                     break;
 
                                     case 'A':
                                     case 'a':
-                                        if (player.move(Player.LEFT)) continue players;
+                                        if (player.move(Direction.LEFT)) continue players;
                                     break;
 
                                     case 'S':
                                     case 's':
-                                        if (player.move(Player.DOWN)) continue players;
+                                        if (player.move(Direction.DOWN)) continue players;
                                     break;
 
                                     case 'D':
                                     case 'd':
-                                        if (player.move(Player.RIGHT)) continue players;
+                                        if (player.move(Direction.RIGHT)) continue players;
                                     break;
 
                                     case 'E':

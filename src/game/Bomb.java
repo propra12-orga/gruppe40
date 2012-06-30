@@ -15,7 +15,7 @@ public class Bomb extends Drawable {
 	
 	public Bomb(int x, int y, Player owner){
         super(x, y, false);
-		this.radius = 1;
+		this.radius = owner.radius;
 		this.strength = 1;
 		this.ticksUntilExplosion = GameData.fps;
 		this.owner = owner;
@@ -62,9 +62,6 @@ public class Bomb extends Drawable {
 		hasExploded = true;
 		GameData.map.setBlocked(this.x, this.y, false);
         GameData.map.destroy(x, y, strength);
-		// All directions (right, up, left, down)
-		int dx[] = {1, 0, -1, 0};
-		int dy[] = {0, 1, 0, -1};
 		// Add new explosion at (x, y)
 		explodeAt(x, y);
         // For all directions
@@ -74,8 +71,8 @@ public class Bomb extends Drawable {
 		    // For radius
 		    for (int i=1; i<=radius; i++) {
 		        // Walk towards direction
-                x2 += dx[j];
-                y2 += dy[j];
+                x2 += Direction.x[j];
+                y2 += Direction.y[j];
                 if (!explodeAt(x2, y2)) break;
 		    }
 		}

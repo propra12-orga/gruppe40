@@ -1,6 +1,7 @@
 package ai;
 
 import game.Bomb;
+import game.Direction;
 import game.GameData;
 import game.Player;
 
@@ -14,8 +15,6 @@ public class Pathfinding {
     public boolean           blocked[][];
     public int               distance[][];
     public Point             previous[][];
-    public int               dx[]      = { 0, 1, 0, -1 };
-    public int               dy[]      = { -1, 0, 1, 0 };
     public static final int  UNVISITED = -1;
     public LinkedList<Point> reachable;
 
@@ -41,8 +40,8 @@ public class Pathfinding {
     }
 
     private void explore(Point p, int direction) {
-        int x = p.x + dx[direction];
-        int y = p.y + dy[direction];
+        int x = p.x + Direction.x[direction];
+        int y = p.y + Direction.y[direction];
         int d = distance[x][y];
         if (contains(x, y) && !blocked[x][y] && d == UNVISITED) {
             // If field is dangerous and we can not run away from it
@@ -74,8 +73,8 @@ public class Pathfinding {
             int x2 = x;
             int y2 = y;
             for (int r = 1; r <= radius; r++) {
-                x2 += dx[i];
-                y2 += dy[i];
+                x2 += Direction.x[i];
+                y2 += Direction.y[i];
                 if (contains(x2, y2)) dangerous[x2][y2] = true;
             }
         }
@@ -118,8 +117,8 @@ public class Pathfinding {
             for (int x = 0; x < w; x++) {
                 if (GameData.map.getField(x, y).getStrength() > 0) {
                     for (int i = 0; i < 4; i++) {
-                        int x2 = x + dx[i];
-                        int y2 = y + dy[i];
+                        int x2 = x + Direction.x[i];
+                        int y2 = y + Direction.y[i];
                         int d = distance[x2][y2];
                         if (d != UNVISITED && d < dist) {
                             p = new Point(x2, y2);
