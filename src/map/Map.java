@@ -10,8 +10,8 @@ import xml_parser.MapParser;
 public class Map implements Serializable {
     public static final int SIZE_MIN_X = 5;
     public static final int SIZE_MIN_Y = 5;
-    public static final int SIZE_MAX_X = 50;
-    public static final int SIZE_MAX_Y = 50;
+    public static final int SIZE_MAX_X = 20;
+    public static final int SIZE_MAX_Y = 20;
     public static final int SIZE_DEFAULT_X = 13;
     public static final int SIZE_DEFAULT_Y = 13;
     
