@@ -55,10 +55,14 @@ public class StartNetwork {
 			@Override public void actionPerformed(ActionEvent e) {
 				if(paneIP.isEditable()) {
 					paneIP.setEditable(false);
+					buttonStartServer.setEnabled(true);
+					buttonConnectGame.setEnabled(true);
 					buttonEditIP.setText("Change ip");
 				}
 				else {
 					paneIP.setEditable(true);
+					buttonStartServer.setEnabled(false);
+					buttonConnectGame.setEnabled(false);
 					buttonEditIP.setText("Confirm");
 				}
 			}
