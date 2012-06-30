@@ -161,9 +161,7 @@ public class Player extends Drawable {
         //Do not place bombs while moving between tiles and do not place bombs on bombs
         if (!hasBomb() || map.isBlocked(x, y) || isMoving()) return false;
         this.bombCounter--;
-        Bomb bomb = new Bomb(x, y, this);
-        bomb.startTimer();
-        map.setBlocked(x, y, true);
+        new Bomb(x, y, this);
         return true;
     }
 

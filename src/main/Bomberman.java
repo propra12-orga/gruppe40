@@ -137,43 +137,58 @@ public class Bomberman {
                 while (GameData.frame.isVisible()) {
                     if (ai != null) ai.nextStep();
                     
-                    synchronized (GameData.keys) {
-                        
-                    }
-                    players: for (int playerNumber = 0; playerNumber < GameData.playerCount; playerNumber++) {
-                        Player player = GameData.players.get(playerNumber);
-                        //Iterate through keys until one works
-                        for (Character key : GameData.keys.get(playerNumber)) {                            
-                            switch (key) {
-                                case 'W':
-                                case 'w':
-                                    if (player.move(Player.UP)) continue players;
-                                break;
-
-                                case 'A':
-                                case 'a':
-                                    if (player.move(Player.LEFT)) continue players;
-                                break;
-
-                                case 'S':
-                                case 's':
-                                    if (player.move(Player.DOWN)) continue players;
-                                break;
-
-                                case 'D':
-                                case 'd':
-                                    if (player.move(Player.RIGHT)) continue players;
-                                break;
-
-                                case 'E':
-                                case 'e':
-                                    player.putBomb();
-                                break;
+                    //Update bombs
+                    synchronized (GameData.bombs) {
+                        ListIterator<Bomb> it = GameData.bombs.listIterator();
+                        while (it.hasNext()) {
+                            Bomb bomb = it.next();
+                            if (bomb.isExpired()) {
+                                it.remove();
+                            }else {
+                                if (--bomb.ticksUntilExplosion < 0) {
+                                    bomb.explode();
+                                }
                             }
                         }
                     }
                     
+                    //Handle key input
+                    synchronized (GameData.keys) {
+                        players: for (int playerNumber = 0; playerNumber < GameData.playerCount; playerNumber++) {
+                            Player player = GameData.players.get(playerNumber);
+                            //Iterate through keys until one works
+                            for (Character key : GameData.keys.get(playerNumber)) {                            
+                                switch (key) {
+                                    case 'W':
+                                    case 'w':
+                                        if (player.move(Player.UP)) continue players;
+                                    break;
+
+                                    case 'A':
+                                    case 'a':
+                                        if (player.move(Player.LEFT)) continue players;
+                                    break;
+
+                                    case 'S':
+                                    case 's':
+                                        if (player.move(Player.DOWN)) continue players;
+                                    break;
+
+                                    case 'D':
+                                    case 'd':
+                                        if (player.move(Player.RIGHT)) continue players;
+                                    break;
+
+                                    case 'E':
+                                    case 'e':
+                                        player.putBomb();
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     
+                    //Update drawables
                     synchronized (GameData.drawables) {
                         //Remove unused tiles
                         ListIterator<Drawable> it = GameData.drawables.listIterator();
@@ -192,9 +207,9 @@ public class Bomberman {
                     GameData.frame.repaint();
                     checkEndConditions();
                     try {
-                        Thread.sleep(1000 / 60);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                        Thread.sleep(1000 / GameData.fps);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -202,11 +217,15 @@ public class Bomberman {
         gameLoop.start();
     }
 
+    /**
+     * Used to determine if game panel should be resized.
+     * This is required because resizing appears to be a quite costly operation on linux.
+     */
     private int hash = 0;
 
     /**
      * Resize the GamePanel so it always has maximum size while still preserving
-     * aspect ratio.
+     * aspect ratio of map.
      */
     public void resizeGamePanel() {
         if (GameData.networkData == null) {
@@ -240,6 +259,9 @@ public class Bomberman {
         }
     }
 
+    /**
+     * Check if the game is over.
+     */
     private void checkEndConditions() {
         int playerCount = GameData.playerCount;
         if (playerCount == 1) {
@@ -253,6 +275,7 @@ public class Bomberman {
                 }
             }
         } else {
+            //Many players
             LinkedList<Player> livingPlayers = new LinkedList<Player>();
             for (Player player : GameData.players)
                 if (player.isAlive()) livingPlayers.add(player);

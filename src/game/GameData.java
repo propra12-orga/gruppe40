@@ -29,4 +29,5 @@ public abstract class GameData {
     public static boolean                       running;
     public static final long                    version = 1;
     public static Vector<LinkedList<Character>> keys;
+    public static int                           fps     = 60;
 }
