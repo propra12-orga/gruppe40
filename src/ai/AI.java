@@ -114,7 +114,7 @@ public class AI {
         int dist = Integer.MAX_VALUE;
         for (Player player : GameData.players) {
             int d = distance[player.x][player.y];
-            if (player != this.player && d != UNVISITED && d < dist) {
+            if (player.isAlive() && player != this.player && d != UNVISITED && d < dist) {
                 closest = player;
                 dist = d;
             }
@@ -181,7 +181,7 @@ public class AI {
             if (p != null) {
                 moveTowards(p, false);
             }else {
-                System.out.println("AI has nowhere to run!");
+                System.out.println("DEBUG MSG: AI has nowhere to run!");
             }
         } else {
             //Run towards player if in reach
@@ -221,7 +221,7 @@ public class AI {
                 if (p != null) {
                     moveTowards(p, true);
                 }else {
-                    System.out.println("no close box");
+                    System.out.println("DEBUG MSG: no close box");
                 }
             }
         }

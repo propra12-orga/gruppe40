@@ -28,24 +28,24 @@ import game.Player;
 public class Bomberman {
 
     private Container pane;
-
-    public static AI ai;
     
-    public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName) {
+    public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName, boolean useAI) {
         GameData.playerCount = 1;
         GameData.frame = new JFrame();
         GameData.menuFrame = menuFrame;
         GameData.bomberman = this;
-        if (GameData.server != null) {            
-            GameData.playerCount = GameData.server.getPlayerCount();
-
-            boolean testingAI = false;
-            if (testingAI) GameData.playerCount = 2;
+        if (GameData.server != null) {
+            if (useAI) {
+                GameData.playerCount = 4;
+            }else{
+                GameData.playerCount = GameData.server.getPlayerCount();
+            }
             
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
             GameData.keys = new Vector<LinkedList<Character>>();
+            GameData.ais = new LinkedList<AI>();
             for (int i=0; i<GameData.playerCount; i++) GameData.keys.add(new LinkedList<Character>());
 
             if (mapName.equals("Random")) {
@@ -58,10 +58,14 @@ public class Bomberman {
             int y = GameData.map.getHeight() - 2;
             if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1, 200));
             if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y, 200));
-            if (testingAI) Bomberman.ai = new AI(GameData.players.lastElement());
             if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y, 200));
             if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1, 200));
-            // TODO more players?
+
+            if (useAI) {
+                for (int i=GameData.server.getPlayerCount(); i<4; i++) {
+                    GameData.ais.add(new AI(GameData.players.get(i)));
+                }
+            }
         }
 
         GameData.gamePanel = new GamePanel();
@@ -135,7 +139,7 @@ public class Bomberman {
         Thread gameLoop = new Thread() {
             public void run() {
                 while (GameData.frame.isVisible()) {
-                    if (ai != null) ai.nextStep();
+                    for (AI ai : GameData.ais) ai.nextStep();
                     
                     //Update bombs
                     synchronized (GameData.bombs) {

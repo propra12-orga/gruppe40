@@ -147,7 +147,8 @@ public class Menu {
 			        }
 			    }
                 base.setVisible(false);
-			    new Bomberman(base, fullscreen, mapName);
+                boolean useAI = true;
+			    new Bomberman(base, fullscreen, mapName, useAI);
 			}
 		};
 		
