@@ -4,6 +4,7 @@ import game.GameData;
 import images.ImageLoader;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.io.Serializable;
 
 /**
@@ -113,6 +114,10 @@ public abstract class Drawable implements Serializable {
 
     public int getY() {
         return y;
+    }
+    
+    public Point getPoint() {
+        return new Point(x, y);
     }
 
     /**
