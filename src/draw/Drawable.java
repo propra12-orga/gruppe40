@@ -22,8 +22,10 @@ public abstract class Drawable implements Serializable {
         this.x = x;
         this.y = y;
         this.isField = isField;
-        if (isField) GameData.drawables.addFirst(this);
-        else GameData.drawables.addLast(this);
+        synchronized (GameData.drawables) {
+            if (isField) GameData.drawables.addFirst(this);
+            else GameData.drawables.addLast(this);
+        }
     }
 
     /**
@@ -60,7 +62,7 @@ public abstract class Drawable implements Serializable {
     }
 
     /**
-     * @return Image of this drawable
+     * @return Image of this Drawable
      */
     public Image getImage() {
         return ImageLoader.getImage(this);

@@ -2,6 +2,7 @@ package draw;
 
 import draw.Drawable;
 import game.GameData;
+import game.Player;
 
 import javax.swing.JPanel;
 
@@ -65,11 +66,20 @@ public class GamePanel extends JPanel {
         int x2 = n % nw;
         int y2 = n / nw;
         //Frame edges in screen-space
-        int destX0 = (int) (x * tileWidth);
-        int destY0 = (int) (y * tileHeight);
-        int destX1 = (int) (x * tileWidth + tileWidth + 1);
-        int destY1 = (int) (y * tileHeight + tileHeight + 1);
+        double destX0 = x * tileWidth;
+        double destY0 = y * tileHeight;
+        double destX1 = x * tileWidth + tileWidth + 1;
+        double destY1 = y * tileHeight + tileHeight + 1;
+        if (drawable instanceof Player) {
+            Player player = (Player)drawable;
+            double tx = tileWidth*player.getFlowX();
+            double ty = tileHeight*player.getFlowY();
+            destX0 += tx;
+            destX1 += tx;
+            destY0 += ty;
+            destY1 += ty;
+        }
         //Draw frame
-        g.drawImage(image, destX0, destY0, destX1, destY1, x2 * dx, y2 * dy, x2 * dx + dx, y2 * dy + dy, this);
+        g.drawImage(image, (int)destX0, (int)destY0, (int)destX1, (int)destY1, x2 * dx, y2 * dy, x2 * dx + dx, y2 * dy + dy, this);
     }
 }

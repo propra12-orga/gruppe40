@@ -14,18 +14,19 @@ import draw.Drawable;
 import draw.GamePanel;
 
 public abstract class GameData {
-    public static JFrame               frame;
-    public static LinkedList<Drawable> drawables;
-    public static LinkedList<Bomb>     bombs;
-    public static GamePanel            gamePanel;
-    public static Vector<Player>       players;
-    public static Map                  map;
-    public static Bomberman            bomberman;
-    public static Server               server;
-    public static Client               client;
-    public static NetworkData          networkData;
-    public static int                  playerCount;
-    public static JFrame               menuFrame;
-    public static boolean              running;
-    public static final long           version = 1;
+    public static JFrame                        frame;
+    public static LinkedList<Drawable>          drawables;
+    public static LinkedList<Bomb>              bombs;
+    public static GamePanel                     gamePanel;
+    public static Vector<Player>                players;
+    public static Map                           map;
+    public static Bomberman                     bomberman;
+    public static Server                        server;
+    public static Client                        client;
+    public static NetworkData                   networkData;
+    public static int                           playerCount;
+    public static JFrame                        menuFrame;
+    public static boolean                       running;
+    public static final long                    version = 1;
+    public static Vector<LinkedList<Character>> keys;
 }

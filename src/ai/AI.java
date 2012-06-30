@@ -157,10 +157,10 @@ public class AI {
         Point towards = getPointTowards(p);
         if (safe) {
             if (!dangerous[towards.x][towards.y]) {
-                player.teleport(towards.x, towards.y);
+                player.moveTo(towards.x, towards.y);
             }
         }else {
-            player.teleport(towards.x, towards.y);
+            player.moveTo(towards.x, towards.y);
         }
     }
 

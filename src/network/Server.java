@@ -1,7 +1,6 @@
 package network;
 
 import game.GameData;
-import game.Player;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -55,37 +54,14 @@ public class Server implements Runnable {
     }
 
     public void handleKeyInput(KeyInput e, int playerNumber) {
-        Player player = GameData.players.get(playerNumber);
-        char key = e.e.getKeyChar();
-        if (e.keyDown) {
-            switch (key) {
-                case 'W':
-                case 'w':
-                    player.startMove(1);
-                break;
-
-                case 'A':
-                case 'a':
-                    player.startMove(4);
-                break;
-
-                case 'S':
-                case 's':
-                    player.startMove(3);
-                break;
-
-                case 'D':
-                case 'd':
-                    player.startMove(2);
-                break;
-
-                case 'E':
-                case 'e':
-                    if (player.hasBomb()) player.putBomb();
-                break;
+        Character key = e.e.getKeyChar();
+        synchronized (GameData.keys) {
+            LinkedList<Character> keys = GameData.keys.get(playerNumber);
+            if (e.keyDown) {
+                if (!keys.contains(key)) keys.addFirst(key);
+            }else {
+                keys.remove(key);
             }
-        } else {
-            if (key != 'e' && key != 'E') player.stopMove();
         }
     }
 

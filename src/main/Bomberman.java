@@ -37,13 +37,15 @@ public class Bomberman {
         GameData.menuFrame = menuFrame;
         GameData.bomberman = this;
         if (GameData.server != null) {
+            boolean testingAI = false;
+            if (testingAI) GameData.playerCount = 2;
+            
             GameData.playerCount = GameData.server.getPlayerCount();
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
             GameData.players = new Vector<Player>();
-
-            boolean testingAI = false;
-            if (testingAI) GameData.playerCount = 2;
+            GameData.keys = new Vector<LinkedList<Character>>();
+            for (int i=0; i<GameData.playerCount; i++) GameData.keys.add(new LinkedList<Character>());
 
             if (mapName.equals("Random")) {
                 GameData.map = new Map(13, 13, GameData.playerCount == 1);
@@ -133,6 +135,43 @@ public class Bomberman {
             public void run() {
                 while (GameData.frame.isVisible()) {
                     if (ai != null) ai.nextStep();
+                    
+                    synchronized (GameData.keys) {
+                        
+                    }
+                    players: for (int playerNumber = 0; playerNumber < GameData.playerCount; playerNumber++) {
+                        Player player = GameData.players.get(playerNumber);
+                        //Iterate through keys until one works
+                        for (Character key : GameData.keys.get(playerNumber)) {                            
+                            switch (key) {
+                                case 'W':
+                                case 'w':
+                                    if (player.move(Player.UP)) continue players;
+                                break;
+
+                                case 'A':
+                                case 'a':
+                                    if (player.move(Player.LEFT)) continue players;
+                                break;
+
+                                case 'S':
+                                case 's':
+                                    if (player.move(Player.DOWN)) continue players;
+                                break;
+
+                                case 'D':
+                                case 'd':
+                                    if (player.move(Player.RIGHT)) continue players;
+                                break;
+
+                                case 'E':
+                                case 'e':
+                                    player.putBomb();
+                                break;
+                            }
+                        }
+                    }
+                    
                     
                     synchronized (GameData.drawables) {
                         //Remove unused tiles

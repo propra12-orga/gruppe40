@@ -48,15 +48,13 @@ public class Bomb extends Drawable implements ActionListener {
         }
 	    // destroy field
         if (map.destroy(x2, y2, strength)) {
-            synchronized (GameData.drawables) {
-                GameData.drawables.add(new Explosion(x2, y2));
-            }
+            new Explosion(x2, y2);
             return false;
         }
         // Stop if blocked
         if (map.isBlocked(x2, y2)) return false;
         synchronized (GameData.drawables) {
-            GameData.drawables.add(new Explosion(x2, y2));
+            new Explosion(x2, y2);
         }
         //Kill players
         for (Player p : GameData.players) {
