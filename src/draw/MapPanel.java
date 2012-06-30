@@ -93,6 +93,7 @@ public class MapPanel extends JPanel {
      * Get bounds for panel so it has maximum size but still preserves map aspect ratio.
      */
     public Rectangle getOptimalSize(int width, int height) {
+        if (map == null) return null;
         int mx = map.getWidth();
         int my = map.getHeight();
 
