@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+import ai.AI;
+
 import main.Bomberman;
 import network.Client;
 import network.NetworkData;
@@ -30,4 +32,5 @@ public abstract class GameData {
     public static final long                    version = 1;
     public static Vector<LinkedList<Character>> keys;
     public static int                           fps     = 60;
+    public static LinkedList<AI>                ais;
 }
