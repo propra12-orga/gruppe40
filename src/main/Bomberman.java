@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -18,7 +19,7 @@ import network.KeyInput;
 import network.NetworkData;
 
 import draw.Drawable;
-import draw.GamePanel;
+import draw.MapPanel;
 import map.Exit;
 import map.Map;
 import game.Bomb;
@@ -68,7 +69,7 @@ public class Bomberman {
             }
         }
 
-        GameData.gamePanel = new GamePanel();
+        GameData.gamePanel = new MapPanel();
         pane = GameData.frame.getContentPane();
         GameData.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -222,12 +223,6 @@ public class Bomberman {
     }
 
     /**
-     * Used to determine if game panel should be resized.
-     * This is required because resizing appears to be a quite costly operation on linux.
-     */
-    private int hash = 0;
-
-    /**
      * Resize the GamePanel so it always has maximum size while still preserving
      * aspect ratio of map.
      */
@@ -236,30 +231,9 @@ public class Bomberman {
             System.out.println("Waiting for server");
             return;
         }
-        Map map = GameData.networkData.map;
-        int mx = map.getWidth();
-        int my = map.getHeight();
-        int width = pane.getWidth();
-        int height = pane.getHeight();
-
-        //Do not resize if nothing has changed
-        int newHash = (mx << 25) | (my << 20) | (width << 10) | height;
-        if (hash != newHash) hash = newHash;
-        else return;
-
-        // Calculate width required to display the image at full height while
-        // preserving aspect ratio
-        int maxWidth = height * mx / my;
-        // If it fits on screen draw it
-        if (maxWidth <= width) {
-            int blackBarWidth = (width - maxWidth) / 2;
-            GameData.gamePanel.setBounds(blackBarWidth, 0, maxWidth, height);
-        } else {
-            // If it does not fit calculate height which preserves aspect ratio
-            // and use that instead
-            int maxHeight = width * my / mx;
-            int blackBarHeight = (height - maxHeight) / 2;
-            GameData.gamePanel.setBounds(0, blackBarHeight, width, maxHeight);
+        Rectangle rect = GameData.gamePanel.getOptimalSize(pane.getWidth(), pane.getHeight());
+        if (rect != null) {
+            GameData.gamePanel.setBounds(rect);
         }
     }
 

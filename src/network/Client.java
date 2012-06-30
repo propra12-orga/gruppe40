@@ -79,6 +79,8 @@ public class Client implements Runnable {
                 }
                 if (object instanceof NetworkData) {
                     GameData.networkData = (NetworkData)object;
+                    GameData.gamePanel.drawables = GameData.networkData.drawables;
+                    GameData.gamePanel.map = GameData.networkData.map;
                     if (GameData.frame != null) {
                         GameData.bomberman.resizeGamePanel();
                         GameData.frame.repaint();
