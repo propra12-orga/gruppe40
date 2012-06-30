@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import map.EmptyField;
 import map.Field;
 import map.Map;
 
@@ -101,6 +102,8 @@ public class MapEditor {
         
         JButton saveButton = new JButton("Save");
         control.add(saveButton);
+        JButton clearButton = new JButton("Clear");
+        control.add(clearButton);
 
         mapPanel = new MapPanel();
         mapWrapper = new JPanel();
@@ -160,15 +163,43 @@ public class MapEditor {
         };
         frame.addMouseListener(mouseListener);
         
+        
+        ActionListener clearListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                
+                
+                for(int n=0;n<GameData.map.getHeight();n++){
+                    for(int m=0;m<GameData.map.getWidth();m++){
+                        
+             
+                            Field field = new EmptyField(m, n);
+                            GameData.map.setField(field);
+
+                        
+                           
+                    }
+                }
+                redrawMap();
+            }
+        };
+        clearButton.addActionListener(clearListener);
+        
+        
+        
+        
+        
+        
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Save");
+                CreateMap.saveMap(GameData.map, "Azeroth");
             }
         };
         saveButton.addActionListener(saveListener);
 
-        String[] tileNames = {"EmptyField", "DestructibleWall", "IndestructibleWall", "MediumWall", "NormalWall"};
+        String[] tileNames = {"EmptyField","IndestructibleWall", "MediumWall", "NormalWall","Exit"};
         tileSelection = new JComboBox(tileNames);
         control.add(tileSelection, BorderLayout.WEST);
         
