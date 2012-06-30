@@ -26,6 +26,10 @@ public class DestructibleWall extends Field {
     public DestructibleWall(int x, int y, int strength) {
         super(x, y, strength);
     }
+    
+    public DestructibleWall(int x, int y) {
+        super(x, y, 1);
+    }
 
     @Override
     public String getPath() {

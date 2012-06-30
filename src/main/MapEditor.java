@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import map.EmptyField;
+import map.Field;
 import map.Map;
 
 import draw.Drawable;
@@ -31,6 +32,7 @@ public class MapEditor {
 	private int h = Map.SIZE_DEFAULT_Y;
 	private JPanel mapWrapper;
 	private MapPanel mapPanel;
+	private JComboBox tileSelection;
 	
 	private void redrawMap() {
         GameData.removeDeadDrawables();
@@ -59,8 +61,17 @@ public class MapEditor {
         int height = mapPanel.getHeight();
         int tx = x*w/width;
         int ty = (int)(y*h/(double)height - 0.5);
-        GameData.map.setField(new EmptyField(tx, ty));
-        redrawMap();
+        try {
+            String s = (String) tileSelection.getSelectedItem();
+            //Get class for field
+            Class<?> whichClass = Class.forName("map." + s);
+            //Create a field using a constructor with parameters x and y
+            Field field = (Field)whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
+            GameData.map.setField(field);
+            redrawMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public MapEditor() {
@@ -86,8 +97,11 @@ public class MapEditor {
         heightSlider.setPaintTicks(true);
         pane.add(heightSlider, BorderLayout.EAST);
         
+        JPanel control = new JPanel();
+        pane.add(control, BorderLayout.NORTH);
+        
         JButton saveButton = new JButton("Save");
-        pane.add(saveButton, BorderLayout.NORTH);
+        control.add(saveButton);
 
         mapPanel = new MapPanel();
         mapWrapper = new JPanel();
@@ -154,6 +168,10 @@ public class MapEditor {
             }
         };
         saveButton.addActionListener(saveListener);
+
+        String[] tileNames = {"EmptyField", "DestructibleWall", "IndestructibleWall", "MediumWall", "NormalWall"};
+        tileSelection = new JComboBox(tileNames);
+        control.add(tileSelection, BorderLayout.WEST);
         
         initMap();
 	}
