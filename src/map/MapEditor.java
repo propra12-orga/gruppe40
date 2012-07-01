@@ -58,16 +58,18 @@ public class MapEditor {
         int height = mapPanel.getHeight();
         int tx = x * w / width;
         int ty = (int) (y * h / (double) height - 0.5);
-        try {
-            String s = (String) tileSelection.getSelectedItem();
-            // Get class for field
-            Class<?> whichClass = Class.forName("map." + s);
-            // Create a field using a constructor with parameters x and y
-            Field field = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
-            GameData.map.setField(field);
-            redrawMap();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (GameData.map.contains(tx, ty)) {
+            try {
+                String s = (String) tileSelection.getSelectedItem();
+                // Get class for field
+                Class<?> whichClass = Class.forName("map." + s);
+                // Create a field using a constructor with parameters x and y
+                Field field = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
+                GameData.map.setField(field);
+                redrawMap();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
