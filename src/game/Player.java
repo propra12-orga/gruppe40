@@ -102,20 +102,6 @@ public class Player extends Drawable {
     }
 
     /**
-     * Get direction from x/y-offset. Only works for one field offsets.
-     * 
-     * @param dx X-translation
-     * @param dy Y-translation
-     * @return Integer indicating a direction which is RIGHT/UP/LEFT/DOWN from 0
-     *         to 3.
-     */
-    public int getDirection(int dx, int dy) {
-        for (int i = 0; i < 4; i++)
-            if (dx == Direction.x[i] && dy == Direction.y[i]) return i;
-        return 0;
-    }
-
-    /**
      * Moves towards an absolute point.
      * 
      * @param x X-Coordinate of point towards which to move.
@@ -134,7 +120,7 @@ public class Player extends Drawable {
      * @return If the move was successful.
      */
     public boolean move(int dx, int dy) {
-        if (!isMoving()) direction = getDirection(dx, dy);
+        if (!isMoving()) direction = Direction.get(dx, dy);
         if (canMove()) {
             int x2 = x + dx;
             int y2 = y + dy;
