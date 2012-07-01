@@ -18,12 +18,11 @@ import ai.AI;
 import network.KeyInput;
 import network.NetworkData;
 
-import draw.Drawable;
-import draw.MapPanel;
 import map.Exit;
 import map.Map;
 import game.Bomb;
 import game.Direction;
+import game.Drawable;
 import game.GameData;
 import game.Player;
 

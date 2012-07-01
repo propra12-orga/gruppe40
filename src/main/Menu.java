@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
 
+import map.MapEditor;
 import network.Client;
 import network.Server;
 

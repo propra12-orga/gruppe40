@@ -1,11 +1,13 @@
 package images;
 
+import game.Drawable;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.HashMap;
 
-import draw.Drawable;
+
 
 /**
  * Class to handle Image loading.

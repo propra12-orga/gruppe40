@@ -1,6 +1,5 @@
 package game;
 
-import draw.Drawable;
 
 import map.Map;
 

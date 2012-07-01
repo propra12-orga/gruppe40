@@ -1,6 +1,5 @@
-package draw;
+package game;
 
-import game.GameData;
 import images.ImageLoader;
 
 import java.awt.Image;

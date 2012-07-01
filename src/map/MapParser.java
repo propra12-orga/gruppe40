@@ -1,4 +1,4 @@
-package xml_parser;
+package map;
      
     import java.io.IOException;
     import java.util.ArrayList;
@@ -7,8 +7,9 @@ package xml_parser;
     import javax.xml.parsers.SAXParser;
     import javax.xml.parsers.SAXParserFactory;
      
+
     import org.xml.sax.SAXException;
-    import org.xml.sax.XMLReader;
+import org.xml.sax.XMLReader;
      
     public class MapParser {
      
@@ -37,7 +38,7 @@ package xml_parser;
                     MapHandler handler = new MapHandler();
                     reader.setContentHandler(handler);
                     //Resource loader is able to locate resource by relative path and can give absolute path
-                    reader.parse(this.getClass().getClassLoader().getResource("xml_parser/" + this.map + ".xml").getPath());
+                    reader.parse(this.getClass().getClassLoader().getResource("map/" + this.map + ".xml").getPath());
                     this.MapArray = handler.getMapElements();
                     this.width = handler.get_width();
                     this.height = handler.get_height();

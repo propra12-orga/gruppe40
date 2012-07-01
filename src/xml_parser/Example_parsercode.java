@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
+
+import map.MapParser;
+
 import org.xml.sax.SAXException;
 
 /**

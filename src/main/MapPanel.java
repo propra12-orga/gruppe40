@@ -1,6 +1,6 @@
-package draw;
+package main;
 
-import draw.Drawable;
+import game.Drawable;
 import game.Player;
 
 import javax.swing.JPanel;

@@ -1,6 +1,9 @@
 package map;
 
 
+/**
+ * Duplicate, will be removed later.
+ */
 public class Path {
 
     /**

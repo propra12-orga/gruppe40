@@ -9,12 +9,11 @@ import javax.swing.JFrame;
 import ai.AI;
 
 import main.Bomberman;
+import main.MapPanel;
 import network.Client;
 import network.NetworkData;
 import network.Server;
 import map.Map;
-import draw.Drawable;
-import draw.MapPanel;
 
 public abstract class GameData {
     public static JFrame                        frame;

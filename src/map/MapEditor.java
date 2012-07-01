@@ -1,17 +1,14 @@
-package main;
+package map;
 
+import game.Drawable;
 import game.GameData;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import map.EmptyField;
-import map.Field;
-import map.Map;
+import main.MapPanel;
 
-import draw.Drawable;
-import draw.MapPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -175,13 +172,9 @@ public class MapEditor {
         ActionListener clearListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                for (int n = 0; n < GameData.map.getHeight(); n++) {
-                    for (int m = 0; m < GameData.map.getWidth(); m++) {
-
-                        Field field = new EmptyField(m, n);
-                        GameData.map.setField(field);
-
+                for (int y = 0; y < h; y++) {
+                    for (int x = 0; x < w; x++) {
+                        GameData.map.setField(new EmptyField(x, y));
                     }
                 }
                 redrawMap();
@@ -192,7 +185,7 @@ public class MapEditor {
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreateMap.saveMap(GameData.map, "Azeroth");
+                MapCreator.saveMap(GameData.map, "Azeroth");
             }
         };
         saveButton.addActionListener(saveListener);
@@ -202,7 +195,7 @@ public class MapEditor {
             public void actionPerformed(ActionEvent e) {
 
                 GameData.drawables = new LinkedList<Drawable>();
-                GameData.map = new Map("Map1"); //NEEDS TO BE IN RES. FOLDER - parser code was changed by keiner...
+                GameData.map = new Map("Map1");
                 int w = GameData.map.getWidth();
                 int h = GameData.map.getHeight();
                 widthSlider.setValue(w);

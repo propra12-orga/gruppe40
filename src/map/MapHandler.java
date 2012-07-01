@@ -1,4 +1,4 @@
-package xml_parser;
+package map;
 
 import java.util.ArrayList;
 
