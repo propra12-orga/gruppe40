@@ -20,7 +20,6 @@ import network.KeyInput;
 import network.NetworkData;
 
 import map.Exit;
-import map.Item;
 import map.Map;
 import game.Bomb;
 import game.Direction;
@@ -196,17 +195,17 @@ public class Bomberman {
 
                                     case 'E':
                                     case 'e':
-                                        player.putItem(Item.BOMB);
+                                        player.putItem(0); //puts bomb
                                     break;
 									
                                     case 'R':
                                     case 'r':
-                                        player.putItem(Item.SUPERBOMB);
+                                        player.putItem(1); //puts superbomb
                                     break;
 									
                                     case 'Q':
                                     case 'q':
-                                        player.putItem(Item.BOX);
+                                        player.putItem(3); //puts box
                                     break;
                                 }
                             }
@@ -287,5 +286,6 @@ public class Bomberman {
         GameData.server = null;
         GameData.client = null;
         GameData.menuFrame.setVisible(true);
+        GameData.menuFrame.requestFocus();
     }
 }

@@ -17,11 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class MapEditor {
+public class MapEditor  {
 
     public final JFrame frame = new JFrame("Map-Editor");
 
@@ -58,6 +60,7 @@ public class MapEditor {
         int height = mapPanel.getHeight();
         int tx = x * w / width;
         int ty = (int) (y * h / (double) height - 0.5);
+
         if (GameData.map.contains(tx, ty)) {
             try {
                 String s = (String) tileSelection.getSelectedItem();
@@ -117,6 +120,7 @@ public class MapEditor {
             public void stateChanged(ChangeEvent e) {
                 w = widthSlider.getValue();
                 initMap();
+                frame.requestFocus();
             }
         };
         widthSlider.addChangeListener(widthListener);
@@ -126,6 +130,7 @@ public class MapEditor {
             public void stateChanged(ChangeEvent e) {
                 h = heightSlider.getValue();
                 initMap();
+                frame.requestFocus();
             }
         };
         heightSlider.addChangeListener(heightListener);
@@ -153,6 +158,7 @@ public class MapEditor {
             @Override
             public void mouseClicked(MouseEvent e) {
                 placeTile(e.getX(), e.getY());
+                frame.requestFocus();
             }
 
             @Override
@@ -164,6 +170,7 @@ public class MapEditor {
             @Override
             public void mousePressed(MouseEvent e) {
                 placeTile(e.getX(), e.getY());
+                frame.requestFocus();
             }
 
             @Override
@@ -180,6 +187,7 @@ public class MapEditor {
                     }
                 }
                 redrawMap();
+                frame.requestFocus();
             }
         };
         clearButton.addActionListener(clearListener);
@@ -187,7 +195,8 @@ public class MapEditor {
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapCreator.saveMap(GameData.map, "Azeroth");
+                MapCreator.saveMap(GameData.map, "Azeroth");   
+                frame.requestFocus();
             }
         };
         saveButton.addActionListener(saveListener);
@@ -204,8 +213,45 @@ public class MapEditor {
                 mapPanel.map = GameData.map;
                 mapPanel.drawables = GameData.drawables;
                 redrawMap();
+                frame.requestFocus();
             }
         };
+        
+        KeyListener exitListener = new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//                    UIManager.put("OptionPane.cancelButtonText", "Cancel");
+//                    UIManager.put("OptionPane.noButtonText", "No");
+//                    UIManager.put("OptionPane.yesButtonText", "Yes");
+//                    UIManager.put("OptionPane.Title","Please select");
+//                   
+//                    int option = JOptionPane.showConfirmDialog(fra,e, "Close window?","Exit",JOptionPane.YES_NO_OPTION);
+//                    if(option == JOptionPane.OK_OPTION) System.exit(0);
+                    frame.dispose();
+
+                   
+                    }
+                }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void keyTyped(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+            };
+
+        
+            
+            
+        frame.setFocusable(true);    
+        frame.addKeyListener(exitListener);
         loadButton.addActionListener(loadListener);
 
         String[] tileNames = { "EmptyField", "IndestructibleWall", "MediumWall", "NormalWall", "Exit" };

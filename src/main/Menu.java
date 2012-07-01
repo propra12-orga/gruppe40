@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import map.MapEditor;
@@ -204,6 +205,7 @@ public class Menu {
 		ActionListener alWindow = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				fullscreen = false;
+				base.requestFocus();
 			}
 		};
 		
@@ -211,6 +213,7 @@ public class Menu {
 		ActionListener alFull = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				fullscreen = true;
+				base.requestFocus();
 			}
 		};
 		
@@ -219,6 +222,7 @@ public class Menu {
 			@Override public void actionPerformed(ActionEvent e) {
 				JComboBox comboBox = (JComboBox)e.getSource();
 				mapName = (String)comboBox.getSelectedItem();
+				base.requestFocus();
 			}
 		};
 		
@@ -246,8 +250,54 @@ public class Menu {
 						}
 					}
 				}
+				base.requestFocus();
 			}
 		};
+
+		KeyListener keyListener = new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    UIManager.put("OptionPane.cancelButtonText", "Cancel");
+                    UIManager.put("OptionPane.noButtonText", "No");
+                    UIManager.put("OptionPane.yesButtonText", "Yes");
+                    UIManager.put("OptionPane.Title","Please select");
+                   
+                    int option = JOptionPane.showConfirmDialog(base, "Close window?","Exit",JOptionPane.YES_NO_OPTION);
+                    if(option == JOptionPane.OK_OPTION) System.exit(0);
+                   
+                    }
+                }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void keyTyped(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+            };
+        base.setFocusable(true);
+        base.addKeyListener(keyListener);
+        
+        
+        
+        WindowStateListener returnListener = new WindowStateListener() {
+            
+            @Override
+            public void windowStateChanged(WindowEvent arg0) {
+                
+                base.requestFocus();
+                
+            }
+        };
+        base.addWindowStateListener(returnListener);
+        
+		
 		
 		//adding listeners
 		buttonSP.addActionListener(alSP);
