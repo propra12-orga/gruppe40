@@ -2,6 +2,8 @@ package ai;
 
 import java.awt.Point;
 
+import map.Item;
+
 import game.Direction;
 import game.GameData;
 import game.Player;
@@ -56,7 +58,7 @@ public class AI {
             Player closest = pathfinding.getClosestReachablePlayer(player);
             if (closest != null) {
                 if (pathfinding.distance[closest.x][closest.y] <= player.radius) {
-                    player.putItem(0);
+                    player.putItem(Item.BOMB);
                 } else {
                     Point p = new Point(closest.x, closest.y);
                     if (p != null) {
@@ -76,7 +78,7 @@ public class AI {
                         for (int y = 0; y < pathfinding.h; y++) {
                             for (int x = 0; x < pathfinding.w; x++) {
                                 if (pathfinding.dangerous[x][y]  == Pathfinding.NOT_DANGEROUS && pathfinding.distance[x][y] != Pathfinding.UNVISITED && pathfinding.distance[x][y] < 3) {
-                                    player.putItem(0);
+                                    player.putItem(Item.BOMB);
                                     return;
                                 }
                             }

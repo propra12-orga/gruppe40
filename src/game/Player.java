@@ -148,11 +148,11 @@ public class Player extends Drawable {
             int y2 = y + dy;
             if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
                 ticks = 0;
-                if (this.putBox) { // leaves box on field if box is collected
-                                   // before
+                // leaves box on field if box is collected before
+                if (this.putBox) { 
                     this.putBox = false;
                     map.setField(new DestructibleWall(this.x, this.y, 1));
-                    this.itemCounter[3]--;
+                    this.itemCounter[Item.BOX]--;
                 }
                 this.x = x2;
                 this.y = y2;
@@ -160,7 +160,7 @@ public class Player extends Drawable {
                 if (field instanceof Item) {
                     Item item = (Item) field;
                     map.setField(new EmptyField(this.x, this.y));
-                    if (item.getType() == 2) {
+                    if (item.getType() == Item.SPEED) {
                         this.speedUp();
                     } else {
                         this.itemCounter[item.getType()]++;
