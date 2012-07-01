@@ -28,13 +28,14 @@ public abstract class Field extends Drawable {
         this.strength = newStrength;
     }
 
-    /**
-     * @param x
-     *            - horizontal axis
-     * @param y
-     *            - vertical axis
-     */
-    public void getItem(int x, int y) {
-//         if (Math.random() < 0.2) new Item(x, y, true);
+    public Field getItem() {
+		int itemnumber = 3; //increased, if more than 3 items
+		int random = (int)(Math.floor(Math.random()*100));
+		if (random < 20){ //80% field remains empty
+			return new Item(this.x, this.y, (random % itemnumber) + 1);
+		}
+		else{
+			return new EmptyField(this.x, this.y);
+		}
     }
 }
