@@ -7,25 +7,24 @@ public class Player extends Drawable {
 
     private Map               map;
     private int               direction;
-
     private boolean           alive;
     private String            name;
     private int               bombCounter;
-    public int                ticks;
-    private int               tickMax;
     public int                radius;
+    private int               tickMax;
+    public int                ticks;
 
     public Player(String name, int x, int y) {
         super(x, y, false);
         this.name = name;
         this.map = GameData.map;
-        this.direction = 0;
-        int tilesPerSec = 8;
-        this.tickMax = GameData.fps/tilesPerSec;
-        this.ticks = GameData.fps/tilesPerSec;
+        this.direction = Direction.DOWN;
         this.alive = true;
         this.bombCounter = 2;
         this.radius = 1;
+        int tilesPerSec = 8;
+        this.tickMax = GameData.fps / tilesPerSec;
+        this.ticks = GameData.fps / tilesPerSec;
     }
 
     public int getSpeed() {

@@ -12,6 +12,7 @@ import java.util.ListIterator;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import ai.AI;
 
@@ -118,8 +119,10 @@ public class Bomberman {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    // TODO ask if user really wanted to press escape
-                    stop();
+                    int option = JOptionPane.showConfirmDialog(GameData.frame, "Do you really want to exit?","Exit",JOptionPane.YES_NO_OPTION);
+                    if(option == JOptionPane.OK_OPTION) {
+                        stop();
+                    }
                 }
             }
 
