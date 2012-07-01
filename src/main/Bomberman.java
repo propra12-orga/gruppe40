@@ -20,6 +20,7 @@ import network.KeyInput;
 import network.NetworkData;
 
 import map.Exit;
+import map.Item;
 import map.Map;
 import game.Bomb;
 import game.Direction;
@@ -195,17 +196,17 @@ public class Bomberman {
 
                                     case 'E':
                                     case 'e':
-                                        player.putItem(0); //puts bomb
+                                        player.putItem(Item.BOMB); //puts bomb
                                     break;
 									
                                     case 'R':
                                     case 'r':
-                                        player.putItem(1); //puts superbomb
+                                        player.putItem(Item.SUPERBOMB); //puts superbomb
                                     break;
 									
                                     case 'Q':
                                     case 'q':
-                                        player.putItem(3); //puts box
+                                        player.putItem(Item.BOX); //puts box
                                     break;
                                 }
                             }
