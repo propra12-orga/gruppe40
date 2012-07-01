@@ -24,12 +24,7 @@ public class Player extends Drawable {
         this.map = GameData.map;
         this.direction = Direction.DOWN;
         this.alive = true;
-		this.itemCounter = new int[4];
-        this.itemCounter[0] = 2;
-		this.itemCounter[1] = 0;
-		this.itemCounter[2] = 0;
-		this.itemCounter[3] = 0;
-		//has 2 bombs, 0 superbomb, 0 speedups, 0 boxes
+		this.itemCounter = new int[]{2,0,0,0}; //has 2 bombs, 0 superbomb, 0 speedups, 0 boxes
         this.radius = 1;
         this.bombTickMax = GameData.fps;
 		this.ticksUntilNormalSpeed = 0;
