@@ -193,17 +193,15 @@ public class MapEditor {
         ActionListener loadListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 GameData.drawables = new LinkedList<Drawable>();
                 GameData.map = new Map("Map1");
-                int w = GameData.map.getWidth();
-                int h = GameData.map.getHeight();
+                w = GameData.map.getWidth();
+                h = GameData.map.getHeight();
                 widthSlider.setValue(w);
                 heightSlider.setValue(h);
                 mapPanel.map = GameData.map;
                 mapPanel.drawables = GameData.drawables;
                 redrawMap();
-
             }
         };
         loadButton.addActionListener(loadListener);
