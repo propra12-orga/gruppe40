@@ -57,10 +57,10 @@ public class Bomberman {
             // TODO non-hardcoded spawn locations
             int x = GameData.map.getWidth() - 2;
             int y = GameData.map.getHeight() - 2;
-            if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1, 200));
-            if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y, 200));
-            if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y, 200));
-            if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1, 200));
+            if (GameData.playerCount > 0) GameData.players.add(new Player("Player 1", 1, 1));
+            if (GameData.playerCount > 1) GameData.players.add(new Player("Player 2", x, y));
+            if (GameData.playerCount > 2) GameData.players.add(new Player("Player 3", 1, y));
+            if (GameData.playerCount > 3) GameData.players.add(new Player("Player 4", x, 1));
 
             if (useAI) {
                 for (int i=GameData.server.getPlayerCount(); i<4; i++) {
@@ -155,6 +155,11 @@ public class Bomberman {
                                 }
                             }
                         }
+                    }
+                    
+                    //Update players
+                    for (Player player : GameData.players) {
+                        player.ticks++;
                     }
                     
                     //Handle key input

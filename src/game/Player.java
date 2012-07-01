@@ -1,6 +1,5 @@
 package game;
 
-
 import map.Map;
 
 public class Player extends Drawable {
@@ -12,27 +11,29 @@ public class Player extends Drawable {
     private boolean           alive;
     private String            name;
     private int               bombCounter;
-    private long              walkStart;
-    private int               walkDistance;
+    public int                ticks;
+    private int               tickMax;
     public int                radius;
 
-    public Player(String name, int x, int y, int speed) {
+    public Player(String name, int x, int y) {
         super(x, y, false);
         this.name = name;
         this.map = GameData.map;
         this.direction = 0;
-        this.walkDistance = speed;
+        int tilesPerSec = 8;
+        this.tickMax = GameData.fps/tilesPerSec;
+        this.ticks = GameData.fps/tilesPerSec;
         this.alive = true;
         this.bombCounter = 2;
         this.radius = 1;
     }
 
     public int getSpeed() {
-        return this.walkDistance;
+        return this.tickMax;
     }
 
     public void setSpeed(int speed) {
-        this.walkDistance = speed;
+        this.tickMax = speed;
     }
 
     public int getX() {
@@ -46,7 +47,7 @@ public class Player extends Drawable {
     public double getFlow() {
         // The player moves instantly on key press, animation follows
         // Not sure if this is the way to go
-        double t = (System.currentTimeMillis() - walkStart) / (double) walkDistance;
+        double t = ticks / (double) tickMax;
         return t < 1 ? t - 1 : 0;// Subtract 1 to make up for player position
     }
 
@@ -82,7 +83,7 @@ public class Player extends Drawable {
     }
 
     public boolean isMoving() {
-        return System.currentTimeMillis() - walkStart < walkDistance;
+        return ticks < tickMax;
     }
 
     private boolean canMove() {
@@ -137,7 +138,7 @@ public class Player extends Drawable {
             int x2 = x + dx;
             int y2 = y + dy;
             if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
-                walkStart = System.currentTimeMillis();
+                ticks = 0;
                 this.x = x2;
                 this.y = y2;
                 return true;
