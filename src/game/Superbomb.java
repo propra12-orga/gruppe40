@@ -1,11 +1,12 @@
 package game;
 
-public class Superbomb extends Bomb{
+public class Superbomb extends Bomb {
 
+    private static final long serialVersionUID = -4118186866125080195L;
 
-public Superbomb(Player owner){
+    public Superbomb(Player owner) {
         super(owner);
-		this.setRadius(3);
-		
-	}
+        this.setRadius(3);
+
+    }
 }
