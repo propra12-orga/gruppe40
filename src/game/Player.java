@@ -14,9 +14,9 @@ public class Player extends Drawable {
     private int               tickMax;
     public int                ticks;
     public int                bombTickMax;
-	private boolean		      putBox;
-	public int 				  ticksUntilNormalSpeed;
-	private int				  tilesPerSec;
+    private boolean           putBox;
+    public int                ticksUntilNormalSpeed;
+    private int               tilesPerSec;
 
     public Player(String name, int x, int y) {
         super(x, y, false);
@@ -24,14 +24,15 @@ public class Player extends Drawable {
         this.map = GameData.map;
         this.direction = Direction.DOWN;
         this.alive = true;
-		this.itemCounter = new int[]{2,0,0,0}; //has 2 bombs, 0 superbomb, 0 speedups, 0 boxes
+        // has 2 bombs, 0 superbomb, 0 speedups, 0 boxes
+        this.itemCounter = new int[] { 2, 0, 0, 0 };
         this.radius = 1;
         this.bombTickMax = GameData.fps;
-		this.ticksUntilNormalSpeed = 0;
+        this.ticksUntilNormalSpeed = 0;
         this.tilesPerSec = 8;
         this.tickMax = GameData.fps / tilesPerSec;
         this.ticks = GameData.fps / tilesPerSec;
-		this.putBox = false;
+        this.putBox = false;
     }
 
     public int getSpeed() {
@@ -41,24 +42,22 @@ public class Player extends Drawable {
     public void setSpeed(int speed) {
         this.tickMax = speed;
     }
-	
-	/**
-	 * sets speed to twice the normal speed
-	 * increases timeUntilNormalSpeed
-	*/
-	public void speedUp(){
-		if(this.ticksUntilNormalSpeed <0){
-			this.ticksUntilNormalSpeed = 0;
-		}
-		this.ticksUntilNormalSpeed+=(GameData.fps*2);
-		this.setSpeed((GameData.fps / this.tilesPerSec)/2);
-	}
-	
-	public void speedDown(){
-		this.setSpeed(GameData.fps / this.tilesPerSec);
-	}
-	
-	
+
+    /**
+     * sets speed to twice the normal speed
+     * increases timeUntilNormalSpeed
+     */
+    public void speedUp() {
+        if (this.ticksUntilNormalSpeed < 0) {
+            this.ticksUntilNormalSpeed = 0;
+        }
+        this.ticksUntilNormalSpeed += (GameData.fps * 2);
+        this.setSpeed((GameData.fps / this.tilesPerSec) / 2);
+    }
+
+    public void speedDown() {
+        this.setSpeed(GameData.fps / this.tilesPerSec);
+    }
 
     public int getX() {
         return this.x;
@@ -149,24 +148,24 @@ public class Player extends Drawable {
             int y2 = y + dy;
             if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
                 ticks = 0;
-				if(this.putBox){ //leaves box on field if box is collected before
-					this.putBox = false;
-					map.setField(new DestructibleWall(this.x,this.y,1));
-					this.itemCounter[3]--;
-				}
+                if (this.putBox) { // leaves box on field if box is collected
+                                   // before
+                    this.putBox = false;
+                    map.setField(new DestructibleWall(this.x, this.y, 1));
+                    this.itemCounter[3]--;
+                }
                 this.x = x2;
                 this.y = y2;
-				Field field = map.getField(this.x,this.y);
-				if(field instanceof Item){
-					Item item = (Item)field;
-					map.setField(new EmptyField(this.x,this.y));
-					if(item.getType() ==2){
-						this.speedUp();
-					}
-					else{
-						this.itemCounter[item.getType()]++;
-					}
-				}
+                Field field = map.getField(this.x, this.y);
+                if (field instanceof Item) {
+                    Item item = (Item) field;
+                    map.setField(new EmptyField(this.x, this.y));
+                    if (item.getType() == 2) {
+                        this.speedUp();
+                    } else {
+                        this.itemCounter[item.getType()]++;
+                    }
+                }
                 return true;
             }
             return false;
@@ -177,10 +176,10 @@ public class Player extends Drawable {
     public boolean hasItem(int type) {
         return alive && this.itemCounter[type] > 0;
     }
-	
-	public int getItemCount(int type){
-		return this.itemCounter[type];
-	}
+
+    public int getItemCount(int type) {
+        return this.itemCounter[type];
+    }
 
     /**
      * If there are bombs left, one is placed at the player's position.
@@ -191,21 +190,20 @@ public class Player extends Drawable {
         // Do not place bombs while moving between tiles and do not place bombs
         // on bombs
         if (!hasItem(type) || map.isBlocked(x, y) || isMoving()) return false;
-		switch(type){
-			case 0: 
-				new Bomb(this);
-				this.itemCounter[type]--;
-				break;
-			case 1:
-				new Superbomb(this);
-				this.itemCounter[type]--;
-				break;
-			case 3:
-				this.putBox = true;
-				break;
-			
-		
-		}
+        switch (type) {
+            case Item.BOMB:
+                new Bomb(this);
+                this.itemCounter[type]--;
+            break;
+            case Item.SUPERBOMB:
+                new Superbomb(this);
+                this.itemCounter[type]--;
+            break;
+            case Item.BOX:
+                this.putBox = true;
+            break;
+
+        }
         return true;
     }
 

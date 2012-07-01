@@ -2,30 +2,35 @@ package map;
 
 import game.GameData;
 
-public class Item extends Field{
-	private static final long serialVersionUID = GameData.version;
-	
-	private int type;
+public class Item extends Field {
+    private static final long serialVersionUID = GameData.version;
 
-	public Item(int x, int y, int type){
-		super(x, y, 0);
-		this.type = type;
-	}
-	
-	public int getType(){
-		return this.type;
-	}
-	
-	  @Override
+    public static final int   BOMB             = 0;
+    public static final int   SUPERBOMB        = 1;
+    public static final int   SPEED            = 2;
+    public static final int   BOX              = 3;
+
+    private int               type;
+
+    public Item(int x, int y, int type) {
+        super(x, y, 0);
+        this.type = type;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    @Override
     public String getPath() {
-		switch(type){
-			case 1: 
-			default: 
-				return "ItemSuperbomb.jpg";
-			case 2:
-				return "ItemSpeed.jpg";
-			case 3:
-				return "ItemBox.jpg";
-		}
+        switch (type) {
+            case SUPERBOMB:
+            default:
+                return "ItemSuperbomb.jpg";
+            case SPEED:
+                return "ItemSpeed.jpg";
+            case BOX:
+                return "ItemBox.jpg";
+        }
     }
 }
