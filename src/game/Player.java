@@ -13,6 +13,7 @@ public class Player extends Drawable {
     public int                radius;
     private int               tickMax;
     public int                ticks;
+    public int                bombTickMax;
 
     public Player(String name, int x, int y) {
         super(x, y, false);
@@ -22,6 +23,7 @@ public class Player extends Drawable {
         this.alive = true;
         this.bombCounter = 2;
         this.radius = 1;
+        this.bombTickMax = GameData.fps;
         int tilesPerSec = 8;
         this.tickMax = GameData.fps / tilesPerSec;
         this.ticks = GameData.fps / tilesPerSec;
@@ -161,7 +163,7 @@ public class Player extends Drawable {
         // on bombs
         if (!hasBomb() || map.isBlocked(x, y) || isMoving()) return false;
         this.bombCounter--;
-        new Bomb(x, y, this);
+        new Bomb(this);
         return true;
     }
 

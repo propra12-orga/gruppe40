@@ -114,8 +114,6 @@ public class Bomberman {
         pane.addComponentListener(componentListener);
 
         KeyListener keyListener = new KeyListener() {
-            // This is just for milestone 2, will be changed later
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

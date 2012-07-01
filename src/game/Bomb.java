@@ -12,11 +12,11 @@ public class Bomb extends Drawable {
 	private Player owner; 
 	public int ticksUntilExplosion;
 	
-	public Bomb(int x, int y, Player owner){
-        super(x, y, false);
+	public Bomb(Player owner){
+        super(owner.x, owner.y, false);
 		this.radius = owner.radius;
 		this.strength = 1;
-		this.ticksUntilExplosion = GameData.fps;
+		this.ticksUntilExplosion = owner.bombTickMax;
 		this.owner = owner;
         GameData.map.setBlocked(x, y, true);
 		synchronized (GameData.bombs) {

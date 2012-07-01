@@ -11,24 +11,25 @@ import java.util.LinkedList;
 public class Pathfinding {
 
     public int               w, h;
-    public boolean           dangerous[][];
+    public int               dangerous[][];
     public boolean           blocked[][];
     public int               distance[][];
     public Point             previous[][];
-    public static final int  UNVISITED = -1;
+    public static final int  UNVISITED     = -1;
+    public static final int  NOT_DANGEROUS = -1;
     public LinkedList<Point> reachable;
 
     public Pathfinding() {
         w = GameData.map.getWidth();
         h = GameData.map.getHeight();
-        dangerous = new boolean[w][h];
+        dangerous = new int[w][h];
         distance = new int[w][h];
         previous = new Point[w][h];
         blocked = new boolean[w][h];
 
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                dangerous[x][y] = false;
+                dangerous[x][y] = NOT_DANGEROUS;
                 blocked[x][y] = GameData.map.isBlocked(x, y);
                 distance[x][y] = UNVISITED;
                 previous[x][y] = null;
@@ -36,7 +37,7 @@ public class Pathfinding {
         }
         reachable = new LinkedList<Point>();
         for (Bomb bomb : GameData.bombs)
-            if (!bomb.isExpired()) markDangerous(bomb.x, bomb.y, bomb.getRadius());
+            if (!bomb.isExpired()) markDangerous(bomb.x, bomb.y, bomb.getRadius(), bomb.ticksUntilExplosion);
     }
 
     private void explore(Point p, int direction) {
@@ -67,15 +68,15 @@ public class Pathfinding {
         return x >= 0 && y >= 0 && x < w && y < h;
     }
 
-    public void markDangerous(int x, int y, int radius) {
-        if (contains(x, y)) dangerous[x][y] = true;
+    public void markDangerous(int x, int y, int radius, int danger) {
+        if (contains(x, y)) dangerous[x][y] = danger;
         for (int i = 0; i < 4; i++) {
             int x2 = x;
             int y2 = y;
             for (int r = 1; r <= radius; r++) {
                 x2 += Direction.x[i];
                 y2 += Direction.y[i];
-                if (contains(x2, y2)) dangerous[x2][y2] = true;
+                if (contains(x2, y2)) dangerous[x2][y2] = danger;
             }
         }
     }

@@ -23,7 +23,7 @@ public class AI {
     private void moveTowards(Point p, boolean safe) {
         Point towards = pathfinding.getPointTowards(p, new Point(player.getPoint()));
         if (safe) {
-            if (!pathfinding.dangerous[towards.x][towards.y]) {
+            if (pathfinding.dangerous[towards.x][towards.y] == Pathfinding.NOT_DANGEROUS) {
                 player.moveTo(towards.x, towards.y);
             }
         } else {
@@ -43,7 +43,7 @@ public class AI {
 
         pathfinding = new Pathfinding();
         pathfinding.start(px, py);
-        if (pathfinding.dangerous[px][py]) {
+        if (pathfinding.dangerous[px][py] != Pathfinding.NOT_DANGEROUS) {
             // Run away if in danger
             Point p = pathfinding.getClosestReachableNicePoint(px, py);
             if (p != null) {
@@ -71,11 +71,11 @@ public class AI {
                     if (pathfinding.contains(x2, y2) && GameData.map.getField(x2, y2).getStrength() > 0) {
                         // Check if we can get away with bombing it
                         pathfinding = new Pathfinding();
-                        pathfinding.markDangerous(x2, y2, player.radius);
+                        pathfinding.markDangerous(x2, y2, player.radius, player.bombTickMax);
                         pathfinding.start(px, py);
                         for (int y = 0; y < pathfinding.h; y++) {
                             for (int x = 0; x < pathfinding.w; x++) {
-                                if (!pathfinding.dangerous[x][y] && pathfinding.distance[x][y] != Pathfinding.UNVISITED && pathfinding.distance[x][y] < 3) {
+                                if (pathfinding.dangerous[x][y]  == Pathfinding.NOT_DANGEROUS && pathfinding.distance[x][y] != Pathfinding.UNVISITED && pathfinding.distance[x][y] < 3) {
                                     player.putBomb();
                                     return;
                                 }
