@@ -26,9 +26,15 @@ Korr@KORR-PC /e/eclipse/Projects/gruppe40 (master)
 $ git config --global user.email whatever...
 
 _____________________________________________________________
+done: items zufaellig unter kisten verteilt: superbomb, kiste, speedup
+TODO: Aenderung im Tutorial
+	Superbomb abwerfen mit R (Bild bisher B) (type = 1)
+	Maennchen wird automatisch schneller bei Einsammeln (Bild bisher S)
+	Kiste abwerfen mit Q (Bild bisher K) (type = 3)
+Anzeige wie viele man noch hat (ueber getItemCount(type) abrufen) waere gut
+
 
 ++++++ to do ++++++
-Items(+Geschwindigkeit, +Bombenradius, +Anzahl)
 Grafiken fuer Bombe und Bomberman
 Serialisierung beschleunigen oder Anzahl der zu serialisierenden Objekte verringern
 

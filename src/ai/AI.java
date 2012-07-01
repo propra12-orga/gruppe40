@@ -56,7 +56,7 @@ public class AI {
             Player closest = pathfinding.getClosestReachablePlayer(player);
             if (closest != null) {
                 if (pathfinding.distance[closest.x][closest.y] <= player.radius) {
-                    player.putBomb();
+                    player.putItem(0);
                 } else {
                     Point p = new Point(closest.x, closest.y);
                     if (p != null) {
@@ -76,7 +76,7 @@ public class AI {
                         for (int y = 0; y < pathfinding.h; y++) {
                             for (int x = 0; x < pathfinding.w; x++) {
                                 if (pathfinding.dangerous[x][y]  == Pathfinding.NOT_DANGEROUS && pathfinding.distance[x][y] != Pathfinding.UNVISITED && pathfinding.distance[x][y] < 3) {
-                                    player.putBomb();
+                                    player.putItem(0);
                                     return;
                                 }
                             }

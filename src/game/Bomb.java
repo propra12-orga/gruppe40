@@ -57,7 +57,9 @@ public class Bomb extends Drawable {
 	public void explode(){
 	    //Prevent infinite loop from two bombs triggering each other
 	    if (hasExploded) return;
-		this.owner.increaseBombCounter();
+		if(!(this instanceof Superbomb)){
+			this.owner.increaseItemCounter(0);
+		}
 		hasExploded = true;
 		GameData.map.setBlocked(this.x, this.y, false);
         GameData.map.destroy(x, y, strength);
@@ -93,6 +95,10 @@ public class Bomb extends Drawable {
     public int getRadius() {
         return radius;
     }
+	
+	public void setRadius(int radius){
+		this.radius = radius;
+	}
 	
     public boolean isExpired() {
         return hasExploded;

@@ -161,6 +161,9 @@ public class Bomberman {
                     //Update players
                     for (Player player : GameData.players) {
                         player.ticks++;
+						if(--player.ticksUntilNormalSpeed <0){
+							player.speedDown();
+						}
                     }
                     
                     //Handle key input
@@ -192,7 +195,17 @@ public class Bomberman {
 
                                     case 'E':
                                     case 'e':
-                                        player.putBomb();
+                                        player.putItem(0); //puts bomb
+                                    break;
+									
+                                    case 'R':
+                                    case 'r':
+                                        player.putItem(1); //puts superbomb
+                                    break;
+									
+                                    case 'Q':
+                                    case 'q':
+                                        player.putItem(3); //puts box
                                     break;
                                 }
                             }

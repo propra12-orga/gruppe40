@@ -12,6 +12,10 @@ public class Item extends Field{
 		this.type = type;
 	}
 	
+	public int getType(){
+		return this.type;
+	}
+	
 	  @Override
     public String getPath() {
 		switch(type){

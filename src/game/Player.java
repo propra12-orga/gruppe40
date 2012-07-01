@@ -1,6 +1,6 @@
 package game;
 
-import map.Map;
+import map.*;
 
 public class Player extends Drawable {
     private static final long serialVersionUID = GameData.version;
@@ -9,11 +9,14 @@ public class Player extends Drawable {
     private int               direction;
     private boolean           alive;
     private String            name;
-    private int               bombCounter;
+    private int[]             itemCounter;
     public int                radius;
     private int               tickMax;
     public int                ticks;
     public int                bombTickMax;
+	private boolean		      putBox;
+	public int 				  ticksUntilNormalSpeed;
+	private int				  tilesPerSec;
 
     public Player(String name, int x, int y) {
         super(x, y, false);
@@ -21,12 +24,19 @@ public class Player extends Drawable {
         this.map = GameData.map;
         this.direction = Direction.DOWN;
         this.alive = true;
-        this.bombCounter = 2;
+		this.itemCounter = new int[4];
+        this.itemCounter[0] = 2;
+		this.itemCounter[1] = 0;
+		this.itemCounter[2] = 0;
+		this.itemCounter[3] = 0;
+		//has 2 bombs, 0 superbomb, 0 speedups, 0 boxes
         this.radius = 1;
         this.bombTickMax = GameData.fps;
-        int tilesPerSec = 8;
+		this.ticksUntilNormalSpeed = 0;
+        this.tilesPerSec = 8;
         this.tickMax = GameData.fps / tilesPerSec;
         this.ticks = GameData.fps / tilesPerSec;
+		this.putBox = false;
     }
 
     public int getSpeed() {
@@ -36,6 +46,24 @@ public class Player extends Drawable {
     public void setSpeed(int speed) {
         this.tickMax = speed;
     }
+	
+	/**
+	 * sets speed to twice the normal speed
+	 * increases timeUntilNormalSpeed
+	*/
+	public void speedUp(){
+		if(this.ticksUntilNormalSpeed <0){
+			this.ticksUntilNormalSpeed = 0;
+		}
+		this.ticksUntilNormalSpeed+=(GameData.fps*2);
+		this.setSpeed((GameData.fps / this.tilesPerSec)/2);
+	}
+	
+	public void speedDown(){
+		this.setSpeed(GameData.fps / this.tilesPerSec);
+	}
+	
+	
 
     public int getX() {
         return this.x;
@@ -126,8 +154,24 @@ public class Player extends Drawable {
             int y2 = y + dy;
             if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
                 ticks = 0;
+				if(this.putBox){ //leaves box on field if box is collected before
+					this.putBox = false;
+					map.setField(new DestructibleWall(this.x,this.y,1));
+					this.itemCounter[3]--;
+				}
                 this.x = x2;
                 this.y = y2;
+				Field field = map.getField(this.x,this.y);
+				if(field instanceof Item){
+					Item item = (Item)field;
+					map.setField(new EmptyField(this.x,this.y));
+					if(item.getType() ==2){
+						this.speedUp();
+					}
+					else{
+						this.itemCounter[item.getType()]++;
+					}
+				}
                 return true;
             }
             return false;
@@ -135,26 +179,43 @@ public class Player extends Drawable {
         return false;
     }
 
-    public boolean hasBomb() {
-        return alive && bombCounter > 0;
+    public boolean hasItem(int type) {
+        return alive && this.itemCounter[type] > 0;
     }
+	
+	public int getItemCount(int type){
+		return this.itemCounter[type];
+	}
 
     /**
      * If there are bombs left, one is placed at the player's position.
      * 
      * @return If the bomb could be planted successfully.
      */
-    public boolean putBomb() {
+    public boolean putItem(int type) {
         // Do not place bombs while moving between tiles and do not place bombs
         // on bombs
-        if (!hasBomb() || map.isBlocked(x, y) || isMoving()) return false;
-        this.bombCounter--;
-        new Bomb(this);
+        if (!hasItem(type) || map.isBlocked(x, y) || isMoving()) return false;
+		switch(type){
+			case 0: 
+				new Bomb(this);
+				this.itemCounter[type]--;
+				break;
+			case 1:
+				new Superbomb(this);
+				this.itemCounter[type]--;
+				break;
+			case 3:
+				this.putBox = true;
+				break;
+			
+		
+		}
         return true;
     }
 
-    public void increaseBombCounter() {
-        this.bombCounter++;
+    public void increaseItemCounter(int type) {
+        this.itemCounter[type]++;
     }
 
     public void setAlive(boolean alive) {
