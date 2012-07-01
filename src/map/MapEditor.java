@@ -79,16 +79,16 @@ public class MapEditor {
         pane.setLayout(new BorderLayout());
 
         final JSlider widthSlider = new JSlider(JSlider.HORIZONTAL, Map.SIZE_MIN_X, Map.SIZE_MAX_X, Map.SIZE_DEFAULT_X);
-        widthSlider.setMinorTickSpacing(1);
-        widthSlider.setMajorTickSpacing(5);
+        widthSlider.setMinorTickSpacing(2);
+        widthSlider.setMajorTickSpacing(4);
         widthSlider.setSnapToTicks(true);
         widthSlider.setPaintLabels(true);
         widthSlider.setPaintTicks(true);
         pane.add(widthSlider, BorderLayout.SOUTH);
 
         final JSlider heightSlider = new JSlider(JSlider.VERTICAL, Map.SIZE_MIN_Y, Map.SIZE_MAX_Y, Map.SIZE_DEFAULT_Y);
-        heightSlider.setMinorTickSpacing(1);
-        heightSlider.setMajorTickSpacing(5);
+        heightSlider.setMinorTickSpacing(2);
+        heightSlider.setMajorTickSpacing(4);
         heightSlider.setSnapToTicks(true);
         heightSlider.setPaintLabels(true);
         heightSlider.setPaintTicks(true);
