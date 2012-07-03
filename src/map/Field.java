@@ -28,14 +28,11 @@ public abstract class Field extends Drawable {
         this.strength = newStrength;
     }
 
-    public Field getItem() {
-		int itemnumber = 3; //increased, if more than 3 items
-		int random = (int)(Math.floor(Math.random()*100));
-		if (random < 20){ //80% field remains empty
-			return new Item(this.x, this.y, (random % itemnumber) + 1);
-		}
-		else{
-			return new EmptyField(this.x, this.y);
-		}
+    public void onDestroy() {
+        int itemnumber = 3; //increased, if more than 3 items
+        int random = (int)(Math.floor(Math.random()*100));
+        if (random < 20){ //80% field remains empty
+            new Item(this.x, this.y, (random % itemnumber) + 1);
+        }
     }
 }

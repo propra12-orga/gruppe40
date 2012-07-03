@@ -13,13 +13,14 @@ import main.MapPanel;
 import network.Client;
 import network.NetworkData;
 import network.Server;
+import map.Item;
 import map.Map;
 
 public abstract class GameData {
     public static JFrame                        frame;
     public static LinkedList<Drawable>          drawables;
     public static LinkedList<Bomb>              bombs;
-    public static MapPanel                     gamePanel;
+    public static MapPanel                      gamePanel;
     public static Vector<Player>                players;
     public static Map                           map;
     public static Bomberman                     bomberman;
@@ -33,8 +34,8 @@ public abstract class GameData {
     public static Vector<LinkedList<Character>> keys;
     public static int                           fps     = 60;
     public static LinkedList<AI>                ais;
-    
-    
+    public static LinkedList<Item>              items;
+
     public static void removeDeadDrawables() {
         ListIterator<Drawable> it = drawables.listIterator();
         while (it.hasNext()) {

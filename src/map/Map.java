@@ -199,7 +199,8 @@ public class Map implements Serializable {
                 m[x][y] = new Exit(x, y);
             } else {
                 if (m[x][y].getStrength() - damage <= 0) {
-                    m[x][y] = m[x][y].getItem();   
+                    m[x][y].onDestroy();
+                    m[x][y] = new EmptyField(x, y);
                 } else {
                     m[x][y].setStrength(m[x][y].getStrength() - damage);
                 }

@@ -48,6 +48,7 @@ public class Bomberman {
             
             GameData.drawables = new LinkedList<Drawable>();
             GameData.bombs = new LinkedList<Bomb>();
+            GameData.items = new LinkedList<Item>();
             GameData.players = new Vector<Player>();
             GameData.keys = new Vector<LinkedList<Character>>();
             GameData.ais = new LinkedList<AI>();
@@ -145,6 +146,25 @@ public class Bomberman {
             public void run() {
                 while (GameData.frame.isVisible()) {
                     for (AI ai : GameData.ais) ai.nextStep();
+                    
+                    //Use items
+                    synchronized (GameData.items) {
+                        ListIterator<Item> it = GameData.items.listIterator();
+                        while (it.hasNext()) {
+                            Item item = it.next();
+                            for (Player player : GameData.players) {
+                                if (item.x == player.x && item.y == player.y) {
+                                    item.setUsed(true);
+                                    if (item.getType() == Item.SPEED) {
+                                        player.speedUp();
+                                    }else {
+                                        player.increaseItemCounter(item.getType());
+                                    }
+                                    it.remove();
+                                }
+                            }
+                        }
+                    }
                     
                     //Update bombs
                     synchronized (GameData.bombs) {

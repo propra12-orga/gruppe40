@@ -158,16 +158,6 @@ public class Player extends Drawable {
                 }
                 this.x = x2;
                 this.y = y2;
-                Field field = map.getField(this.x, this.y);
-                if (field instanceof Item) {
-                    Item item = (Item) field;
-                    map.setField(new EmptyField(this.x, this.y));
-                    if (item.getType() == Item.SPEED) {
-                        this.speedUp();
-                    } else {
-                        this.itemCounter[item.getType()]++;
-                    }
-                }
                 return true;
             }
             return false;
