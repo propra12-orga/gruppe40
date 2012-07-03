@@ -17,8 +17,9 @@ public class Player extends Drawable {
     private boolean           putBox;
     public int                ticksUntilNormalSpeed;
     private int               tilesPerSec;
+    private int               playerColor;
 
-    public Player(String name, int x, int y) {
+    public Player(String name, int x, int y, int playerColor) {
         super(x, y, false);
         this.name = name;
         this.map = GameData.map;
@@ -33,6 +34,7 @@ public class Player extends Drawable {
         this.tickMax = GameData.fps / tilesPerSec;
         this.ticks = GameData.fps / tilesPerSec;
         this.putBox = false;
+        this.playerColor = playerColor;
     }
 
     public int getSpeed() {
@@ -149,7 +151,7 @@ public class Player extends Drawable {
             if (map.contains(x2, y2) && !map.isBlocked(x2, y2)) {
                 ticks = 0;
                 // leaves box on field if box is collected before
-                if (this.putBox) { 
+                if (this.putBox) {
                     this.putBox = false;
                     map.setField(new DestructibleWall(this.x, this.y, 1));
                     this.itemCounter[Item.BOX]--;
@@ -226,7 +228,22 @@ public class Player extends Drawable {
 
     @Override
     public String getPath() {
-        return "Player.gif";
+        return "Player" + playerColor + ".png";
+    }
+    
+    @Override
+    public int getFrameCountX() {
+        return 4;
+    }
+    
+    @Override
+    public int getFrameCountY() {
+        return 1;
+    }
+    
+    @Override
+    public int getFrame() {
+        return direction;
     }
 
     public int getDirection() {
