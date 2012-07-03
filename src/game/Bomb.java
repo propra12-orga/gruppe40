@@ -11,12 +11,14 @@ public class Bomb extends Drawable {
 	private boolean hasExploded;
 	private Player owner; 
 	public int ticksUntilExplosion;
+	public int bombTickMax;
 	
 	public Bomb(Player owner){
         super(owner.x, owner.y, false);
 		this.radius = owner.radius;
 		this.strength = 1;
 		this.ticksUntilExplosion = owner.bombTickMax;
+		this.bombTickMax = owner.bombTickMax;
 		this.owner = owner;
         GameData.map.setBlocked(x, y, true);
 		synchronized (GameData.bombs) {
@@ -106,7 +108,23 @@ public class Bomb extends Drawable {
 
     @Override
     public String getPath() {
-        return "Bomb.gif";
+        return "Bomb.png";
+    }
+    
+    @Override
+    public int getFrameCountX() {
+        return 3;
+    }
+    
+    @Override
+    public int getFrameCountY() {
+        return 1;
+    }
+    
+    @Override
+    public int getFrame() {
+        int frameCount = getFrameCountX()*getFrameCountY();
+        return (int)(frameCount - frameCount*ticksUntilExplosion/(double)bombTickMax);
     }
     
     @Override
