@@ -24,6 +24,10 @@ public class Server implements Runnable {
         socket.close();
     }
     
+    /**
+     * Creates a server.
+     * @param port Port at which the server is listening for clients.
+     */
     public Server(int port) {
         try {
             socket = new DatagramSocket(port);
@@ -36,6 +40,10 @@ public class Server implements Runnable {
         return clients.size();
     }
 
+    /**
+     * Sends data to all clients.
+     * @param data Byte array to be sent.
+     */
     public void send(byte[] data) {
         if (!running) return;
         for (SocketAddress addr : clients) {
@@ -52,11 +60,15 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Sends an object to all clients.
+     * @param object Object to be sent.
+     */
     public void send(Object object) {
         send(ObjectConverter.toByteArray(object));
     }
-
-    public void handleKeyInput(KeyInput e, int playerNumber) {
+    
+    private void handleKeyInput(KeyInput e, int playerNumber) {
         Character key = e.e.getKeyChar();
         synchronized (GameData.keys) {
             LinkedList<Character> keys = GameData.keys.get(playerNumber);
@@ -67,7 +79,7 @@ public class Server implements Runnable {
             }
         }
     }
-
+    
     public void run() {
         final int BUFFER_SIZE = 1024 * 64;
         byte[] buffer = new byte[BUFFER_SIZE];

@@ -60,7 +60,7 @@ public class Menu {
 		JLabel mapOr = new JLabel("  or  ");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
-		final JCheckBox checkAI = new JCheckBox("AI? (host only)");
+		final JCheckBox checkAI = new JCheckBox("AI");
 		final Dimension dimButtonSize = new Dimension(190,60);
 		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	

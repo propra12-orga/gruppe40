@@ -35,6 +35,13 @@ public class Bomberman {
     private Container pane;
     private boolean shouldHaveExit;
     
+    /**
+     * Creates a new instance of a Bomberman game.
+     * @param menuFrame Menu frame.
+     * @param fullscreen If the window should fill the screen.
+     * @param mapName Name of the map to load.
+     * @param useAI If remaining slots should be filled up with AI players.
+     */
     public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName, boolean useAI) {
         GameData.playerCount = 1;
         GameData.frame = new JFrame();
@@ -165,6 +172,9 @@ public class Bomberman {
         gameLoop.start();
     }
     
+    /**
+     * Updates the game (one frame).
+     */
     private void updateGameState() {
         for (AI ai : GameData.ais) ai.nextStep();
         
@@ -312,6 +322,9 @@ public class Bomberman {
         }
     }
 
+    /**
+     * Stops the game and cleans up.
+     */
     public void stop() {
         if (GameData.server != null) GameData.server.stop();
         if (GameData.client != null) GameData.client.stop();
