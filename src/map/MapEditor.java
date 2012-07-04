@@ -25,16 +25,15 @@ import java.util.LinkedList;
 
 public class MapEditor {
 
-    public final JFrame frame = new JFrame("Map-Editor");
+    public final JFrame frame     = new JFrame("Map-Editor");
 
-    private int         w     = Map.SIZE_DEFAULT_X;
-    private int         h     = Map.SIZE_DEFAULT_Y;
+    private int         w         = Map.SIZE_DEFAULT_X;
+    private int         h         = Map.SIZE_DEFAULT_Y;
     private JPanel      mapWrapper;
     private MapPanel    mapPanel;
     private JComboBox   tileSelection;
-    JLabel symmetric = new JLabel("Symmetric");
-    JLabel valid = new JLabel("Valid");
-    
+    JLabel              symmetric = new JLabel("Symmetric");
+    JLabel              valid     = new JLabel("Valid");
 
     private void redrawMap() {
         GameData.removeDeadDrawables();
@@ -72,19 +71,15 @@ public class MapEditor {
                 // Create a field using a constructor with parameters x and y
                 Field field = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
                 GameData.map.setField(field);
-                
-               
-                //System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
-                //System.out.println("Is map valid? - " + GameData.map.isValid());
-               
-              
-               valid.setBackground(mapPanel.map.isValid() ? Color.green : Color.red);
-               symmetric.setBackground(mapPanel.map.isSymmetric() ? Color.green : Color.orange);
-               
-                
 
-                
-                
+                // System.out.println("Is map symmetric? - " +
+                // GameData.map.isSymmetric());
+                // System.out.println("Is map valid? - " +
+                // GameData.map.isValid());
+
+                valid.setBackground(mapPanel.map.isValid() ? Color.green : Color.red);
+                symmetric.setBackground(mapPanel.map.isSymmetric() ? Color.green : Color.orange);
+
                 redrawMap();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -211,7 +206,10 @@ public class MapEditor {
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapCreator.saveMap(GameData.map, "Azeroth");
+
+                if (!GameData.map.isValid()) JOptionPane.showMessageDialog(frame, "Map did not pass the validation process.\nPlease check!", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                else MapCreator.saveMap(GameData.map, "Azeroth");
+
                 frame.requestFocus();
             }
         };
@@ -237,12 +235,13 @@ public class MapEditor {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    int option = JOptionPane.showConfirmDialog(frame, "Do you really want to exit?","Exit",JOptionPane.YES_NO_OPTION);
-                    if(option == JOptionPane.OK_OPTION) {
+                    int option = JOptionPane.showConfirmDialog(frame, "Do you really want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.OK_OPTION) {
                         frame.dispose();
                     }
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent arg0) {}
 
@@ -257,13 +256,11 @@ public class MapEditor {
         String[] tileNames = { "EmptyField", "IndestructibleWall", "MediumWall", "NormalWall", "Exit" };
         tileSelection = new JComboBox(tileNames);
         control.add(tileSelection, BorderLayout.WEST);
-        
-
 
         control.add(symmetric);
         control.add(valid);
-      symmetric.setOpaque(true);
-      valid.setOpaque(true);
+        symmetric.setOpaque(true);
+        valid.setOpaque(true);
 
         initMap();
         valid.setBackground(mapPanel.map.isValid() ? Color.green : Color.red);
