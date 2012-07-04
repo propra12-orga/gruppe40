@@ -11,6 +11,11 @@ import java.util.zip.Inflater;
 
 public class ObjectConverter {
 
+    /**
+     * Compresses a byte array.
+     * @param input The byte array to compress.
+     * @return A compressed byte array.
+     */
     public static byte[] compressBytes(byte[] input) {
         Deflater deflater = new Deflater();
         deflater.setInput(input);
@@ -29,6 +34,11 @@ public class ObjectConverter {
         return byteStream.toByteArray();
     }
 
+    /**
+     * Inflates a byte array.
+     * @param input The byte array to be inflated.
+     * @return A inflated byte array.
+     */
     public static byte[] inflateBytes(byte[] input) {
         Inflater inflater = new Inflater();
         inflater.setInput(input);
@@ -50,6 +60,11 @@ public class ObjectConverter {
         return byteStream.toByteArray();
     }
 
+    /**
+     * Converts an object to a compressed byte array.
+     * @param object The object to be compressed.
+     * @return A byte array which contains the compressed object.
+     */
     public static byte[] toByteArray(Object object) {
         try {
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -65,6 +80,11 @@ public class ObjectConverter {
         return null;
     }
 
+    /**
+     * Creates an object from a compressed byte array.
+     * @param data The byte array of which the object should be created from.
+     * @return An object created from the byte array.
+     */
     public static Object getFromByteArray(byte[] data) {
         data = inflateBytes(data);
         Object object = null;

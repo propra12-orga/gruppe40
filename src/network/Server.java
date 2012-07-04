@@ -16,11 +16,14 @@ public class Server implements Runnable {
     private DatagramSocket            socket  = null;
     private LinkedList<SocketAddress> clients = new LinkedList<SocketAddress>();
     
+    /**
+     * Stops the server.
+     */
     public void stop() {
         running = false;
         socket.close();
     }
-
+    
     public Server(String ip, int port) {
         try {
             socket = new DatagramSocket(port);

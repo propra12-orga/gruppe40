@@ -26,7 +26,7 @@ public abstract class GameData {
     public static Bomberman                     bomberman;
     public static Server                        server;
     public static Client                        client;
-    public static NetworkData                   networkData;
+    public static NetworkData                   networkData = new NetworkData(null, null, System.currentTimeMillis());
     public static int                           playerCount;
     public static JFrame                        menuFrame;
     public static boolean                       running;
