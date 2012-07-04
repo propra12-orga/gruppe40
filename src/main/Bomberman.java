@@ -9,6 +9,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Vector;
@@ -28,6 +31,7 @@ import game.Bomb;
 import game.Direction;
 import game.Drawable;
 import game.GameData;
+import game.Player;
 import game.Player;
 
 public class Bomberman {
@@ -69,6 +73,16 @@ public class Bomberman {
             } else {
                 GameData.map = new Map(mapName);
             }
+			
+			 try {
+                System.setOut(new PrintStream(new FileOutputStream("log_test.txt")));
+            } catch (FileNotFoundException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+			
+			
+			
             // TODO non-hardcoded spawn locations
             int x = GameData.map.getWidth() - 2;
             int y = GameData.map.getHeight() - 2;

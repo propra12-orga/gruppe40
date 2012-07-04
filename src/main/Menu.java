@@ -16,20 +16,23 @@ import network.Client;
 import network.Server;
 
 import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 
 public class Menu {
 
-    static boolean      fullscreen = false, mapLoaded = false;
-    static String       mapName    = "Random";
-    static File         mapFile;
-    static Tutorial     tut        = null;
-    static StartNetwork startNet   = null;
-    static MapEditor    mapEdit    = null;
-    static boolean      useAI      = true;
+    static boolean fullscreen = false, mapLoaded = false;
+	static String mapName = "Random";
+	static File mapFile;
+	static Tutorial tut = null;
+	static StartNetwork startNet = null;
+	static MapEditor mapEdit = null;
+	public final static File logfile = new File("log_test.txt");
 
     public static void main(String[] args) {
 
@@ -170,7 +173,30 @@ public class Menu {
                 new Bomberman(base, fullscreen, mapName, useAI);
             }
         };
+			    
+				if(logfile.exists()){
+	                 
+                     BufferedReader reader;
+                     try {
+                         reader = new BufferedReader(new FileReader(logfile));
+                         String line;
+                         line = "";
+                         while((line = reader.readLine( )) != null){
+                             StartNetwork.log.setText(StartNetwork.log.getText()+ line+"\n");
+                         }
+                         reader.close( );
+                     } catch (FileNotFoundException e1) {
+                         // TODO Auto-generated catch block
+                         e1.printStackTrace();
+                     }
+             catch (IOException e1) {
+                 // TODO Auto-generated catch block
+                 e1.printStackTrace();
+             }
 
+             }
+			}
+		};
         // multiplayer
         // ActionListener alMP = new ActionListener() {
         // @Override public void actionPerformed(ActionEvent e) {

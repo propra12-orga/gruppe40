@@ -15,14 +15,20 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class StartNetwork {
-	
-	public final JFrame networkWindow = new JFrame("Network settings");
-	public final JEditorPane log = new JEditorPane();
-	final JScrollPane scrollPane = new JScrollPane(log);
-	
-	boolean AI = false;
+
+    public final JFrame             networkWindow = new JFrame("Network settings");
+    public static final JEditorPane log           = new JEditorPane();
+    final JScrollPane               scrollPane    = new JScrollPane(log);
+    public final File               logfile       = new File("log_test.txt");
+
+    boolean                         AI            = false;
 	
 	public StartNetwork() {
 
@@ -41,14 +47,11 @@ public class StartNetwork {
 		
 		final JTextPane paneIP = new JTextPane();
 		
-		
-		
 		base.setLayout(new FlowLayout());
 		buttonsStart.setLayout(new FlowLayout());
 		
 		buttonsStart.add(buttonConnectGame);
 		buttonsStart.add(buttonStartServer);
-		
 		
 		base.add(buttonsStart);
 		base.add(scrollPane);
@@ -74,33 +77,43 @@ public class StartNetwork {
 			}
 		};
 		
-		//connect to game
-		ActionListener alConnect = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-			    int port = 12345;
-			    String ip = paneIP.getText();
-			    GameData.client = new Client(ip, port);
-			    new Thread(GameData.client).start();
-			    if (!GameData.client.connect(1000)) {
-			       System.err.println("Authentication failed");
-			    }else {
-	                System.out.println("Successfully connected to server");
-			    }
-			}
-		};
-		
-//		ItemListener ilAI = new ItemListener() {
-//			@Override
-//			public void itemStateChanged(ItemEvent e) {
-//				if(e.getItemSelectable() == checkAI) {
-//					AI = true;
-//				}
-//				if(e.getStateChange() == ItemEvent.DESELECTED) {
-//					AI = false;
-//				}
-//			}
-//		};
-		
+        // connect to game
+        ActionListener alConnect = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int port = 12345;
+                String ip = paneIP.getText();
+                GameData.client = new Client(ip, port);
+                new Thread(GameData.client).start();
+                if (!GameData.client.connect(1000)) {
+                    System.out.println("Authentication failed");
+                } else {
+                    System.out.println("Successfully connected to server");
+                }
+
+                if (logfile.exists()) {
+                    log.setText("");
+                    BufferedReader reader;
+                    try {
+                        reader = new BufferedReader(new FileReader(logfile));
+                        String line;
+                        line = "";
+                        while ((line = reader.readLine()) != null) {
+                            log.setText(log.getText() + line + "\n");
+                        }
+                        reader.close();
+                    } catch (FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+                }
+
+            }
+        };		
 		//adding actionlisteners
 		//buttonEditIP.addActionListener(alChange);
 		buttonStartServer.addActionListener(alServer);
