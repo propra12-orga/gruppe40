@@ -35,4 +35,8 @@ public abstract class Field extends Drawable {
             new Item(this.x, this.y, (random % itemnumber) + 1);
         }
     }
+
+    public boolean isDestroyable() {
+        return strength != -1;
+    }
 }

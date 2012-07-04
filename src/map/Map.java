@@ -6,20 +6,22 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import ai.Pathfinding;
+
 public class Map implements Serializable {
-    public static final int SIZE_MIN_X = 5;
-    public static final int SIZE_MIN_Y = 5;
-    public static final int SIZE_MAX_X = 21;
-    public static final int SIZE_MAX_Y = 21;
-    public static final int SIZE_DEFAULT_X = 13;
-    public static final int SIZE_DEFAULT_Y = 13;
+    public static final int   SIZE_MIN_X       = 5;
+    public static final int   SIZE_MIN_Y       = 5;
+    public static final int   SIZE_MAX_X       = 21;
+    public static final int   SIZE_MAX_Y       = 21;
+    public static final int   SIZE_DEFAULT_X   = 13;
+    public static final int   SIZE_DEFAULT_Y   = 13;
 
     private static final long serialVersionUID = GameData.version;
 
-    private int width, height;
+    private int               width, height;
 
-    private Field[][] m;
-    private ArrayList<String> MapArray = null;
+    private Field[][]         m;
+    private ArrayList<String> MapArray         = null;
 
     /**
      * @param xml
@@ -39,30 +41,27 @@ public class Map implements Serializable {
                     NormalWall exit = new NormalWall(x, y);
                     exit.setExit(true);
                     m[x][y] = exit;
-                } else
-                    try {
-                        // Get class for field
-                        Class<?> whichClass = Class.forName("map."
-                                + this.MapArray.get(i));
-                        // Create a field using a constructor with parameters x
-                        // and y
-                        m[x][y] = (Field) whichClass.getConstructor(
-                                Integer.TYPE, Integer.TYPE).newInstance(x, y);
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
+                } else try {
+                    // Get class for field
+                    Class<?> whichClass = Class.forName("map." + this.MapArray.get(i));
+                    // Create a field using a constructor with parameters x
+                    // and y
+                    m[x][y] = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(x, y);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -83,8 +82,7 @@ public class Map implements Serializable {
         /* no walls at the spawnpoint */
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
-                if (Math.random() < 0.9)
-                    m[x][y] = new NormalWall(x, y);
+                if (Math.random() < 0.9) m[x][y] = new NormalWall(x, y);
             }
         }
 
@@ -96,14 +94,12 @@ public class Map implements Serializable {
                     if (singleplayer) {
                         lastWall = new NormalWall(x, y);
                         m[x][y] = lastWall;
-                    } else
-                        m[x][y] = new NormalWall(x, y);
+                    } else m[x][y] = new NormalWall(x, y);
                 }
             }
         }
 
-        if (lastWall != null)
-            lastWall.setExit(true);
+        if (lastWall != null) lastWall.setExit(true);
 
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
@@ -237,7 +233,23 @@ public class Map implements Serializable {
                 int x2 = width - x - 1;
                 int y2 = height - y - 1;
                 Field f[] = new Field[] { getField(x, y), getField(x2, y), getField(x2, y2), getField(x, y2) };
-                for (int i = 1; i < 4; i++) if (f[0].getClass() != f[i].getClass()) return false;
+                for (int i = 1; i < 4; i++)
+                    if (f[0].getClass() != f[i].getClass()) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValid() {
+        int spawnPositionX[] = { 1, width - 2, width - 2, 1 };
+        int spawnPositionY[] = { 1, 1, height - 2, height - 2 };
+        
+        Pathfinding pathfinding = new Pathfinding(GameData.map, null, null, 1);
+        pathfinding.disregardDestroyableWalls = true;
+        pathfinding.start(spawnPositionX[0], spawnPositionY[0]);
+        for (int j = 0; j < 4; j++) {
+            if (pathfinding.isReachable(spawnPositionX[j], spawnPositionY[j]) == false) {
+                return false;
             }
         }
         return true;

@@ -22,7 +22,7 @@ public class Pathfinding {
     private Map               map;
     private Vector<Player>    players;
     private int speed;
-    private boolean disregardDestroyableWalls;
+    public boolean disregardDestroyableWalls;
     
     public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs, int speed) {
         this.map = map;
@@ -43,15 +43,22 @@ public class Pathfinding {
             }
         }
         reachable = new LinkedList<Point>();
-        for (Bomb bomb : bombs)
-            if (!bomb.isExpired()) markDangerous(bomb.x, bomb.y, bomb.getRadius(), bomb.ticksUntilExplosion);
+        if (bombs != null) {
+            for (Bomb bomb : bombs) {
+                if (!bomb.isExpired()) {
+                    markDangerous(bomb.x, bomb.y, bomb.getRadius(), bomb.ticksUntilExplosion);
+                }
+            }
+        }
     }
 
     private void explore(Point p, int direction) {
         int x = p.x + Direction.x[direction];
         int y = p.y + Direction.y[direction];
-        int d = distance[x][y];
-        if (contains(x, y) && (!map.isBlocked(x, y) || disregardDestroyableWalls && map.getField(x, y).getStrength() > 0) && d == UNVISITED) {
+        if (!contains(x, y)) return;
+        boolean notBlocked = !map.isBlocked(x, y);
+        if (disregardDestroyableWalls) notBlocked = map.getField(x, y).isDestroyable();
+        if (notBlocked && distance[x][y] == UNVISITED) {
             int danger = dangerous[x][y];
             if (danger != NOT_DANGEROUS) {
                 //We can not survive that

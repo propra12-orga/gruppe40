@@ -68,6 +68,11 @@ public class MapEditor {
                 // Create a field using a constructor with parameters x and y
                 Field field = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
                 GameData.map.setField(field);
+                
+                //TODO implement jlabels (red/green)
+                System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
+                System.out.println("Is map valid? - " + GameData.map.isValid());
+                
                 redrawMap();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -194,7 +199,6 @@ public class MapEditor {
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
                 MapCreator.saveMap(GameData.map, "Azeroth");
                 frame.requestFocus();
             }
@@ -221,30 +225,17 @@ public class MapEditor {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    // UIManager.put("OptionPane.cancelButtonText", "Cancel");
-                    // UIManager.put("OptionPane.noButtonText", "No");
-                    // UIManager.put("OptionPane.yesButtonText", "Yes");
-                    // UIManager.put("OptionPane.Title","Please select");
-                    //
-                    // int option = JOptionPane.showConfirmDialog(fra,e,
-                    // "Close window?","Exit",JOptionPane.YES_NO_OPTION);
-                    // if(option == JOptionPane.OK_OPTION) System.exit(0);
-                    frame.dispose();
-
+                    int option = JOptionPane.showConfirmDialog(frame, "Do you really want to exit?","Exit",JOptionPane.YES_NO_OPTION);
+                    if(option == JOptionPane.OK_OPTION) {
+                        frame.dispose();
+                    }
                 }
             }
+            @Override
+            public void keyReleased(KeyEvent arg0) {}
 
             @Override
-            public void keyReleased(KeyEvent arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void keyTyped(KeyEvent arg0) {
-                // TODO Auto-generated method stub
-
-            }
+            public void keyTyped(KeyEvent arg0) {}
         };
 
         frame.setFocusable(true);
