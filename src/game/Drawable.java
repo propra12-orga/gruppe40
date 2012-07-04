@@ -15,7 +15,7 @@ public abstract class Drawable implements Serializable {
     public int     y          = 0;
     public boolean visible    = true;
     public long    duration   = -1;
-    public long    t          = System.currentTimeMillis();
+    public long    t          = GameData.networkData.time;
     public boolean isField;
 
     public Drawable(int x, int y, boolean isField) {
@@ -54,7 +54,7 @@ public abstract class Drawable implements Serializable {
         if (duration <= 0) {
             return 0;
         } else {
-            double u = (System.currentTimeMillis() - t) / (double) duration;
+            double u = (GameData.networkData.time - t) / (double) duration;
             int nx = getFrameCountX();
             int ny = getFrameCountY();
             return (int) (nx * ny * u);

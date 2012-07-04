@@ -14,10 +14,12 @@ public class NetworkData implements Serializable {
 
     public LinkedList<Drawable> drawables;
     public Map map;
+    public long time;
     
-    public NetworkData(LinkedList<Drawable> drawables, Map map) {
+    public NetworkData(LinkedList<Drawable> drawables, Map map, long time) {
         this.drawables = drawables;
         this.map = map;
+        this.time = time;
     }
     
 }
