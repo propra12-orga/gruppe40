@@ -29,6 +29,7 @@ public class Menu {
 	static Tutorial tut = null;
 	static StartNetwork startNet = null;
 	static MapEditor mapEdit = null;
+	static boolean AI = false;
 	
 	public static void main(String[] args) {
 	    
@@ -59,6 +60,7 @@ public class Menu {
 		JLabel mapOr = new JLabel("  or  ");
 		JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 		
+		final JCheckBox checkAI = new JCheckBox("AI? (host only)");
 		final Dimension dimButtonSize = new Dimension(190,60);
 		final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
@@ -85,6 +87,8 @@ public class Menu {
 		buttonsSize.add(rbWindow);
 		gameSizes.add(rbFull);
 		buttonsSize.add(rbFull);
+		
+		buttonsSize.add(checkAI);
 		
 		//close window - adding options
 		base.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -272,6 +276,18 @@ public class Menu {
 				base.requestFocus();
 			}
 		};
+		
+		ItemListener ilAI = new ItemListener() {
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getItemSelectable() == checkAI) {
+				AI = true;
+			}
+			if(e.getStateChange() == ItemEvent.DESELECTED) {
+				AI = false;
+			}
+		}
+	};
 
 		KeyListener keyListener = new KeyListener() {
             @Override
@@ -329,6 +345,7 @@ public class Menu {
 		rbFull.addActionListener(alFull);
 		cbMapChoice.addActionListener(alMapChoice);
 		buttonLoadMap.addActionListener(alLoadMap);
+		checkAI.addItemListener(ilAI);
 		
 	}
 	
