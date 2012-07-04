@@ -33,6 +33,7 @@ public class Menu {
 	static StartNetwork startNet = null;
 	static MapEditor mapEdit = null;
 	public final static File logfile = new File("log_test.txt");
+	static boolean useAI = true;
 
     public static void main(String[] args) {
 
@@ -59,7 +60,7 @@ public class Menu {
         JLabel mapOr = new JLabel("  or  ");
         JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 
-        final JCheckBox checkAI = new JCheckBox("AI", true);
+        final JCheckBox checkAI = new JCheckBox("AI", useAI);
         final Dimension dimButtonSize = new Dimension(190, 60);
         final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -171,8 +172,6 @@ public class Menu {
                 }
                 base.setVisible(false);
                 new Bomberman(base, fullscreen, mapName, useAI);
-            }
-        };
 			    
 				if(logfile.exists()){
 	                 
