@@ -39,6 +39,7 @@ public class Bomberman {
         GameData.frame = new JFrame();
         GameData.menuFrame = menuFrame;
         GameData.bomberman = this;
+        GameData.networkData = new NetworkData(null, null, System.currentTimeMillis());
         if (GameData.server != null) {
             if (useAI) {
                 GameData.playerCount = 4;
@@ -258,7 +259,7 @@ public class Bomberman {
         synchronized (GameData.drawables) {
             GameData.removeDeadDrawables();
             //Send everything to clients
-            NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
+            NetworkData networkData = new NetworkData(GameData.drawables, GameData.map, System.currentTimeMillis());
             GameData.server.send(networkData);
         }
         checkEndConditions();

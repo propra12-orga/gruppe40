@@ -11,7 +11,7 @@ public class Explosion extends Drawable {
 
     @Override
     public boolean isExpired() {
-        return System.currentTimeMillis() - t > duration;
+        return GameData.networkData.time - t > duration;
     }
 
     @Override

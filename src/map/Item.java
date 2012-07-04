@@ -38,7 +38,7 @@ public class Item extends Drawable {
 
     @Override
     public int getFrame() {
-        int t2 = (int) (System.currentTimeMillis() - t);
+        int t2 = (int) (GameData.networkData.time - t);
         t2 %= 1000;
         if (t2 > 500) t2 = 1000 - t2;
         int frameCount = getFrameCountX() * getFrameCountY();
