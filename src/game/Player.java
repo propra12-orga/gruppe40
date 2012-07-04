@@ -153,7 +153,7 @@ public class Player extends Drawable {
                 // leaves box on field if box is collected before
                 if (this.putBox) {
                     this.putBox = false;
-                    map.setField(new DestructibleWall(this.x, this.y, 1));
+                    map.setField(new NormalWall(this.x, this.y));
                     this.itemCounter[Item.BOX]--;
                 }
                 this.x = x2;

@@ -7,19 +7,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Map implements Serializable {
-    public static final int   SIZE_MIN_X       = 5;
-    public static final int   SIZE_MIN_Y       = 5;
-    public static final int   SIZE_MAX_X       = 21;
-    public static final int   SIZE_MAX_Y       = 21;
-    public static final int   SIZE_DEFAULT_X   = 13;
-    public static final int   SIZE_DEFAULT_Y   = 13;
+    public static final int SIZE_MIN_X = 5;
+    public static final int SIZE_MIN_Y = 5;
+    public static final int SIZE_MAX_X = 21;
+    public static final int SIZE_MAX_Y = 21;
+    public static final int SIZE_DEFAULT_X = 13;
+    public static final int SIZE_DEFAULT_Y = 13;
 
     private static final long serialVersionUID = GameData.version;
 
-    private int               width, height;
+    private int width, height;
 
-    private Field[][]         m;
-    private ArrayList<String> MapArray         = null;
+    private Field[][] m;
+    private ArrayList<String> MapArray = null;
 
     /**
      * @param xml
@@ -36,30 +36,33 @@ public class Map implements Serializable {
         for (int y = 0, i = 0; y < height; y++) {
             for (int x = 0; x < width; x++, i++) {
                 if (this.MapArray.get(i).equals("Exit")) {
-                    DestructibleWall exit = new DestructibleWall(x, y, 1);
+                    NormalWall exit = new NormalWall(x, y);
                     exit.setExit(true);
                     m[x][y] = exit;
-                } else try {
-                    // Get class for field
-                    Class<?> whichClass = Class.forName("map." + this.MapArray.get(i));
-                    // Create a field using a constructor with parameters x and
-                    // y
-                    m[x][y] = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(x, y);
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
+                } else
+                    try {
+                        // Get class for field
+                        Class<?> whichClass = Class.forName("map."
+                                + this.MapArray.get(i));
+                        // Create a field using a constructor with parameters x
+                        // and y
+                        m[x][y] = (Field) whichClass.getConstructor(
+                                Integer.TYPE, Integer.TYPE).newInstance(x, y);
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
             }
         }
     }
@@ -80,24 +83,27 @@ public class Map implements Serializable {
         /* no walls at the spawnpoint */
         for (int x = 3; x < width - 3; x++) {
             for (int y = 1; y < (height - 1); y++) {
-                if (Math.random() < 0.9) m[x][y] = new DestructibleWall(x, y, 1);
+                if (Math.random() < 0.9)
+                    m[x][y] = new NormalWall(x, y);
             }
         }
 
-        DestructibleWall lastWall = null;
+        NormalWall lastWall = null;
         for (int y = 3; y < height - 3; y++) {
             for (int x = 1; x < (width - 1); x++) {
                 if (Math.random() < 0.9) {
                     /* If it is a singleplayer-game spawn the exit */
                     if (singleplayer) {
-                        lastWall = new DestructibleWall(x, y, 1);
+                        lastWall = new NormalWall(x, y);
                         m[x][y] = lastWall;
-                    } else m[x][y] = new DestructibleWall(x, y, 1);
+                    } else
+                        m[x][y] = new NormalWall(x, y);
                 }
             }
         }
 
-        if (lastWall != null) lastWall.setExit(true);
+        if (lastWall != null)
+            lastWall.setExit(true);
 
         /* spawns walls as frame */
         for (int x = 0; x < width; x++) {
@@ -212,28 +218,11 @@ public class Map implements Serializable {
      *            - vertical axis
      */
     public void setExit(int x, int y) {
-        DestructibleWall exitWall = new DestructibleWall(x, y, 1);
+        NormalWall exitWall = new NormalWall(x, y);
         exitWall.setExit(true);
     }
 
     public void setField(Field field) {
         m[field.x][field.y] = field;
-    }
-
-    /**
-     * Checks if the map is mirrored vertically and horizontally.
-     * 
-     * @return If the map is symmetric.
-     */
-    public boolean isSymmetric() {
-        for (int x = 0; x < width / 2; x++) {
-            for (int y = 0; y < height / 2; y++) {
-                int x2 = width - x - 1;
-                int y2 = height - y - 1;
-                Field f[] = new Field[] { getField(x, y), getField(x2, y), getField(x2, y2), getField(x, y2) };
-                for (int i = 1; i < 4; i++) if (f[0].getClass() != f[i].getClass()) return false;
-            }
-        }
-        return true;
     }
 }
