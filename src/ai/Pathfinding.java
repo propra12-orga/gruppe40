@@ -24,6 +24,13 @@ public class Pathfinding {
     private int speed;
     public boolean disregardDestroyableWalls;
     
+    /**
+     * Creates a new object to find paths.
+     * @param map Map on which to find paths.
+     * @param players Players which to find paths of.
+     * @param bombs
+     * @param speed
+     */
     public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs, int speed) {
         this.map = map;
         this.players = players;

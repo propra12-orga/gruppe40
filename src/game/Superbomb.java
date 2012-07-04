@@ -7,6 +7,10 @@ public class Superbomb extends Bomb {
     public Superbomb(Player owner) {
         super(owner);
         this.setRadius(3);
-
     }
+   
+    @Override
+    public String getPath() {
+        return "SuperBomb.png";
+    }    
 }

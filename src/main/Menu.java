@@ -29,7 +29,7 @@ public class Menu {
     static Tutorial     tut        = null;
     static StartNetwork startNet   = null;
     static MapEditor    mapEdit    = null;
-    static boolean      useAI      = false;
+    static boolean      useAI      = true;
 
     public static void main(String[] args) {
 
@@ -56,7 +56,7 @@ public class Menu {
         JLabel mapOr = new JLabel("  or  ");
         JLabel creators = new JLabel("Dominik Mehren, Lisa Rey, Philipp Kochanski, Sebastian Brink, Thomas Germer");
 
-        final JCheckBox checkAI = new JCheckBox("AI");
+        final JCheckBox checkAI = new JCheckBox("AI", true);
         final Dimension dimButtonSize = new Dimension(190, 60);
         final Dimension dimScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
