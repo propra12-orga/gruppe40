@@ -37,7 +37,10 @@ public abstract class GameData {
     public static LinkedList<Item>              items;
     
     
-    public static void removeDeadDrawables() {
+    /**
+     * Removes unused fields.
+     */
+    public static void removeUnusedFields() {
         ListIterator<Drawable> it = drawables.listIterator();
         while (it.hasNext()) {
             Drawable drawable = it.next();

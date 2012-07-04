@@ -36,7 +36,7 @@ public class MapEditor {
     JLabel              valid     = new JLabel("Valid");
 
     private void redrawMap() {
-        GameData.removeDeadDrawables();
+        GameData.removeUnusedFields();
         int width = mapWrapper.getWidth();
         int height = mapWrapper.getHeight();
         Rectangle rect = mapPanel.getOptimalSize(width, height);

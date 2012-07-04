@@ -269,7 +269,7 @@ public class Bomberman {
         
         //Update drawables
         synchronized (GameData.drawables) {
-            GameData.removeDeadDrawables();
+            GameData.removeUnusedFields();
             //Send everything to clients
             NetworkData networkData = new NetworkData(GameData.drawables, GameData.map, System.currentTimeMillis());
             GameData.server.send(networkData);
