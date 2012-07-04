@@ -22,12 +22,13 @@ public class Pathfinding {
     public Map               map;
     public Vector<Player>    players;
     public LinkedList<Bomb>  bombs;
-    public boolean           findDangerousPath;
+    public int speed;
 
-    public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs) {
+    public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs, int speed) {
         this.map = map;
         this.players = players;
         this.bombs = bombs;
+        this.speed = speed;
 
         w = map.getWidth();
         h = map.getHeight();
@@ -52,12 +53,11 @@ public class Pathfinding {
         int y = p.y + Direction.y[direction];
         int d = distance[x][y];
         if (contains(x, y) && !map.isBlocked(x, y) && d == UNVISITED) {
-            // If field is dangerous and we can not run away from it
-            // if (dangerous[x][y] && d > 2) return;
             int danger = dangerous[x][y];
             if (danger != NOT_DANGEROUS) {
-                if (findDangerousPath) {
-                }
+                //We can not survive that
+                if (distance[x][y]/speed > danger) return;
+                //Else we are running through a bomb which will explode soon but we are faster (or slower)
             }
             previous[x][y] = p;
             distance[x][y] = distance[p.x][p.y] + 1;
@@ -99,7 +99,7 @@ public class Pathfinding {
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 int d = distance[x][y];
-                if (d != UNVISITED) {
+                if (d != UNVISITED && notDangerous(x, y)) {
                     if ((x != px || y != py) && d < dist) {
                         p = new Point(x, y);
                         dist = d;
@@ -142,6 +142,10 @@ public class Pathfinding {
             }
         }
         return p;
+    }
+    
+    public boolean notDangerous(int x, int y) {
+        return dangerous[x][y] == NOT_DANGEROUS;
     }
 
     public Point getPointTowards(Point target, Point source) {

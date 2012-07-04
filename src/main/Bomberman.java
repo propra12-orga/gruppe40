@@ -161,6 +161,7 @@ public class Bomberman {
                                         player.increaseItemCounter(item.getType());
                                     }
                                     it.remove();
+                                    continue;
                                 }
                             }
                         }

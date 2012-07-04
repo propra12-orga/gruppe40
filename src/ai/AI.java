@@ -14,7 +14,7 @@ public class AI {
     /**
      * Could be used as a difficulty value
      */
-    private final int   TICK_MAX = 5;
+    private final int   TICK_MAX = 1;
     private Player      player;
     private Pathfinding pathfinding;
 
@@ -43,16 +43,16 @@ public class AI {
         int px = player.x;
         int py = player.y;
 
-        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs);
+        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs, player.getSpeed());
         pathfinding.start(px, py);
         if (pathfinding.dangerous[px][py] != Pathfinding.NOT_DANGEROUS) {
             // Run away if in danger
             Point p = pathfinding.getClosestReachableNicePoint(px, py);
             if (p != null) {
                 moveTowards(p, false);
-            } else {
-                System.out.println("DEBUG MSG: AI has nowhere to run!");
-            }
+            } //else {
+                //System.out.println("DEBUG MSG: AI has nowhere to run!");
+            //}
         } else {
             // Run towards player if in reach
             Player closest = pathfinding.getClosestReachablePlayer(player);
@@ -72,7 +72,7 @@ public class AI {
                     int y2 = py + Direction.y[i];
                     if (pathfinding.contains(x2, y2) && GameData.map.getField(x2, y2).getStrength() > 0) {
                         // Check if we can get away with bombing it
-                        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs);
+                        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs, player.getSpeed());
                         pathfinding.markDangerous(x2, y2, player.radius, player.bombTickMax);
                         pathfinding.start(px, py);
                         for (int y = 0; y < pathfinding.h; y++) {
@@ -88,9 +88,9 @@ public class AI {
                 Point p = pathfinding.getClosestBox();
                 if (p != null) {
                     moveTowards(p, true);
-                } else {
-                    System.out.println("DEBUG MSG: no close box");
-                }
+                } //else {
+                    //System.out.println("DEBUG MSG: no close box");
+                //}
             }
         }
     }
