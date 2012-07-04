@@ -28,6 +28,16 @@ public class Menu {
 	static MapEditor mapEdit = null;
 	
 	public static void main(String[] args) {
+	    
+	    try {
+	        UIManager.setLookAndFeel(
+	                UIManager.getSystemLookAndFeelClassName());
+	    } catch (Exception e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    
+	    
 		
 		/******************************************************
 		 * Initialize frame, labels, buttons and set settings *
