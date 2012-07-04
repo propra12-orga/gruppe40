@@ -43,7 +43,7 @@ public class AI {
         int px = player.x;
         int py = player.y;
 
-        pathfinding = new Pathfinding();
+        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs);
         pathfinding.start(px, py);
         if (pathfinding.dangerous[px][py] != Pathfinding.NOT_DANGEROUS) {
             // Run away if in danger
@@ -72,7 +72,7 @@ public class AI {
                     int y2 = py + Direction.y[i];
                     if (pathfinding.contains(x2, y2) && GameData.map.getField(x2, y2).getStrength() > 0) {
                         // Check if we can get away with bombing it
-                        pathfinding = new Pathfinding();
+                        pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs);
                         pathfinding.markDangerous(x2, y2, player.radius, player.bombTickMax);
                         pathfinding.start(px, py);
                         for (int y = 0; y < pathfinding.h; y++) {

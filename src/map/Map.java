@@ -225,4 +225,21 @@ public class Map implements Serializable {
     public void setField(Field field) {
         m[field.x][field.y] = field;
     }
+
+    /**
+     * Checks if the map is mirrored vertically and horizontally.
+     * 
+     * @return If the map is symmetric.
+     */
+    public boolean isSymmetric() {
+        for (int x = 0; x < width / 2; x++) {
+            for (int y = 0; y < height / 2; y++) {
+                int x2 = width - x - 1;
+                int y2 = height - y - 1;
+                Field f[] = new Field[] { getField(x, y), getField(x2, y), getField(x2, y2), getField(x, y2) };
+                for (int i = 1; i < 4; i++) if (f[0].getClass() != f[i].getClass()) return false;
+            }
+        }
+        return true;
+    }
 }

@@ -2,41 +2,48 @@ package ai;
 
 import game.Bomb;
 import game.Direction;
-import game.GameData;
 import game.Player;
 
 import java.awt.Point;
 import java.util.LinkedList;
+import java.util.Vector;
+
+import map.Map;
 
 public class Pathfinding {
 
     public int               w, h;
     public int               dangerous[][];
-    public boolean           blocked[][];
     public int               distance[][];
     public Point             previous[][];
     public static final int  UNVISITED     = -1;
     public static final int  NOT_DANGEROUS = -1;
     public LinkedList<Point> reachable;
+    public Map               map;
+    public Vector<Player>    players;
+    public LinkedList<Bomb>  bombs;
+    public boolean           findDangerousPath;
 
-    public Pathfinding() {
-        w = GameData.map.getWidth();
-        h = GameData.map.getHeight();
+    public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs) {
+        this.map = map;
+        this.players = players;
+        this.bombs = bombs;
+
+        w = map.getWidth();
+        h = map.getHeight();
         dangerous = new int[w][h];
         distance = new int[w][h];
         previous = new Point[w][h];
-        blocked = new boolean[w][h];
 
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 dangerous[x][y] = NOT_DANGEROUS;
-                blocked[x][y] = GameData.map.isBlocked(x, y);
                 distance[x][y] = UNVISITED;
                 previous[x][y] = null;
             }
         }
         reachable = new LinkedList<Point>();
-        for (Bomb bomb : GameData.bombs)
+        for (Bomb bomb : bombs)
             if (!bomb.isExpired()) markDangerous(bomb.x, bomb.y, bomb.getRadius(), bomb.ticksUntilExplosion);
     }
 
@@ -44,9 +51,14 @@ public class Pathfinding {
         int x = p.x + Direction.x[direction];
         int y = p.y + Direction.y[direction];
         int d = distance[x][y];
-        if (contains(x, y) && !blocked[x][y] && d == UNVISITED) {
+        if (contains(x, y) && !map.isBlocked(x, y) && d == UNVISITED) {
             // If field is dangerous and we can not run away from it
             // if (dangerous[x][y] && d > 2) return;
+            int danger = dangerous[x][y];
+            if (danger != NOT_DANGEROUS) {
+                if (findDangerousPath) {
+                }
+            }
             previous[x][y] = p;
             distance[x][y] = distance[p.x][p.y] + 1;
             reachable.addLast(new Point(x, y));
@@ -101,7 +113,7 @@ public class Pathfinding {
     public Player getClosestReachablePlayer(Player thisPlayer) {
         Player closest = null;
         int dist = Integer.MAX_VALUE;
-        for (Player player : GameData.players) {
+        for (Player player : players) {
             int d = distance[player.x][player.y];
             if (player.isAlive() && player != thisPlayer && d != UNVISITED && d < dist) {
                 closest = player;
@@ -116,7 +128,7 @@ public class Pathfinding {
         int dist = Integer.MAX_VALUE;
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                if (GameData.map.getField(x, y).getStrength() > 0) {
+                if (map.getField(x, y).getStrength() > 0) {
                     for (int i = 0; i < 4; i++) {
                         int x2 = x + Direction.x[i];
                         int y2 = y + Direction.y[i];
