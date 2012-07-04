@@ -9,7 +9,6 @@ import javax.swing.event.ChangeListener;
 
 import main.MapPanel;
 
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Rectangle;
@@ -23,7 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class MapEditor  {
+public class MapEditor {
 
     public final JFrame frame = new JFrame("Map-Editor");
 
@@ -195,7 +194,8 @@ public class MapEditor  {
         ActionListener saveListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapCreator.saveMap(GameData.map, "Azeroth");   
+                System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
+                MapCreator.saveMap(GameData.map, "Azeroth");
                 frame.requestFocus();
             }
         };
@@ -216,41 +216,38 @@ public class MapEditor  {
                 frame.requestFocus();
             }
         };
-        
+
         KeyListener exitListener = new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-//                    UIManager.put("OptionPane.cancelButtonText", "Cancel");
-//                    UIManager.put("OptionPane.noButtonText", "No");
-//                    UIManager.put("OptionPane.yesButtonText", "Yes");
-//                    UIManager.put("OptionPane.Title","Please select");
-//                   
-//                    int option = JOptionPane.showConfirmDialog(fra,e, "Close window?","Exit",JOptionPane.YES_NO_OPTION);
-//                    if(option == JOptionPane.OK_OPTION) System.exit(0);
+                    // UIManager.put("OptionPane.cancelButtonText", "Cancel");
+                    // UIManager.put("OptionPane.noButtonText", "No");
+                    // UIManager.put("OptionPane.yesButtonText", "Yes");
+                    // UIManager.put("OptionPane.Title","Please select");
+                    //
+                    // int option = JOptionPane.showConfirmDialog(fra,e,
+                    // "Close window?","Exit",JOptionPane.YES_NO_OPTION);
+                    // if(option == JOptionPane.OK_OPTION) System.exit(0);
                     frame.dispose();
 
-                   
-                    }
                 }
+            }
 
             @Override
             public void keyReleased(KeyEvent arg0) {
                 // TODO Auto-generated method stub
-                
+
             }
 
             @Override
             public void keyTyped(KeyEvent arg0) {
                 // TODO Auto-generated method stub
-                
-            }
-            };
 
-        
-            
-            
-        frame.setFocusable(true);    
+            }
+        };
+
+        frame.setFocusable(true);
         frame.addKeyListener(exitListener);
         loadButton.addActionListener(loadListener);
 
