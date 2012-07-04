@@ -10,6 +10,7 @@ import javax.swing.event.ChangeListener;
 import main.MapPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,9 @@ public class MapEditor {
     private JPanel      mapWrapper;
     private MapPanel    mapPanel;
     private JComboBox   tileSelection;
+    JLabel symmetric = new JLabel("Symmetric");
+    JLabel valid = new JLabel("Valid");
+    
 
     private void redrawMap() {
         GameData.removeDeadDrawables();
@@ -69,9 +73,17 @@ public class MapEditor {
                 Field field = (Field) whichClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(tx, ty);
                 GameData.map.setField(field);
                 
-                //TODO implement jlabels (red/green)
-                System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
-                System.out.println("Is map valid? - " + GameData.map.isValid());
+               
+                //System.out.println("Is map symmetric? - " + GameData.map.isSymmetric());
+                //System.out.println("Is map valid? - " + GameData.map.isValid());
+               
+              
+               valid.setBackground(mapPanel.map.isValid() ? Color.green : Color.red);
+               symmetric.setBackground(mapPanel.map.isSymmetric() ? Color.green : Color.orange);
+               
+                
+
+                
                 
                 redrawMap();
             } catch (Exception e) {
@@ -245,7 +257,16 @@ public class MapEditor {
         String[] tileNames = { "EmptyField", "IndestructibleWall", "MediumWall", "NormalWall", "Exit" };
         tileSelection = new JComboBox(tileNames);
         control.add(tileSelection, BorderLayout.WEST);
+        
+
+
+        control.add(symmetric);
+        control.add(valid);
+      symmetric.setOpaque(true);
+      valid.setOpaque(true);
 
         initMap();
+        valid.setBackground(mapPanel.map.isValid() ? Color.green : Color.red);
+        symmetric.setBackground(mapPanel.map.isSymmetric() ? Color.green : Color.orange);
     }
 }
