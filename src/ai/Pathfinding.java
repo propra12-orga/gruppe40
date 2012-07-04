@@ -12,22 +12,21 @@ import map.Map;
 
 public class Pathfinding {
 
-    public int               w, h;
-    public int               dangerous[][];
-    public int               distance[][];
-    public Point             previous[][];
-    public static final int  UNVISITED     = -1;
-    public static final int  NOT_DANGEROUS = -1;
-    public LinkedList<Point> reachable;
-    public Map               map;
-    public Vector<Player>    players;
-    public LinkedList<Bomb>  bombs;
-    public int speed;
-
+    private int               w, h;
+    private int               dangerous[][];
+    private int               distance[][];
+    private Point             previous[][];
+    private static final int  UNVISITED     = -1;
+    private static final int  NOT_DANGEROUS = -1;
+    private LinkedList<Point> reachable;
+    private Map               map;
+    private Vector<Player>    players;
+    private int speed;
+    private boolean disregardDestroyableWalls;
+    
     public Pathfinding(Map map, Vector<Player> players, LinkedList<Bomb> bombs, int speed) {
         this.map = map;
         this.players = players;
-        this.bombs = bombs;
         this.speed = speed;
 
         w = map.getWidth();
@@ -52,7 +51,7 @@ public class Pathfinding {
         int x = p.x + Direction.x[direction];
         int y = p.y + Direction.y[direction];
         int d = distance[x][y];
-        if (contains(x, y) && !map.isBlocked(x, y) && d == UNVISITED) {
+        if (contains(x, y) && (!map.isBlocked(x, y) || disregardDestroyableWalls && map.getField(x, y).getStrength() > 0) && d == UNVISITED) {
             int danger = dangerous[x][y];
             if (danger != NOT_DANGEROUS) {
                 //We can not survive that
@@ -147,6 +146,14 @@ public class Pathfinding {
     public boolean notDangerous(int x, int y) {
         return dangerous[x][y] == NOT_DANGEROUS;
     }
+    
+    public boolean isDangerous(int x, int y) {
+        return dangerous[x][y] != NOT_DANGEROUS;
+    }
+    
+    public int getDistance(int x, int y) {
+        return distance[x][y];
+    }
 
     public Point getPointTowards(Point target, Point source) {
         Point prev = source;
@@ -155,5 +162,9 @@ public class Pathfinding {
             target = previous[target.x][target.y];
         }
         return prev;
+    }
+
+    public boolean isReachable(int x, int y) {
+        return distance[x][y] != UNVISITED;
     }
 }

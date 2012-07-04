@@ -25,7 +25,7 @@ public class AI {
     private void moveTowards(Point p, boolean safe) {
         Point towards = pathfinding.getPointTowards(p, new Point(player.getPoint()));
         if (safe) {
-            if (pathfinding.dangerous[towards.x][towards.y] == Pathfinding.NOT_DANGEROUS) {
+            if (pathfinding.notDangerous(towards.x, towards.y)) {
                 player.moveTo(towards.x, towards.y);
             }
         } else {
@@ -45,7 +45,7 @@ public class AI {
 
         pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs, player.getSpeed());
         pathfinding.start(px, py);
-        if (pathfinding.dangerous[px][py] != Pathfinding.NOT_DANGEROUS) {
+        if (pathfinding.isDangerous(px, py)) {
             // Run away if in danger
             Point p = pathfinding.getClosestReachableNicePoint(px, py);
             if (p != null) {
@@ -57,7 +57,7 @@ public class AI {
             // Run towards player if in reach
             Player closest = pathfinding.getClosestReachablePlayer(player);
             if (closest != null) {
-                if (pathfinding.distance[closest.x][closest.y] <= player.radius) {
+                if (pathfinding.getDistance(closest.x, closest.y) <= player.radius) {
                     player.putItem(Item.BOMB);
                 } else {
                     Point p = new Point(closest.x, closest.y);
@@ -75,9 +75,9 @@ public class AI {
                         pathfinding = new Pathfinding(GameData.map, GameData.players, GameData.bombs, player.getSpeed());
                         pathfinding.markDangerous(x2, y2, player.radius, player.bombTickMax);
                         pathfinding.start(px, py);
-                        for (int y = 0; y < pathfinding.h; y++) {
-                            for (int x = 0; x < pathfinding.w; x++) {
-                                if (pathfinding.dangerous[x][y]  == Pathfinding.NOT_DANGEROUS && pathfinding.distance[x][y] != Pathfinding.UNVISITED && pathfinding.distance[x][y] < 3) {
+                        for (int y = 0; y < GameData.map.getHeight(); y++) {
+                            for (int x = 0; x < GameData.map.getWidth(); x++) {
+                                if (pathfinding.notDangerous(x, y) && pathfinding.isReachable(x, y) && pathfinding.getDistance(x, y) < 3) {
                                     player.putItem(Item.BOMB);
                                     return;
                                 }
