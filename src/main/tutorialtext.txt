@@ -1,8 +1,10 @@
-	Player 1	Player 2	
+	Player 1
 
-   left	  - a -	  - j -	
-   right	  - d -	  - l -	
-   up	  - w -	  - i -	
-   down	  - s -	  - k -	
+   left	  - a - 	
+   right	  - d -	 
+   up	  - w -		
+   down	  - s -		
 
-   bomb	  - e -	  - o -	
+   bomb	  - e -		
+   superbomb	  - r -	
+   boxes	  - q -	
