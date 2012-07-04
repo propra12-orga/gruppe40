@@ -145,7 +145,7 @@ public class Menu {
 		cards.show(base.getContentPane(), "menu");
 		
 		 try {
-             System.setOut(new PrintStream(new FileOutputStream("Log/log_test.txt")));
+             System.setOut(new PrintStream(new FileOutputStream("log_test.txt")));
          } catch (FileNotFoundException e1) {
              // TODO Auto-generated catch block
              e1.printStackTrace();

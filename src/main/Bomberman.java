@@ -33,6 +33,7 @@ import game.Player;
 public class Bomberman {
 
     private Container pane;
+    private boolean shouldHaveExit;
     
     public Bomberman(JFrame menuFrame, boolean fullscreen, String mapName, boolean useAI) {
         GameData.playerCount = 1;
@@ -41,6 +42,7 @@ public class Bomberman {
         GameData.bomberman = this;
         GameData.networkData = new NetworkData(null, null, System.currentTimeMillis());
         if (GameData.server != null) {
+            shouldHaveExit = GameData.server.getPlayerCount() == 1;
             if (useAI) {
                 GameData.playerCount = 4;
             }else{
@@ -56,7 +58,7 @@ public class Bomberman {
             for (int i=0; i<GameData.playerCount; i++) GameData.keys.add(new LinkedList<Character>());
 
             if (mapName.equals("Random")) {
-                GameData.map = new Map(Map.SIZE_DEFAULT_X, Map.SIZE_DEFAULT_Y, GameData.playerCount == 1);
+                GameData.map = new Map(Map.SIZE_DEFAULT_X, Map.SIZE_DEFAULT_Y, shouldHaveExit);
             } else {
                 GameData.map = new Map(mapName);
             }
@@ -284,8 +286,7 @@ public class Bomberman {
      * Check if the game is over.
      */
     private void checkEndConditions() {
-        int playerCount = GameData.playerCount;
-        if (playerCount == 1) {
+        if (shouldHaveExit) {
             // Single player
             Player player = GameData.players.firstElement();
             if (!player.isAlive()) {
