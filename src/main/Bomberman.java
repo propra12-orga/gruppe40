@@ -145,107 +145,12 @@ public class Bomberman {
         Thread gameLoop = new Thread() {
             public void run() {
                 while (GameData.frame.isVisible()) {
-                    for (AI ai : GameData.ais) ai.nextStep();
                     
-                    //Use items
-                    synchronized (GameData.items) {
-                        ListIterator<Item> it = GameData.items.listIterator();
-                        while (it.hasNext()) {
-                            Item item = it.next();
-                            for (Player player : GameData.players) {
-                                if (item.x == player.x && item.y == player.y) {
-                                    item.setUsed(true);
-                                    if (item.getType() == Item.SPEED) {
-                                        player.speedUp();
-                                    }else {
-                                        player.increaseItemCounter(item.getType());
-                                    }
-                                    it.remove();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    
-                    //Update bombs
-                    synchronized (GameData.bombs) {
-                        ListIterator<Bomb> it = GameData.bombs.listIterator();
-                        while (it.hasNext()) {
-                            Bomb bomb = it.next();
-                            if (bomb.isExpired()) {
-                                it.remove();
-                            }else {
-                                if (--bomb.ticksUntilExplosion < 0) {
-                                    bomb.explode();
-                                }
-                            }
-                        }
-                    }
-                    
-                    //Update players
-                    for (Player player : GameData.players) {
-                        player.ticks++;
-						if(--player.ticksUntilNormalSpeed <0){
-							player.speedDown();
-						}
-                    }
-                    
-                    //Handle key input
-                    synchronized (GameData.keys) {
-                        players: for (int playerNumber = 0; playerNumber < GameData.playerCount; playerNumber++) {
-                            Player player = GameData.players.get(playerNumber);
-                            //Iterate through keys until one works
-                            for (Character key : GameData.keys.get(playerNumber)) {                            
-                                switch (key) {
-                                    case 'W':
-                                    case 'w':
-                                        if (player.move(Direction.UP)) continue players;
-                                    break;
-
-                                    case 'A':
-                                    case 'a':
-                                        if (player.move(Direction.LEFT)) continue players;
-                                    break;
-
-                                    case 'S':
-                                    case 's':
-                                        if (player.move(Direction.DOWN)) continue players;
-                                    break;
-
-                                    case 'D':
-                                    case 'd':
-                                        if (player.move(Direction.RIGHT)) continue players;
-                                    break;
-
-                                    case 'E':
-                                    case 'e':
-                                        player.putItem(Item.BOMB); //puts bomb
-                                    break;
-									
-                                    case 'R':
-                                    case 'r':
-                                        player.putItem(Item.SUPERBOMB); //puts superbomb
-                                    break;
-									
-                                    case 'Q':
-                                    case 'q':
-                                        player.putItem(Item.BOX); //puts box
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    
-                    //Update drawables
-                    synchronized (GameData.drawables) {
-                        GameData.removeDeadDrawables();
-                        //Send everything to clients
-                        NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
-                        if (GameData.server != null) GameData.server.send(networkData);
+                    if (GameData.server != null) {
+                        updateGameState();
                     }
                     
                     GameData.frame.repaint();
-                    checkEndConditions();
                     try {
                         Thread.sleep(1000 / GameData.fps);
                     } catch (InterruptedException e) {
@@ -255,6 +160,108 @@ public class Bomberman {
             }
         };
         gameLoop.start();
+    }
+    
+    private void updateGameState() {
+        for (AI ai : GameData.ais) ai.nextStep();
+        
+        //Use items
+        synchronized (GameData.items) {
+            ListIterator<Item> it = GameData.items.listIterator();
+            while (it.hasNext()) {
+                Item item = it.next();
+                for (Player player : GameData.players) {
+                    if (item.x == player.x && item.y == player.y) {
+                        item.setUsed(true);
+                        if (item.getType() == Item.SPEED) {
+                            player.speedUp();
+                        }else {
+                            player.increaseItemCounter(item.getType());
+                        }
+                        it.remove();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        //Update bombs
+        synchronized (GameData.bombs) {
+            ListIterator<Bomb> it = GameData.bombs.listIterator();
+            while (it.hasNext()) {
+                Bomb bomb = it.next();
+                if (bomb.isExpired()) {
+                    it.remove();
+                }else {
+                    if (--bomb.ticksUntilExplosion < 0) {
+                        bomb.explode();
+                    }
+                }
+            }
+        }
+        
+        //Update players
+        for (Player player : GameData.players) {
+            player.ticks++;
+            if(--player.ticksUntilNormalSpeed <0){
+                player.speedDown();
+            }
+        }
+        
+        //Handle key input
+        synchronized (GameData.keys) {
+            players: for (int playerNumber = 0; playerNumber < GameData.playerCount; playerNumber++) {
+                Player player = GameData.players.get(playerNumber);
+                //Iterate through keys until one works
+                for (Character key : GameData.keys.get(playerNumber)) {                            
+                    switch (key) {
+                        case 'W':
+                        case 'w':
+                            if (player.move(Direction.UP)) continue players;
+                        break;
+
+                        case 'A':
+                        case 'a':
+                            if (player.move(Direction.LEFT)) continue players;
+                        break;
+
+                        case 'S':
+                        case 's':
+                            if (player.move(Direction.DOWN)) continue players;
+                        break;
+
+                        case 'D':
+                        case 'd':
+                            if (player.move(Direction.RIGHT)) continue players;
+                        break;
+
+                        case 'E':
+                        case 'e':
+                            player.putItem(Item.BOMB); //puts bomb
+                        break;
+                        
+                        case 'R':
+                        case 'r':
+                            player.putItem(Item.SUPERBOMB); //puts superbomb
+                        break;
+                        
+                        case 'Q':
+                        case 'q':
+                            player.putItem(Item.BOX); //puts box
+                        break;
+                    }
+                }
+            }
+        }
+        
+        //Update drawables
+        synchronized (GameData.drawables) {
+            GameData.removeDeadDrawables();
+            //Send everything to clients
+            NetworkData networkData = new NetworkData(GameData.drawables, GameData.map);
+            GameData.server.send(networkData);
+        }
+        checkEndConditions();
     }
 
     /**
