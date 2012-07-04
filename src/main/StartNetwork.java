@@ -69,8 +69,7 @@ public class StartNetwork {
 		ActionListener alServer = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 			    int port = 12345;
-			    String ip = paneIP.getText();
-			    GameData.server = new Server(ip, port);
+			    GameData.server = new Server(port);
 			    new Thread(GameData.server).start();
 			}
 		};

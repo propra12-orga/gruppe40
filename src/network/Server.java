@@ -24,7 +24,7 @@ public class Server implements Runnable {
         socket.close();
     }
     
-    public Server(String ip, int port) {
+    public Server(int port) {
         try {
             socket = new DatagramSocket(port);
         } catch (SocketException e) {

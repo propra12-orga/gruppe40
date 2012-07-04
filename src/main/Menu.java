@@ -161,7 +161,7 @@ public class Menu {
 			        //If there is no network connection host a local server
 			        int port = 12345;
 			        String ip = "127.0.0.1";
-			        GameData.server = new Server(ip, port);
+			        GameData.server = new Server(port);
 			        GameData.client = new Client(ip, port);
 			        new Thread(GameData.server).start();
 			        new Thread(GameData.client).start();
