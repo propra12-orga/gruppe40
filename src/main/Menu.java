@@ -17,6 +17,9 @@ import network.Server;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 public class Menu {
 	
@@ -137,7 +140,12 @@ public class Menu {
 		base.setVisible(true);
 		cards.show(base.getContentPane(), "menu");
 		
-		
+		 try {
+             System.setOut(new PrintStream(new FileOutputStream("Log/log_test.txt")));
+         } catch (FileNotFoundException e1) {
+             // TODO Auto-generated catch block
+             e1.printStackTrace();
+         }
 		/*****************************************************
 		 * Actionlistner - Actions taken when Button clicked *
 		 *****************************************************/
@@ -159,7 +167,8 @@ public class Menu {
 			        }
 			    }
                 base.setVisible(false);
-                boolean useAI = true;
+                //TODO fix back to true for useAI
+                boolean useAI = false;
 			    new Bomberman(base, fullscreen, mapName, useAI);
 			}
 		};

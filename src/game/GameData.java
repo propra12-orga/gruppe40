@@ -35,7 +35,8 @@ public abstract class GameData {
     public static int                           fps     = 60;
     public static LinkedList<AI>                ais;
     public static LinkedList<Item>              items;
-
+    
+    
     public static void removeDeadDrawables() {
         ListIterator<Drawable> it = drawables.listIterator();
         while (it.hasNext()) {

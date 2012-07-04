@@ -9,65 +9,62 @@ import javax.swing.text.StyleContext;
 import network.Client;
 import network.Server;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 public class StartNetwork {
 	
 	public final JFrame networkWindow = new JFrame("Network settings");
+	public final JEditorPane log = new JEditorPane();
+	final JScrollPane scrollPane = new JScrollPane(log);
+	
 	boolean AI = false;
 	
 	public StartNetwork() {
+
+
+            
+
+
+       
+	    
 		//panels etc...
 		JPanel base = new JPanel();
 		JPanel buttonsStart = new JPanel();
-		final JCheckBox checkAI = new JCheckBox("AI? (host only)");
+		//final JCheckBox checkAI = new JCheckBox("AI? (host only)");
 		final JButton buttonConnectGame = new JButton("Connect to server");
 		final JButton buttonStartServer = new JButton("Start server");
-		final JButton buttonEditIP = new JButton("Change ip");
+		
 		final JTextPane paneIP = new JTextPane();
+		
+		
 		
 		base.setLayout(new FlowLayout());
 		buttonsStart.setLayout(new FlowLayout());
 		
 		buttonsStart.add(buttonConnectGame);
 		buttonsStart.add(buttonStartServer);
-		buttonsStart.add(checkAI);
+		
 		
 		base.add(buttonsStart);
+		base.add(scrollPane);
 		base.add(paneIP);
-		base.add(buttonEditIP);
 
 		//editing JTextPane
 		StyleContext.NamedStyle styleCenter = StyleContext.getDefaultStyleContext().new NamedStyle();
 		StyleConstants.setAlignment(styleCenter, StyleConstants.ALIGN_CENTER);
 		paneIP.setText("127.0.0.1");
-		paneIP.setEditable(false);
+		paneIP.setEditable(true);
+		paneIP.setBorder(BorderFactory.createLineBorder(Color.black));
 		paneIP.setLogicalStyle(styleCenter);
 		
-		//changing ip
-		ActionListener alChange = new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				if(paneIP.isEditable()) {
-					paneIP.setEditable(false);
-					buttonStartServer.setEnabled(true);
-					buttonConnectGame.setEnabled(true);
-					buttonEditIP.setText("Change ip");
-				}
-				else {
-					paneIP.setEditable(true);
-					buttonStartServer.setEnabled(false);
-					buttonConnectGame.setEnabled(false);
-					buttonEditIP.setText("Confirm");
-				}
-			}
-		};
-		
+		log.setText("Server-Log:\n");
+		log.setEditable(false);
+				
 		//start server
 		ActionListener alServer = new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
@@ -93,32 +90,32 @@ public class StartNetwork {
 			}
 		};
 		
-		ItemListener ilAI = new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getItemSelectable() == checkAI) {
-					AI = true;
-				}
-				if(e.getStateChange() == ItemEvent.DESELECTED) {
-					AI = false;
-				}
-			}
-		};
+//		ItemListener ilAI = new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				if(e.getItemSelectable() == checkAI) {
+//					AI = true;
+//				}
+//				if(e.getStateChange() == ItemEvent.DESELECTED) {
+//					AI = false;
+//				}
+//			}
+//		};
 		
 		//adding actionlisteners
-		buttonEditIP.addActionListener(alChange);
+		//buttonEditIP.addActionListener(alChange);
 		buttonStartServer.addActionListener(alServer);
 		buttonConnectGame.addActionListener(alConnect);
-		checkAI.addItemListener(ilAI);
+		//checkAI.addItemListener(ilAI);
 		
 		
 		//setting up sizes to match everything
 		buttonConnectGame.setPreferredSize(new Dimension(180, 70));
 		buttonStartServer.setPreferredSize(new Dimension(180, 70));
-		paneIP.setPreferredSize(new Dimension(350, 35));
-		buttonEditIP.setPreferredSize(new Dimension(350, 35));
+		paneIP.setPreferredSize(new Dimension(350, 25));
+		log.setPreferredSize(new Dimension(440, 200));
 		networkWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		networkWindow.setSize(450, 235);
+		networkWindow.setSize(450, 400);
 		networkWindow.setResizable(false);
 		buttonsStart.setPreferredSize(new Dimension(450, 110));
 		
